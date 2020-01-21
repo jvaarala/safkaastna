@@ -5,14 +5,14 @@
 
         <!-- Yhteyden perustiedot: ajuri, palvelin käyttäjätunnus/salasana -->
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/valuuttaDBHibernate</property>
-        <property name="hibernate.connection.username">olso</property>
-        <property name="hibernate.connection.password">olso</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:2280/restaurants</property>
+        <property name="hibernate.connection.username">user</property>
+        <property name="hibernate.connection.password">koira123</property>
 
         <!-- create , create-drop, update tai validate -->
         <!-- Älä käytä tuotantoversioissa, ts, älä anna Hibernaten enää muuttaa taulurakennetta  -->
         <!-- Ekalla kerralla create, kun kanta olemassa validate -->
-        <property name="hbm2ddl.auto">validate</property>
+        <property name="hibernate.hbm2ddl.auto">validate</property>
 
         <!-- kun true, kaiuta kaikki SQL-lauseet stdout:iin -->
         <property name="show_sql">false</property>
