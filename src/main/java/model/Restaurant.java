@@ -113,4 +113,20 @@ public class Restaurant {
     public double getLng() { return lng; }
 
     public void setLng(double lng) { this.lng = lng; }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", postal_code=" + postal_code +
+                ", city='" + city + '\'' +
+                ", www='" + www + '\'' +
+                ", admin='" + admin + '\'' +
+                ", admin_www='" + admin_www + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                '}';
+    }
 }
