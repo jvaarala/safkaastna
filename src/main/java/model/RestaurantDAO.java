@@ -48,7 +48,7 @@ public class RestaurantDAO {
             transaction.commit();
             success = true;
         } catch (Exception e) {
-            if (transaction != null {
+            if (transaction != null) {
                 transaction.rollback();
             }
             e.printStackTrace();
@@ -77,7 +77,7 @@ public class RestaurantDAO {
     }
 
     //TODO if necessary
-    public boolean updateRestaurant(Valuutta valuutta) {
+    public boolean updateRestaurant(Restaurant restaurant) {
         boolean success = false;
         Transaction transaction = null;
 
