@@ -27,7 +27,7 @@ public class RestaurantDAO {
         }
     }
 
-    @Override
+
     protected void finalize() {
         try {
             if (sessionFactory != null) {
@@ -37,6 +37,26 @@ public class RestaurantDAO {
             e.printStackTrace();
         }
     }
+
+    public boolean createRestaurant(Restaurant restaurant) {
+        boolean success = false;
+
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(restaurant);
+            transaction.commit();
+            success = true;
+        } catch (Exception e) {
+            if (transaction != null {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+
 
     public List<Restaurant> readRestaurants() {
         List restaurants = new ArrayList<>();
@@ -54,5 +74,55 @@ public class RestaurantDAO {
         }
 
         return restaurants;
+    }
+
+    //TODO if necessary
+    public boolean updateRestaurant(Valuutta valuutta) {
+        boolean success = false;
+        Transaction transaction = null;
+
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+
+            // muuutettavat ominaisuudet
+            int id = restaurant.getId();
+
+            Restaurant r = (Restaurant)session.get(Restaurant.class, id);
+
+            if (r != null) {
+                // r.setFeature(feature);
+                success = true;
+                transaction.commit();
+            }
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return success;
+    }
+
+    public boolean deleteRestaurant(String id) {
+        boolean success = false;
+
+        Transaction transaction = null;
+
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+
+            Restaurant r = (Restaurant)session.get(Restaurant.class, id);
+            if (r != null) {
+                session.delete(r);
+                transaction.commit();
+            }
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return success;
     }
 }
