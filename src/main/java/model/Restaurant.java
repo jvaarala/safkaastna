@@ -24,12 +24,16 @@ public class Restaurant {
     private String admin;
     @Column
     private String admin_www;
+    @Column
+    private double lat;
+    @Column
+    private double lng;
 
     public Restaurant() {
 
     }
 
-    public Restaurant(int id, String name, String address, int postal_code, String city, String www, String admin, String admin_www) {
+    public Restaurant(int id, String name, String address, int postal_code, String city, String www, String admin, String admin_www, double lon, double lng) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -38,6 +42,8 @@ public class Restaurant {
         this.www = www;
         this.admin = admin;
         this.admin_www = admin_www;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public String getName() {
@@ -95,4 +101,16 @@ public class Restaurant {
     public void setAdmin_www(String admin_www) {
         this.admin_www = admin_www;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
+
+    public double getLat() { return lat; }
+
+    public void setLat(double lat) { this.lat = lat; }
+
+    public double getLng() { return lng; }
+
+    public void setLng(double lng) { this.lng = lng; }
 }
