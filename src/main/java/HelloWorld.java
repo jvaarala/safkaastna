@@ -14,6 +14,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class HelloWorld extends Application {
@@ -24,11 +25,17 @@ public class HelloWorld extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        try {
-            readJSON();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            readJSON();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        RestaurantDAO dao = new RestaurantDAO();
+        List<Restaurant> restaurantsFromDb = new ArrayList<>();
+
+        restaurantsFromDb = dao.readRestaurants();
+        System.out.println(restaurantsFromDb.get(10));
 
         primaryStage.setTitle("Hello World!");
         Button btn = new Button();
@@ -51,7 +58,7 @@ public class HelloWorld extends Application {
 
     private static void readJSON() throws Exception {
         RestaurantDAO dao = new RestaurantDAO();
-        File file = new File("/Users/katriaho/IdeaProjects/safkaastna/restaurantRawData230120.json");
+        File file = new File("restaurantRawData230120.json");
         String content = FileUtils.readFileToString(file, "utf-8");
 
         // Convert JSON string to JSONObject
