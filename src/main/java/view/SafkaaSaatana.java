@@ -1,6 +1,7 @@
 package view;
 
 import java.io.IOException;
+import java.net.URL;
 
 import javafx.application.*;
 import javafx.event.ActionEvent;
@@ -37,7 +38,10 @@ public class SafkaaSaatana extends Application {
 		this.primaryStage = primaryStage;
 		
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(SafkaaSaatana.class.getResource("SafkaaSaatana.fxml"));
+		
+		URL testa = SafkaaSaatana.class.getResource("SafkaaSaatana.fxml");
+		System.out.println(testa);
+		loader.setLocation(testa);
 		try {
 			aaaaaa = (BorderPane) loader.load();
 		} catch (IOException e) {
