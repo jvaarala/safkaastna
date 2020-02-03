@@ -97,6 +97,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
         listViewNames.setItems(items);
 
         mapView.addMapInializedListener(this);
+
         listViewNames.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     Restaurant restaurantToFind = new Restaurant();
@@ -107,7 +108,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
                             break;
                         }
                     }
-                    System.out.println(restaurantToFind.toString());
+//                    System.out.println(restaurantToFind.toString());
                     showRestaurantDetails(restaurantToFind);
                 }
         );
