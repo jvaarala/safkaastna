@@ -1,0 +1,93 @@
+NÄMÄ ILMAN KOORDINAATTEJA
+Cafe Arken
+      "name": "CAFÉ ARKEN",
+      "address": "FABRIKSGATAN 2",
+      "postal_code": "20500",
+      "city": "TURKU",
+      "www": "http://www.abo.fi/karen/index.php?page=matlistor",
+      "admin": "KAFÉ GADOLINIA KB/ÅBO AKADEMIS STUDENTKÅR",
+      "admin_www": "http://www.abo.fi/karen/index.php?page=matlistor",
+      "lat": "",
+      "lon": ""
+Jakelupiste 0442 MediTeknia Itäsuomen yliopisto
+      "name": "JAKELUPISTE (0442) MEDITEKNIA. ITÄ-SUOMEN YLIOPISTO",
+      "address": "HARJULANTIE 1",
+      "postal_code": "70210",
+      "city": "KUOPIO",
+      "www": "https://www.fazerfoodco.fi/mediteknia",
+      "admin": "FAZER FOOD SERVICES OY",
+      "admin_www": "https://www.fazerfoodco.fi/",
+      "lat": "",
+      "lon": ""
+Oulun yliopistollinen sairaala
+"name": "OULUN YLIOPISTOLLINEN SAIRAALA",
+      "address": "PL 50",
+      "postal_code": "90029",
+      "city": "OYS",
+      "www": "http://www.ppshp.fi/ravintolapalvelut/",
+      "admin": "POHJOIS-POHJANMAAN SAIRAANHOITOPIIRIN KUNTAYHTYMÄ",
+      "admin_www": "http://www.ppshp.fi/ravintolapalvelut/",
+      "lat": "",
+      "lon": ""
+Cafe Techno
+      "name": "CAFÉ TECHNO",
+      "address": "BOMULLSGRÄND 3",
+      "postal_code": "65200",
+      "city": "VAASA",
+      "www": "",
+      "admin": "ODEN HARBARD AB",
+      "admin_www": "",
+      "lat": "",
+      "lon": ""
+CAFe TECHNO
+      "name": "CAFé TECHNO",
+      "address": "BOMULLSGRÄND 3",
+      "postal_code": "65200",
+      "city": "VAASA",
+      "www": "https://www.cafetechno.fi/fi/",
+      "admin": "HUE & BER ÖB",
+      "admin_www": "",
+      "lat": "",
+      "lon": ""
+Katriinan kasvisravintola
+      "name": "KATRIINAN KASVISRAVINTOLA",
+      "address": "KAUPPAKATU 11",
+      "postal_code": "40100",
+      "city": "JYVÄSKYLÄ",
+      "www": "",
+      "admin": "SAARIJÄRVI MISPELI OY",
+      "admin_www": "",
+      "lat": "",
+      "lon": ""
+
+RUOTSI - NÄILLÄ VÄÄRÄT KOORDINAATIT
+Restaurang Alexander
+      "name": "RESTAURANG ALEXANDER",
+      "address": "PB 311, STRANDGATAN 2",
+      "postal_code": "65101",
+      "city": "VAASA",
+      "www": "",
+      "admin": "ISS PALVELUT OY/CATERING SERVICES",
+      "admin_www": "",
+      "lat": 58.4104894,
+      "lng": 15.6315829
+Cafe Kåren
+      "name": "CAFÉ KÅREN",
+      "address": "TAVASTGATAN 22",
+      "postal_code": "20500",
+      "city": "TURKU",
+      "www": "http://www.abo.fi/karen/index.php?page=matlistor",
+      "admin": "KAFÉ GADOLINIA KB/ÅBO AKADEMIS STUDENTKÅR",
+      "admin_www": "http://www.abo.fi/karen/index.php?page=matlistor",
+      "lat": 59.3197471,
+      "lng": 18.0608235
+Cafe Fänriken
+      "name": "CAFÉ FÄNRIKEN",
+      "address": "FÄNRIKSGATAN 3",
+      "postal_code": "20500",
+      "city": "TURKU",
+      "www": "http://www.abo.fi/karen/index.php?page=matlistor",
+      "admin": "KAFÉ GADOLINIA KB/ÅBO AKADEMIS STUDENTKÅR",
+      "admin_www": "http://www.abo.fi/karen/index.php?page=matlistor",
+      "lat": 55.60310879999999,
+      "lng": 13.011902

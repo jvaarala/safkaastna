@@ -1,3 +1,6 @@
+import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
+import com.lynden.gmapsfx.javascript.event.UIEventType;
+import com.lynden.gmapsfx.javascript.object.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,12 +17,7 @@ import java.util.ResourceBundle;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
-import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.MapOptions;
 // import com.lynden.gmapsfx.javascript.object.MapType;
-import com.lynden.gmapsfx.javascript.object.Marker;
-import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,10 +25,12 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import netscape.javascript.JSObject;
 
 public class FXMLExampleController implements Initializable, MapComponentInitializedListener {
 
     private RestaurantDAO restaurantDAO = new RestaurantDAO();
+    private List<Restaurant> restaurantsFromDb;
 
     @FXML
     private ListView<String> listViewNames;
@@ -50,9 +50,9 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
         listViewNames.getItems().clear();
 
         // Haetaan Restaurant-oliot tietokannasta
-        List<Restaurant> restaurantsFromDb;
         List<Marker> restaurantMarkers = new ArrayList<>();
         restaurantsFromDb = restaurantDAO.readRestaurants();
+
 
         // Lisätään ravintoloiden nimet ObservableListiin
         for (Restaurant restaurant : restaurantsFromDb) {
@@ -61,10 +61,30 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(tempLatLong);
             Marker tempMarker = new Marker(markerOptions);
+
+            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+            infoWindowOptions.content(restaurant.getName());
+            infoWindowOptions.disableAutoPan(false);
+            InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+            infoWindow.open(map, tempMarker);
+
             restaurantMarkers.add(tempMarker);
         }
 
         map.addMarkers(restaurantMarkers);
+
+        // clickin lat long tulostuu, kun klikkaa kohtaa kartalta (ei markeria)
+        map.addUIEventHandler(UIEventType.click, (JSObject obj) -> {
+            LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
+            System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
+        });
+        // tämä toimii ihan vastaavasti kun ylläoleva
+//        map.addMouseEventHandler(UIEventType.click, (GMapMouseEvent e) -> {
+//            System.out.println(e);
+//            LatLong latLong = e.getLatLong();
+//            System.out.println("Lat: " + latLong.getLatitude());
+//            System.out.println("Long " + latLong.getLongitude());
+//        });
 
         // Asetetaan ObservableList ListViewiin
         listViewNames.setItems(items);
@@ -77,7 +97,21 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
         listViewNames.setItems(items);
 
         mapView.addMapInializedListener(this);
-
+        listViewNames.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    int id = -1;
+                    System.out.println(newValue);
+                    for(int i = 0; i < restaurantsFromDb.size(); i++) {
+                        if (restaurantsFromDb.get(i).getName().equals(newValue)) {
+                            id = i;
+                            break;
+                        }
+                    }
+                    Restaurant restaurantToFind = restaurantsFromDb.get(id);
+                    System.out.println(restaurantToFind.toString());
+                    showRestaurantDetails(restaurantToFind);
+                }
+        );
     }
 
     @Override
@@ -104,5 +138,23 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
         Marker joeSmithMarker = new Marker(markerOptions1);
         map.addMarker( joeSmithMarker );
         */
+    }
+
+    private void showRestaurantDetails(Restaurant restaurant) {
+        if (restaurant != null) {
+            System.out.println("Täällä");
+//            MapOptions mapOptions = new MapOptions();
+//            mapOptions.center(new LatLong(restaurant.getLat(), restaurant.getLng()))
+//                .overviewMapControl(false)
+//                    .panControl(false)
+//                    .rotateControl(false)
+//                    .scaleControl(false)
+//                    .streetViewControl(false)
+//                    .zoomControl(false)
+//                    .zoom(12);
+            mapView.setCenter(restaurant.getLat(), restaurant.getLng());
+        } else {
+            System.out.println("Ravintolaa ei valittu");
+        }
     }
 }
