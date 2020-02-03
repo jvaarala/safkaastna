@@ -15,7 +15,7 @@ public class FXMLExample extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("fxml_example.fxml"));
 
         stage.setTitle("FXML Welcome");
-        stage.setScene(new Scene(root, 300, 500));
+        stage.setScene(new Scene(root));
         stage.show();
     }
 }
