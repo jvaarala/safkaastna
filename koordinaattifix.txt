@@ -20,7 +20,7 @@ Jakelupiste 0442 MediTeknia Itäsuomen yliopisto
       "lat": "",
       "lon": ""
 Oulun yliopistollinen sairaala
-"name": "OULUN YLIOPISTOLLINEN SAIRAALA",
+      "name": "OULUN YLIOPISTOLLINEN SAIRAALA",
       "address": "PL 50",
       "postal_code": "90029",
       "city": "OYS",

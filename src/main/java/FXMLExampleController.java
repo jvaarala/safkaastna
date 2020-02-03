@@ -99,15 +99,14 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
         mapView.addMapInializedListener(this);
         listViewNames.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    int id = -1;
+                    Restaurant restaurantToFind = new Restaurant();
                     System.out.println(newValue);
                     for(int i = 0; i < restaurantsFromDb.size(); i++) {
                         if (restaurantsFromDb.get(i).getName().equals(newValue)) {
-                            id = i;
+                            restaurantToFind = restaurantsFromDb.get(i);
                             break;
                         }
                     }
-                    Restaurant restaurantToFind = restaurantsFromDb.get(id);
                     System.out.println(restaurantToFind.toString());
                     showRestaurantDetails(restaurantToFind);
                 }
@@ -142,19 +141,8 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 
     private void showRestaurantDetails(Restaurant restaurant) {
         if (restaurant != null) {
-            System.out.println("Täällä");
-//            MapOptions mapOptions = new MapOptions();
-//            mapOptions.center(new LatLong(restaurant.getLat(), restaurant.getLng()))
-//                .overviewMapControl(false)
-//                    .panControl(false)
-//                    .rotateControl(false)
-//                    .scaleControl(false)
-//                    .streetViewControl(false)
-//                    .zoomControl(false)
-//                    .zoom(12);
             mapView.setCenter(restaurant.getLat(), restaurant.getLng());
-        } else {
-            System.out.println("Ravintolaa ei valittu");
+            mapView.setZoom(15);
         }
     }
 }
