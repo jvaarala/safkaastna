@@ -59,5 +59,10 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
+        <dependency>
+            <groupId>com.lynden</groupId>
+            <artifactId>GMapsFX</artifactId>
+            <version>2.12.0</version>
+        </dependency>
     </dependencies>
 </project>

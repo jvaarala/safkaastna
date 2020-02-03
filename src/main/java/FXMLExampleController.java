@@ -12,15 +12,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class FXMLExampleController implements Initializable {
+import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.MapOptions;
+// import com.lynden.gmapsfx.javascript.object.MapType;
+import com.lynden.gmapsfx.javascript.object.Marker;
+import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
-    RestaurantDAO restaurantDAO = new RestaurantDAO();
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+
+public class FXMLExampleController implements Initializable, MapComponentInitializedListener {
+
+    private RestaurantDAO restaurantDAO = new RestaurantDAO();
 
     @FXML
     private ListView<String> listViewNames;
 
     @FXML
     private ObservableList<String> items = FXCollections.observableArrayList();
+
+    @FXML
+    private GoogleMapView mapView = new GoogleMapView();
+
+    private GoogleMap map;
 
 
     @FXML
@@ -29,13 +50,21 @@ public class FXMLExampleController implements Initializable {
         listViewNames.getItems().clear();
 
         // Haetaan Restaurant-oliot tietokannasta
-        List<Restaurant> restaurantsFromDb = new ArrayList<>();
+        List<Restaurant> restaurantsFromDb;
+        List<Marker> restaurantMarkers = new ArrayList<>();
         restaurantsFromDb = restaurantDAO.readRestaurants();
 
         // Lisätään ravintoloiden nimet ObservableListiin
-        for (int i = 0; i < restaurantsFromDb.size(); i++) {
-            items.add(restaurantsFromDb.get(i).getName());
+        for (Restaurant restaurant : restaurantsFromDb) {
+            items.add(restaurant.getName());
+            LatLong tempLatLong = new LatLong(restaurant.getLat(), restaurant.getLng());
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(tempLatLong);
+            Marker tempMarker = new Marker(markerOptions);
+            restaurantMarkers.add(tempMarker);
         }
+
+        map.addMarkers(restaurantMarkers);
 
         // Asetetaan ObservableList ListViewiin
         listViewNames.setItems(items);
@@ -43,10 +72,37 @@ public class FXMLExampleController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        items.add("placeholder 1");
-        items.add("placeholder 2");
-        items.add("placeholder 3");
+        items.add("Hae painamalla nappia");
 
         listViewNames.setItems(items);
+
+        mapView.addMapInializedListener(this);
+
+    }
+
+    @Override
+    public void mapInitialized() {
+        //Set the initial properties of the map.
+        MapOptions mapOptions = new MapOptions();
+
+        mapOptions.center(new LatLong(60.192059, 24.945831))
+//                .mapType(MapType.ROADMAP)
+                .overviewMapControl(false)
+                .panControl(false)
+                .rotateControl(false)
+                .scaleControl(false)
+                .streetViewControl(false)
+                .zoomControl(false)
+                .zoom(12);
+
+        map = mapView.createMap(mapOptions);
+
+/*        //Add markers to the map
+        LatLong joeSmithLocation = new LatLong(47.6197, -122.3231);
+        MarkerOptions markerOptions1 = new MarkerOptions();
+        markerOptions1.position(joeSmithLocation);
+        Marker joeSmithMarker = new Marker(markerOptions1);
+        map.addMarker( joeSmithMarker );
+        */
     }
 }
