@@ -537,7 +537,7 @@
       "admin": "SAARIJÄRVI MISPELI OY",
       "admin_www": "",
       "lat": 62.239721,
-      "lon": 25.471217
+      "lng": 25.471217
     },
     {
       "name": "LOUNASRAVINTOLA ILOKIVI",
@@ -1164,7 +1164,7 @@
       "admin": "HUE & BER ÖB",
       "admin_www": "",
       "lat": 63.104325,
-      "lon": 21.595024
+      "lng": 21.595024
     },
     {
       "name": "CAFÉ ANN-MARI",
@@ -1208,7 +1208,7 @@
       "admin": "ODEN HARBARD AB",
       "admin_www": "",
       "lat": 63.104325,
-      "lon": 21.595024
+      "lng": 21.595024
     },
     {
       "name": "PSYKIATRIAN YKSIKÖN RUOKASALI, VAASAN KESKUSSAIRAALA",
@@ -1560,7 +1560,7 @@
       "admin": "POHJOIS-POHJANMAAN SAIRAANHOITOPIIRIN KUNTAYHTYMÄ",
       "admin_www": "http://www.ppshp.fi/ravintolapalvelut/",
       "lat": 65.007133,
-      "lon": 25.518015
+      "lng": 25.518015
     },
     {
       "name": "OULUN YO:N HARJOITTELUKOULU (0242) KOSKELAN YKSIKKÖ",
@@ -1769,7 +1769,7 @@
       "admin": "FAZER FOOD SERVICES OY",
       "admin_www": "https://www.fazerfoodco.fi/",
       "lat": 62.895263,
-      "lon": 27.641169
+      "lng": 27.641169
     },
     {
       "name": "KAARRE 6810",
@@ -3133,7 +3133,7 @@
       "admin": "KAFÉ GADOLINIA KB/ÅBO AKADEMIS STUDENTKÅR",
       "admin_www": "http://www.abo.fi/karen/index.php?page=matlistor",
       "lat": 60.456713,
-      "lon": 22.279710
+      "lng": 22.279710
     },
     {
       "name": "CAFÉ FÄNRIKEN",

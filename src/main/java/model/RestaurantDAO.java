@@ -86,11 +86,13 @@ public class RestaurantDAO {
 
             // muuutettavat ominaisuudet
             int id = restaurant.getId();
+            double lng = restaurant.getLng();
 
             Restaurant r = (Restaurant)session.get(Restaurant.class, id);
 
             if (r != null) {
                 // r.setFeature(feature);
+                r.setLng(lng);
                 success = true;
                 transaction.commit();
             }
