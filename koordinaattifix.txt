@@ -14,7 +14,7 @@ Cafe Arken
       "admin": "KAFÉ GADOLINIA KB/ÅBO AKADEMIS STUDENTKÅR",
       "admin_www": "http://www.abo.fi/karen/index.php?page=matlistor",
       "lat": 60.456713,
-      "lon": 22.279710
+      "lng": 22.279710
 Jakelupiste 0442 MediTeknia Itäsuomen yliopisto
       "name": "JAKELUPISTE (0442) MEDITEKNIA. ITÄ-SUOMEN YLIOPISTO",
       "address": "HARJULANTIE 1",
@@ -24,7 +24,7 @@ Jakelupiste 0442 MediTeknia Itäsuomen yliopisto
       "admin": "FAZER FOOD SERVICES OY",
       "admin_www": "https://www.fazerfoodco.fi/",
       "lat": 62.895263,
-      "lon": 27.641169
+      "lng": 27.641169
 
 Oulun yliopistollinen sairaala
       "name": "OULUN YLIOPISTOLLINEN SAIRAALA",
@@ -35,7 +35,7 @@ Oulun yliopistollinen sairaala
       "admin": "POHJOIS-POHJANMAAN SAIRAANHOITOPIIRIN KUNTAYHTYMÄ",
       "admin_www": "http://www.ppshp.fi/ravintolapalvelut/",
       "lat": 65.007133,
-      "lon": 25.518015
+      "lng": 25.518015
 
 Cafe Techno
       "name": "CAFÉ TECHNO",
@@ -46,7 +46,7 @@ Cafe Techno
       "admin": "ODEN HARBARD AB",
       "admin_www": "",
       "lat": 63.104325,
-      "lon": 21.595024
+      "lng": 21.595024
 CAFe TECHNO
       "name": "CAFé TECHNO",
       "address": "BOMULLSGRÄND 3",
@@ -56,7 +56,7 @@ CAFe TECHNO
       "admin": "HUE & BER ÖB",
       "admin_www": "",
       "lat": 63.104325,
-      "lon": 21.595024
+      "lng": 21.595024
 
 Katriinan kasvisravintola
       "name": "KATRIINAN KASVISRAVINTOLA",
@@ -67,7 +67,7 @@ Katriinan kasvisravintola
       "admin": "SAARIJÄRVI MISPELI OY",
       "admin_www": "",
       "lat": 62.239721,
-      "lon": 25.471217
+      "lng": 25.471217
 
 RUOTSI - NÄILLÄ VÄÄRÄT KOORDINAATIT
 Restaurang Alexander
