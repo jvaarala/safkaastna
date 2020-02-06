@@ -1,3 +1,11 @@
 /.idea/
 /target/
 safkaastna.iml
+
+
+# Oliver lisäykset
+/bin/
+/.metadata/
+.classpath
+.settings/
+.project
