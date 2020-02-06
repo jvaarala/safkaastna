@@ -59,6 +59,7 @@ public class RestaurantDAO {
 
 
     public List<Restaurant> readRestaurants() {
+        System.out.println("Fetching from database");
         List restaurants = new ArrayList<>();
         Transaction transaction = null;
 
@@ -72,6 +73,7 @@ public class RestaurantDAO {
             }
             e.printStackTrace();
         }
+        System.out.println(".. done");
 
         return restaurants;
     }
