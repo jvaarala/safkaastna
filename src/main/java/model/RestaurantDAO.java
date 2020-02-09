@@ -27,6 +27,9 @@ public class RestaurantDAO {
         }
     }
 
+    public RestaurantDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     protected void finalize() {
         try {
@@ -59,6 +62,7 @@ public class RestaurantDAO {
 
 
     public List<Restaurant> readRestaurants() {
+        System.out.println("Fetching from database");
         List restaurants = new ArrayList<>();
         Transaction transaction = null;
 
@@ -67,11 +71,10 @@ public class RestaurantDAO {
             restaurants = session.createQuery("from Restaurant").getResultList();
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
+            transaction.rollback();
             e.printStackTrace();
         }
+        System.out.println(".. done");
 
         return restaurants;
     }
@@ -86,24 +89,24 @@ public class RestaurantDAO {
 
             // muuutettavat ominaisuudet
             int id = restaurant.getId();
+            double lng = restaurant.getLng();
 
             Restaurant r = (Restaurant)session.get(Restaurant.class, id);
 
             if (r != null) {
                 // r.setFeature(feature);
+                r.setLng(lng);
                 success = true;
                 transaction.commit();
             }
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
+            transaction.rollback();
             e.printStackTrace();
         }
         return success;
     }
 
-    public boolean deleteRestaurant(String id) {
+    public boolean deleteRestaurant(int id) {
         boolean success = false;
 
         Transaction transaction = null;
@@ -115,11 +118,10 @@ public class RestaurantDAO {
             if (r != null) {
                 session.delete(r);
                 transaction.commit();
+                success = true;
             }
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
+            transaction.rollback();
             e.printStackTrace();
         }
 

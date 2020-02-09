@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import model.Restaurant;
+import model.RestaurantDAO;
 
 
 public class FXMLExample extends Application {
@@ -27,10 +29,22 @@ public class FXMLExample extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+//        fixCoordinates();
         Parent root = FXMLLoader.load(getClass().getResource("fxml_example.fxml"));
 
         stage.setTitle("FXML Welcome");
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    private boolean fixCoordinates() {
+        boolean success = false;
+        RestaurantDAO dao = new RestaurantDAO();
+
+        // korjattavat id 49, 106, 110, 142, 161, 285
+        Restaurant r = new Restaurant(285, 22.279710);
+        dao.updateRestaurant(r);
+        
+        return success;
     }
 }

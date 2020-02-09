@@ -33,7 +33,12 @@ public class Restaurant {
 
     }
 
-    public Restaurant(int id, String name, String address, int postal_code, String city, String www, String admin, String admin_www, double lon, double lng) {
+    public Restaurant (int id, double lng) {
+        this.lng = lng;
+        this.id = id;
+    }
+
+    public Restaurant(int id, String name, String address, int postal_code, String city, String www, String admin, String admin_www, double lat, double lng) {
         this.id = id;
         this.name = name;
         this.address = address;

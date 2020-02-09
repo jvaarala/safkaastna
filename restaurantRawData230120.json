@@ -536,8 +536,8 @@
       "www": "",
       "admin": "SAARIJÄRVI MISPELI OY",
       "admin_www": "",
-      "lat": "",
-      "lon": ""
+      "lat": 62.239721,
+      "lng": 25.471217
     },
     {
       "name": "LOUNASRAVINTOLA ILOKIVI",
@@ -1163,8 +1163,8 @@
       "www": "https://www.cafetechno.fi/fi/",
       "admin": "HUE & BER ÖB",
       "admin_www": "",
-      "lat": "",
-      "lon": ""
+      "lat": 63.104325,
+      "lng": 21.595024
     },
     {
       "name": "CAFÉ ANN-MARI",
@@ -1207,8 +1207,8 @@
       "www": "",
       "admin": "ODEN HARBARD AB",
       "admin_www": "",
-      "lat": "",
-      "lon": ""
+      "lat": 63.104325,
+      "lng": 21.595024
     },
     {
       "name": "PSYKIATRIAN YKSIKÖN RUOKASALI, VAASAN KESKUSSAIRAALA",
@@ -1284,8 +1284,8 @@
       "www": "",
       "admin": "ISS PALVELUT OY/CATERING SERVICES",
       "admin_www": "",
-      "lat": 58.4104894,
-      "lng": 15.6315829
+      "lat": 63.098212,
+      "lng": 21.601260
     },
     {
       "name": "RESTAURANG W33",
@@ -1559,8 +1559,8 @@
       "www": "http://www.ppshp.fi/ravintolapalvelut/",
       "admin": "POHJOIS-POHJANMAAN SAIRAANHOITOPIIRIN KUNTAYHTYMÄ",
       "admin_www": "http://www.ppshp.fi/ravintolapalvelut/",
-      "lat": "",
-      "lon": ""
+      "lat": 65.007133,
+      "lng": 25.518015
     },
     {
       "name": "OULUN YO:N HARJOITTELUKOULU (0242) KOSKELAN YKSIKKÖ",
@@ -1768,8 +1768,8 @@
       "www": "https://www.fazerfoodco.fi/mediteknia",
       "admin": "FAZER FOOD SERVICES OY",
       "admin_www": "https://www.fazerfoodco.fi/",
-      "lat": "",
-      "lon": ""
+      "lat": 62.895263,
+      "lng": 27.641169
     },
     {
       "name": "KAARRE 6810",
@@ -3132,8 +3132,8 @@
       "www": "http://www.abo.fi/karen/index.php?page=matlistor",
       "admin": "KAFÉ GADOLINIA KB/ÅBO AKADEMIS STUDENTKÅR",
       "admin_www": "http://www.abo.fi/karen/index.php?page=matlistor",
-      "lat": "",
-      "lon": ""
+      "lat": 60.456713,
+      "lng": 22.279710
     },
     {
       "name": "CAFÉ FÄNRIKEN",
@@ -3143,8 +3143,8 @@
       "www": "http://www.abo.fi/karen/index.php?page=matlistor",
       "admin": "KAFÉ GADOLINIA KB/ÅBO AKADEMIS STUDENTKÅR",
       "admin_www": "http://www.abo.fi/karen/index.php?page=matlistor",
-      "lat": 55.60310879999999,
-      "lng": 13.011902
+      "lat": 60.456918,
+      "lng": 22.282021
     },
     {
       "name": "CAFÉ GADOLINIA",
@@ -3165,8 +3165,8 @@
       "www": "http://www.abo.fi/karen/index.php?page=matlistor",
       "admin": "KAFÉ GADOLINIA KB/ÅBO AKADEMIS STUDENTKÅR",
       "admin_www": "http://www.abo.fi/karen/index.php?page=matlistor",
-      "lat": 59.3197471,
-      "lng": 18.0608235
+      "lat": 60.449873,
+      "lng": 22.275873
     },
     {
       "name": "DELICA/DELI",
