@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.fxml.*;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 
 public class SafkaaSaatana extends Application {
@@ -39,8 +40,7 @@ public class SafkaaSaatana extends Application {
 		
 		FXMLLoader loader = new FXMLLoader();
 		
-		URL testa = SafkaaSaatana.class.getResource("SafkaaSaatana.fxml");
-		System.out.println(testa);
+		URL testa =  getClass().getResource("SafkaaSaatana.fxml");
 		loader.setLocation(testa);
 		try {
 			aaaaaa = (BorderPane) loader.load();
@@ -50,6 +50,20 @@ public class SafkaaSaatana extends Application {
 		}
 		primaryStage.setScene(new Scene(aaaaaa));
         primaryStage.show();
+        
+        initConnection();
+	}
+	
+	public void initConnection() {
+		FXMLLoader loader = new FXMLLoader();
+		URL connector = getClass().getResource("OptionsBar.fxml");
+		loader.setLocation(connector);
+		try {
+			ToolBar connectBar = (ToolBar) loader.load();
+			aaaaaa.setTop(connectBar); //change to work with correct element
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
     //copy your old code and stuff like that. Structure and things available there without much research
