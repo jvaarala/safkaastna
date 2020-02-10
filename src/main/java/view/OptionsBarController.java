@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import model.RestaurantDAO;
 import model.Restaurant;
+import view.FXMLExampleController;
 
 
 public class OptionsBarController {
@@ -15,6 +16,7 @@ public class OptionsBarController {
 	private List<Restaurant> restaurantsFromDb;
 	private Restaurant template;
 	private String helpText = "ApuaApua";
+	private FXMLExampleController mapController;
 	
 	/*
 	private MainApp mainApp;
@@ -37,6 +39,8 @@ public class OptionsBarController {
 		db_data = new RestaurantDAO();
 		try {
 			restaurantsFromDb = db_data.readRestaurants();
+			System.out.println("perkele Saatana "+restaurantsFromDb.size());
+			mapController.updateListView(restaurantsFromDb);
 			//mainapp.setRestaurants(restaurantsFromDb);
 		} catch (NullPointerException e) {
 			System.out.println("Connection failed and no restaurands available");
@@ -49,6 +53,9 @@ public class OptionsBarController {
 			*/
 		}
 
+	}
+	public void setMapController(FXMLExampleController mapController) {
+		this.mapController = mapController;
 	}
 	
 	public void Help() {

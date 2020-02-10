@@ -31,10 +31,14 @@ public class FXMLExample extends Application {
     public void start(Stage stage) throws Exception {
 //        fixCoordinates();
         Parent root = FXMLLoader.load(getClass().getResource("fxml_example.fxml"));
-
+		URL centerMap = getClass().getResource("SafkaaSaatana.fxml");
+		System.out.println("aa "+centerMap);
         stage.setTitle("FXML Welcome");
         stage.setScene(new Scene(root));
         stage.show();
+   
+        
+        
     }
 
     private boolean fixCoordinates() {
