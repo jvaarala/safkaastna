@@ -1,6 +1,7 @@
 /.idea/
 /target/
 safkaastna.iml
+.env
 
 
 # Oliver lisäykset

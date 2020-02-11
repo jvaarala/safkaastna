@@ -1,6 +1,7 @@
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
+import io.github.cdimascio.dotenv.Dotenv;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,6 +32,8 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 
     private RestaurantDAO restaurantDAO = new RestaurantDAO();
     private List<Restaurant> restaurantsFromDb;
+    Dotenv dotenv = Dotenv.load();
+    String api = dotenv.get("APIKEY");
 
     @FXML
     private ListView<String> listViewNames;
@@ -58,6 +61,8 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
         listViewNames.setItems(items);
 
         mapView.addMapInializedListener(this);
+        mapView.setKey(api);
+
 
         listViewNames.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
