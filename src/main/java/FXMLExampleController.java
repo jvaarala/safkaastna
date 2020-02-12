@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import model.RestaurantDAO;
 import model.Restaurant;
 
@@ -26,14 +28,19 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import model.SearchLogic;
 import netscape.javascript.JSObject;
 
 public class FXMLExampleController implements Initializable, MapComponentInitializedListener {
 
     private RestaurantDAO restaurantDAO = new RestaurantDAO();
     private List<Restaurant> restaurantsFromDb;
+
     Dotenv dotenv = Dotenv.load();
     String api = dotenv.get("APIKEY");
+
+    SearchLogic search = new SearchLogic();
+
 
     @FXML
     private ListView<String> listViewNames;
@@ -45,6 +52,18 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
     private GoogleMapView mapView = new GoogleMapView();
 
     private GoogleMap map;
+
+    @FXML
+    private TextField searchTextBox;
+
+    @FXML
+    public void handleSearchBar(KeyEvent keyEvent) {
+        String textInSearchField = searchTextBox.getText();
+       List<Restaurant> foundRestaurants = search.Search(restaurantsFromDb, textInSearchField);
+        updateListView(foundRestaurants);
+    }
+
+
 
 
     @FXML
@@ -77,6 +96,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
                     showRestaurantDetails(restaurantToFind);
                 }
         );
+
     }
 
     @Override
@@ -149,4 +169,5 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
             mapView.setZoom(15);
         }
     }
+
 }
