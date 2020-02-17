@@ -22,8 +22,8 @@ public class SearchLogic {
         searchWord = searchWord.toUpperCase();
         String newsearchWord = "\\S+" + searchWord;
 
-        System.out.println(searchWord);
-        System.out.println(newsearchWord);
+//        System.out.println(searchWord);
+//        System.out.println(newsearchWord);
 
         for (Restaurant restaurant : restaurantList) {
 
