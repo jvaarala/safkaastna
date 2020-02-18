@@ -1,29 +1,22 @@
+import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
-import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
-import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
-import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import io.github.cdimascio.dotenv.Dotenv;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-//import model.RestaurantDAO;
+import jdk.nashorn.internal.parser.JSONParser;
+import model.RestaurantDAO;
 import model.Restaurant;
-import model.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
-import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,11 +25,18 @@ import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 // import com.lynden.gmapsfx.javascript.object.MapType;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import model.SearchLogic;
 import netscape.javascript.JSObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLPeerUnverifiedException;
 
 public class FXMLExampleController implements Initializable, MapComponentInitializedListener {
 
@@ -51,136 +51,22 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
     @FXML private ObservableList<String> items = FXCollections.observableArrayList();
     @FXML private GoogleMapView mapView = new GoogleMapView();
     @FXML private TextField searchTextBox;
+    @FXML private CheckBox checkBox;
 
     private GoogleMap map;
-    private GeocodingService geocodingService;
-    private StringProperty address = new SimpleStringProperty();
-
 
     @FXML
     public void handleSearchBar(KeyEvent keyEvent) {
+        System.out.println("handleSearchBar alku");
         String textInSearchField = searchTextBox.getText();
+        if(checkBox.isSelected()) {
+            LatLong ll = fetchNormalJava(textInSearchField);
+            focusMapOnCoordinate(ll);
+        }
         List<Restaurant> foundRestaurants = search.Search(restaurantsFromDb, textInSearchField);
         updateListView(foundRestaurants);
-//        fetchWithGmapsFX();
-        if (foundRestaurants.size() == 0) {
-            fetchNormalJava(textInSearchField);
-        }
+        System.out.println("handleSearchBar loppu");
     }
-
-/*
-https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,
-+Mountain+View,+CA&key=YOUR_API_KEY
-
- */
-
-    public void fetchNormalJava(String s) {
-//        String api2 = dotenv.get("APIKEY2");
-
-        String sWithoutSpaces = s.replace(" ", "+");
-        String httpsUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="+ sWithoutSpaces +
-                "&key=" + api;
-        URL url;
-
-        try {
-            url = new URL(httpsUrl);
-            HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
-            print_https_cert(con);
-            print_content(con);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void print_content(HttpsURLConnection con){
-        if(con!=null){
-
-            try {
-
-                System.out.println("****** Content of the URL ********");
-                BufferedReader br =
-                        new BufferedReader(
-                                new InputStreamReader(con.getInputStream()));
-
-                String input;
-
-                while ((input = br.readLine()) != null){
-                    System.out.println(input);
-                }
-                br.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }
-
-    private void print_https_cert(HttpsURLConnection con){
-
-        if(con!=null){
-
-            try {
-
-                System.out.println("Response Code : " + con.getResponseCode());
-                System.out.println("Cipher Suite : " + con.getCipherSuite());
-                System.out.println("\n");
-
-                Certificate[] certs = con.getServerCertificates();
-                for(Certificate cert : certs){
-                    System.out.println("Cert Type : " + cert.getType());
-                    System.out.println("Cert Hash Code : " + cert.hashCode());
-                    System.out.println("Cert Public Key Algorithm : "
-                            + cert.getPublicKey().getAlgorithm());
-                    System.out.println("Cert Public Key Format : "
-                            + cert.getPublicKey().getFormat());
-                    System.out.println("\n");
-                }
-
-            } catch (SSLPeerUnverifiedException e) {
-                e.printStackTrace();
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-
-        }
-
-    }
-
-    public void fetchWithGmapsFX() {
-        System.out.println("HAKUSANA " + searchTextBox.getText());
-        System.out.println(address);
-        geocodingService.geocode(address.get(), (GeocodingResult[] results, GeocoderStatus status) -> {
-            System.out.println("Haun results " + results);
-            System.out.println("status " + status);
-            LatLong latLong = null;
-
-            if( status == GeocoderStatus.ZERO_RESULTS) {
-                System.out.println("IF");
-                Alert alert = new Alert(Alert.AlertType.ERROR, "No matching address found");
-                alert.show();
-                return;
-            } else if( results.length > 1 ) {
-                System.out.println("ELSE IF");
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Multiple results found, showing the first one.");
-                alert.show();
-                latLong = new LatLong(results[0].getGeometry().getLocation().getLatitude(), results[0].getGeometry().getLocation().getLongitude());
-            } else {
-                System.out.println("ELSE");
-                latLong = new LatLong(results[0].getGeometry().getLocation().getLatitude(), results[0].getGeometry().getLocation().getLongitude());
-            }
-
-            System.out.println("rivi 94: LatLong on" + latLong);
-            if (latLong == null) {
-
-                System.out.println("LATLONG NULL");
-            }
-            map.setCenter(latLong);
-
-        });
-    }
-
 
     @FXML
     protected void handleEsimButtonAction(ActionEvent event) {
@@ -190,6 +76,7 @@ https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Park
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("initialize alku");
         // Haetaan Restaurant-oliot tietokannasta
         restaurantsFromDb = restaurantDAO.readRestaurants();
 
@@ -197,14 +84,27 @@ https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Park
 
         mapView.addMapInializedListener(this);
         mapView.setKey(api);
-        address.bind(searchTextBox.textProperty());         // TODO KAKE
 
+        listViewNames.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    Restaurant restaurantToFind = new Restaurant();
+                    System.out.println(newValue);
+                    for(int i = 0; i < restaurantsFromDb.size(); i++) {
+                        if (restaurantsFromDb.get(i).getName().equals(newValue)) {
+                            restaurantToFind = restaurantsFromDb.get(i);
+                            break;
+                        }
+                    }
+                    showRestaurantDetails(restaurantToFind);
+                }
+        );
+        System.out.println("initialize loppu");
     }
 
     @Override
     public void mapInitialized() {
+        System.out.println("mapInitialized alku");
         //Set the initial properties of the map.
-        geocodingService = new GeocodingService();          // TODO KAKE
         MapOptions mapOptions = new MapOptions();
 
         mapOptions
@@ -234,28 +134,15 @@ https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Park
         });
 
         updateListView(restaurantsFromDb);
-//        map.setCenter(new LatLong(60.192059, 24.945831));
+        map.setCenter(new LatLong(60.192059, 24.945831));
+        System.out.println("mapInitialized alku");
     }
 
     private void updateListView(List<Restaurant> restaurants) {
-        listViewNames.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    Restaurant restaurantToFind = new Restaurant();
-                    System.out.println("listView click listener" + newValue);
-                    for(int i = 0; i < restaurantsFromDb.size(); i++) {
-                        if (restaurantsFromDb.get(i).getName().equals(newValue)) {
-                            restaurantToFind = restaurantsFromDb.get(i);
-                            break;
-                        }
-                    }
-                    showRestaurantDetails(restaurantToFind);
-                }
-        );
+        System.out.println("updateListview alku");
         // Tyhjennetään lista
         listViewNames.getItems().clear();
         List<Marker> restaurantMarkers = new ArrayList<>();
-
-
 
         // Lisätään ravintoloiden nimet ObservableListiin
         for (Restaurant restaurant : restaurants) {
@@ -265,14 +152,12 @@ https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Park
             markerOptions.position(tempLatLong);
             Marker tempMarker = new Marker(markerOptions);
 
-            if (restaurants.size() < 10) {
-                //          Tämä toteutus vaikuttaa melko hitaalta, keksi parempi
+/*          Tämä toteutus vaikuttaa melko hitaalta, keksi parempi
 
-                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                infoWindowOptions.content(restaurant.getName());
-                InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
-                infoWindow.open(map, tempMarker);
-            }
+            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+            infoWindowOptions.content(restaurant.getName());
+            InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+            infoWindow.open(map, tempMarker);*/
 
             restaurantMarkers.add(tempMarker);
         }
@@ -282,25 +167,79 @@ https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Park
         // Asetetaan ObservableList ListViewiin
         listViewNames.setItems(items);
 
-        // Karttanäkymän tarkennus listasisällön mukaan
-        // jos täysi lista, mennään oletussijaintiin -> tähän voi muokata oletuskaupungin random koordinaattien sijaan!
-        if (restaurants.size() == 310) {
-            mapView.setCenter(60.192059, 24.945831);
-            mapView.setZoom(12);
-        }
-        // jos listan pituus on jotain muuta, mutta ei nolla, fokusoidaan listan ensimmäiseen ravintolaan?
-        else if (restaurants.size() > 0 ) {
-            Restaurant restaurantToShow = restaurants.get(0);
-            showRestaurantDetails(restaurantToShow);
-        }
+        System.out.println("updateListview loppu");
     }
 
     private void showRestaurantDetails(Restaurant restaurant) {
-        System.out.println("Focus on " + restaurant.getName() + " " + restaurant.getCity());
+        System.out.println("showRestaurantDetails alku");
         if (restaurant != null) {
             mapView.setCenter(restaurant.getLat(), restaurant.getLng());
             mapView.setZoom(15);
         }
+        System.out.println("showRestaurantDetails loppu");
+
     }
 
+    private void focusMapOnCoordinate(LatLong ll) {
+        System.out.printf("focusMapOnCoordinates alku");
+        mapView.setCenter(ll.getLatitude(), ll.getLongitude());
+        mapView.setZoom(15);
+        System.out.printf("focusMapOnCoordinates loppu");
+    }
+
+    public LatLong fetchNormalJava(String s) {
+        System.out.println("FETCHING STUFF alku");
+
+        String sWithoutSpaces = s.replace(" ", "+");
+        String httpsUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="+ sWithoutSpaces +
+                "&key=" + api;
+        URL url;
+        HttpsURLConnection con = null;
+        StringBuilder result = new StringBuilder();
+        InputStream in = null;
+        BufferedReader reader = null;
+
+        try {
+            url = new URL(httpsUrl);
+            con = (HttpsURLConnection)url.openConnection();
+            in = new BufferedInputStream(con.getInputStream());
+            reader = new BufferedReader(new InputStreamReader(in));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+
+//            print_https_cert(con);
+//            print_content(con);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+            if (con != null) {
+                con.disconnect();
+            }
+        }
+
+        LatLong ll = null;
+        JSONObject resultJSON = new JSONObject(result.toString());
+        JSONArray resultArray = resultJSON.getJSONArray("results");
+        for (int i = 0; i < resultArray.length(); i++) {
+            JSONObject results = resultArray.getJSONObject(i);
+            JSONObject geometry = results.getJSONObject("geometry");
+            JSONObject location = geometry.getJSONObject("location");
+            ll = new LatLong(location.getDouble("lat"), location.getDouble("lng"));
+        }
+        System.out.println(ll);
+        System.out.println("FETCHING STUFF loppu");
+        return ll;
+    }
 }
+
+
