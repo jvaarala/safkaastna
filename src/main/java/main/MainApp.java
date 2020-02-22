@@ -1,5 +1,7 @@
+package main;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
@@ -59,12 +61,14 @@ public class MainApp extends Application {
 	public void initConnection() {
 		FXMLLoader loader = new FXMLLoader();
 		URL connector = getClass().getResource("/view/OptionsBar.fxml");
+		System.out.println("a1 "+connector);
 		loader.setLocation(connector);
 		try {
 			ToolBar connectBar = (ToolBar) loader.load();
 			mainScreen.setTop(connectBar); //change to work with correct element
 			
 	        this.optionsControl = loader.getController();
+	        this.optionsControl.setMainApp(this);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -73,12 +77,14 @@ public class MainApp extends Application {
 	
 	public void initMap() {
 		FXMLLoader loader = new FXMLLoader();
-		URL centerMap = getClass().getResource("/view/fxml_example.fxml");
+		URL centerMap = getClass().getResource("/fxml_example.fxml");
 		System.out.println("aa "+centerMap);
 		loader.setLocation(centerMap);
 		try {
+			System.out.println("jjj");
 			GridPane mapPane = (GridPane) loader.load();
 			mainScreen.setCenter(mapPane); //change to work with correct element
+			System.out.println("bb");
 			FXMLExampleController mapController = loader.getController();
 			System.out.println("Perkele "+mapController);
 			optionsControl.setMapController(mapController);
@@ -97,6 +103,13 @@ public class MainApp extends Application {
         dao.updateRestaurant(r);
         
         return success;
+    }
+    
+    public void setRestaurants(List<Restaurant> restaurantsDB) {
+    	this.restaurantsFromDb = restaurantsDB;
+    }
+    public List<Restaurant> getRestaurants() {
+    	return this.restaurantsFromDb;
     }
     
 

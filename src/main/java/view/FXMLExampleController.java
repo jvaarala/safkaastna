@@ -1,3 +1,5 @@
+package view;
+
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
@@ -10,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import main.MainApp;
 import model.RestaurantDAO;
 import model.Restaurant;
 
@@ -33,8 +36,9 @@ import netscape.javascript.JSObject;
 
 public class FXMLExampleController implements Initializable, MapComponentInitializedListener {
 
-    private RestaurantDAO restaurantDAO = new RestaurantDAO();
+    //private RestaurantDAO restaurantDAO = new RestaurantDAO();
     private List<Restaurant> restaurantsFromDb;
+    private MainApp mainApp;
 
     Dotenv dotenv = Dotenv.load();
     String api = dotenv.get("APIKEY");
@@ -75,14 +79,13 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Haetaan Restaurant-oliot tietokannasta
-        restaurantsFromDb = restaurantDAO.readRestaurants();
-
+        restaurantsFromDb = mainApp.getRestaurants();
         listViewNames.setItems(items);
-
+        System.out.println("WE DID THIS");
         mapView.addMapInializedListener(this);
         mapView.setKey(api);
 
-
+        
         listViewNames.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     Restaurant restaurantToFind = new Restaurant();
@@ -96,16 +99,17 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
                     showRestaurantDetails(restaurantToFind);
                 }
         );
-
+        
+         
     }
 
     @Override
     public void mapInitialized() {
         //Set the initial properties of the map.
+    	System.out.println("mapp init");
         MapOptions mapOptions = new MapOptions();
 
         mapOptions
-//                .mapType(MapType.ROADMAP)
                 .overviewMapControl(false)
                 .panControl(false)
                 .rotateControl(false)
@@ -115,7 +119,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
                 .zoom(12);
 
         map = mapView.createMap(mapOptions);
-
+        System.out.println("mappp 2");
 /*        //Add markers to the map
         LatLong joeSmithLocation = new LatLong(47.6197, -122.3231);
         MarkerOptions markerOptions1 = new MarkerOptions();
@@ -130,13 +134,15 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
             System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
         });
 
-        updateListView(restaurantsFromDb);
+        updateListView(mainApp.getRestaurants());
         map.setCenter(new LatLong(60.192059, 24.945831));
+        System.out.println("mappp 3");
     }
 
-    private void updateListView(List<Restaurant> restaurants) {
+    public void updateListView(List<Restaurant> restaurants) {
         // Tyhjennetään lista
-        listViewNames.getItems().clear();
+    	System.out.println("UPDATE IN PROGRESS FOR MAPS");
+    	listViewNames.getItems().clear();
         List<Marker> restaurantMarkers = new ArrayList<>();
 
         // Lisätään ravintoloiden nimet ObservableListiin
@@ -161,6 +167,11 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 
         // Asetetaan ObservableList ListViewiin
         listViewNames.setItems(items);
+        System.out.println("UPDATE MAPS DONE");
+    }
+    
+    public void setMainApp(MainApp mainApp) {
+    	this.mainApp = mainApp;
     }
 
     private void showRestaurantDetails(Restaurant restaurant) {

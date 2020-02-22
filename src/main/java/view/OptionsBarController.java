@@ -1,10 +1,10 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import main.MainApp;
 import model.RestaurantDAO;
 import model.Restaurant;
 import view.FXMLExampleController;
@@ -14,22 +14,12 @@ public class OptionsBarController {
 	
 	private RestaurantDAO db_data;
 	private List<Restaurant> restaurantsFromDb;
-	private Restaurant template;
 	private String helpText = "ApuaApua";
 	private FXMLExampleController mapController;
 	
-	/*
+	
 	private MainApp mainApp;
 	
-	public OptionsBarController(MainApp mainApp) {
-		this.mainApp = mainApp;
-		template = new Restaurant(0, "Placeholder", "ExampleStreet", 00000, "Helsinki", "www.www.www", "Placeholder", "", 000, 000);
-
-	}
-	*/
-	public OptionsBarController() {
-		template = new Restaurant(0, "Placeholder", "ExampleStreet", 00000, "Helsinki", "www.www.www", "Placeholder", "", 000, 000);
-	}
 	
 	@FXML
 	private Button connect;
@@ -40,22 +30,21 @@ public class OptionsBarController {
 		try {
 			restaurantsFromDb = db_data.readRestaurants();
 			System.out.println("perkele Saatana "+restaurantsFromDb.size());
-			mapController.updateListView(restaurantsFromDb);
-			//mainapp.setRestaurants(restaurantsFromDb);
-		} catch (NullPointerException e) {
-			System.out.println("Connection failed and no restaurands available");
-			restaurantsFromDb = new ArrayList<Restaurant>();
-			restaurantsFromDb.add(template);
-			/*
-			 if(mainapp.getRestaurants().size() < 1) {
-			 	mainapp.setRestaurants(restaurantsFromDb);
-			 }
-			*/
+			mainApp.setRestaurants(restaurantsFromDb);
+			mainApp.initMap();
+			//mapController.updateListView(restaurantsFromDb);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Connection failed and no restaurants available");
 		}
 
 	}
 	public void setMapController(FXMLExampleController mapController) {
 		this.mapController = mapController;
+	}
+	public void setMainApp(MainApp mainApp) {
+		this.mainApp = mainApp;
 	}
 	
 	public void Help() {
