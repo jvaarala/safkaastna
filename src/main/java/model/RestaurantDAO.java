@@ -1,11 +1,13 @@
 package model;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,22 @@ public class RestaurantDAO {
     SessionFactory sessionFactory = null;
 
     public RestaurantDAO() {
+//        Dotenv dotenv = Dotenv.load();
+//        final String SECRET = dotenv.get("SECRET");
+//
+//        Configuration cfg = new Configuration()
+//                .addResource("Item.hbm.xml")
+//                .addResource("Bid.hbm.xml")
+//                .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect")
+//                .setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.driver")
+////                .setProperty("hibernate.connection.datasource", "java:comp/env/jdbc/test")
+////                .setProperty("hibernate.order_updates", "true")
+//                .setProperty("hibernate.connection.url", "jdbc.mysql://localhost:2206/restaurants")
+//                .setProperty("hibernate.connection.username", "user")
+//                .setProperty("hibernate.connection.password", SECRET)
+//                .setProperty("hibernate.hbm2ddl.auto", "update")
+//                .setProperty("show_sql", "false")
+//                .addAnnotatedClass(model.Restaurant.class);
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         System.out.println("fff..");
         try {

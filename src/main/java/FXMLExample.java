@@ -20,6 +20,8 @@ import javafx.scene.control.Button;
 import model.Restaurant;
 import model.RestaurantDAO;
 
+import javax.security.auth.login.Configuration;
+
 
 public class FXMLExample extends Application {
 
@@ -30,6 +32,7 @@ public class FXMLExample extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 //        fixCoordinates();
+
         Parent root = FXMLLoader.load(getClass().getResource("fxml_example.fxml"));
 		URL centerMap = getClass().getResource("SafkaaSaatana.fxml");
 		System.out.println("aa "+centerMap);

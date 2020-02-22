@@ -1,14 +1,15 @@
-package view;
-
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
+import io.github.cdimascio.dotenv.Dotenv;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import model.RestaurantDAO;
 import model.Restaurant;
 
@@ -27,12 +28,19 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import model.SearchLogic;
 import netscape.javascript.JSObject;
 
 public class FXMLExampleController implements Initializable, MapComponentInitializedListener {
 
+    private RestaurantDAO restaurantDAO = new RestaurantDAO();
     private List<Restaurant> restaurantsFromDb;
-    private RestaurantDAO restaurantDAO; //= new RestaurantDAO();
+
+    Dotenv dotenv = Dotenv.load();
+    String api = dotenv.get("APIKEY");
+
+    SearchLogic search = new SearchLogic();
+
 
     @FXML
     private ListView<String> listViewNames;
@@ -45,10 +53,18 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 
     private GoogleMap map;
 
-    public void setRestaurants(List<Restaurant> restaurants) {
-    	this.restaurantsFromDb = restaurants;
-    	
+    @FXML
+    private TextField searchTextBox;
+
+    @FXML
+    public void handleSearchBar(KeyEvent keyEvent) {
+        String textInSearchField = searchTextBox.getText();
+       List<Restaurant> foundRestaurants = search.Search(restaurantsFromDb, textInSearchField);
+        updateListView(foundRestaurants);
     }
+
+
+
 
     @FXML
     protected void handleEsimButtonAction(ActionEvent event) {
@@ -59,15 +75,13 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Haetaan Restaurant-oliot tietokannasta
-        //restaurantsFromDb = restaurantDAO.readRestaurants();
-        
-        //Restaurant template = new Restaurant(0, "Placeholder", "ExampleStreet", 00000, "Helsinki", "www.www.www", "Placeholder", "", 000, 000);
-        restaurantsFromDb = new ArrayList<Restaurant>();
-		//restaurantsFromDb.add(template);
+        restaurantsFromDb = restaurantDAO.readRestaurants();
 
         listViewNames.setItems(items);
 
         mapView.addMapInializedListener(this);
+        mapView.setKey(api);
+
 
         listViewNames.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
@@ -82,6 +96,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
                     showRestaurantDetails(restaurantToFind);
                 }
         );
+
     }
 
     @Override
@@ -114,14 +129,12 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
             LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
             System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
         });
-        if(restaurantsFromDb.size() != 0) {
-            updateListView(restaurantsFromDb);
-        }
 
+        updateListView(restaurantsFromDb);
         map.setCenter(new LatLong(60.192059, 24.945831));
     }
 
-    public void updateListView(List<Restaurant> restaurants) {
+    private void updateListView(List<Restaurant> restaurants) {
         // Tyhjennetään lista
         listViewNames.getItems().clear();
         List<Marker> restaurantMarkers = new ArrayList<>();
@@ -156,4 +169,5 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
             mapView.setZoom(15);
         }
     }
+
 }
