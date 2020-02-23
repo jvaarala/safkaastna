@@ -12,8 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import main.MainApp;
-import model.RestaurantDAO;
 import model.Restaurant;
 
 import java.net.URL;
@@ -23,21 +23,13 @@ import java.util.ResourceBundle;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
-// import com.lynden.gmapsfx.javascript.object.MapType;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import model.SearchLogic;
 import netscape.javascript.JSObject;
 
 public class FXMLExampleController implements Initializable, MapComponentInitializedListener {
 
-    //private RestaurantDAO restaurantDAO = new RestaurantDAO();
-    private List<Restaurant> restaurantsFromDb;
     private MainApp mainApp;
 
     Dotenv dotenv = Dotenv.load();
@@ -56,6 +48,9 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
     private GoogleMapView mapView = new GoogleMapView();
 
     private GoogleMap map;
+    
+    @FXML
+    private AnchorPane mapContainer;
 
     @FXML
     private TextField searchTextBox;
@@ -63,7 +58,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
     @FXML
     public void handleSearchBar(KeyEvent keyEvent) {
         String textInSearchField = searchTextBox.getText();
-       List<Restaurant> foundRestaurants = search.Search(restaurantsFromDb, textInSearchField);
+       List<Restaurant> foundRestaurants = search.Search(mainApp.getRestaurants(), textInSearchField);
         updateListView(foundRestaurants);
     }
 
@@ -78,14 +73,14 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Haetaan Restaurant-oliot tietokannasta
-        restaurantsFromDb = mainApp.getRestaurants();
         listViewNames.setItems(items);
         System.out.println("WE DID THIS");
+        mapContainer.getChildren().add(mapView);
+        
         mapView.addMapInializedListener(this);
         mapView.setKey(api);
 
-        
+        /*
         listViewNames.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     Restaurant restaurantToFind = new Restaurant();
@@ -99,8 +94,8 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
                     showRestaurantDetails(restaurantToFind);
                 }
         );
+        */
         
-         
     }
 
     @Override
@@ -134,7 +129,6 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
             System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
         });
 
-        updateListView(mainApp.getRestaurants());
         map.setCenter(new LatLong(60.192059, 24.945831));
         System.out.println("mappp 3");
     }

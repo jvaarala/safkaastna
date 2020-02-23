@@ -3,6 +3,8 @@ package view;
 import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import main.MainApp;
 import model.RestaurantDAO;
@@ -15,38 +17,60 @@ public class OptionsBarController {
 	private RestaurantDAO db_data;
 	private List<Restaurant> restaurantsFromDb;
 	private String helpText = "ApuaApua";
-	private FXMLExampleController mapController;
-	
-	
 	private MainApp mainApp;
 	
 	
-	@FXML
-	private Button connect;
+	private void popupAlert(String text) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("CONNECTION ERROR");
+		alert.setHeaderText("Error occured while fetching data");
+		alert.setContentText(text);
+		alert.show();
+	}
 	
-	public void Connect() {
-		System.out.println("perkele");
-		db_data = new RestaurantDAO();
+	private void initConnection() {
+		this.db_data = new RestaurantDAO();
+	}
+	
+	@FXML
+	public boolean getRestaurants() {
+		initConnection();
+
 		try {
 			restaurantsFromDb = db_data.readRestaurants();
 			System.out.println("perkele Saatana "+restaurantsFromDb.size());
 			mainApp.setRestaurants(restaurantsFromDb);
-			mainApp.initMap();
-			//mapController.updateListView(restaurantsFromDb);
-
+		} catch (NullPointerException e) {
+			popupAlert("NO CONNECTION TO DATABASE, FAILED TO FETCH RESTAURANTS");
+			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Connection failed and no restaurants available");
+			String errorText = e.toString();
+			popupAlert(errorText);
+			return false;
 		}
+		return true;
 
 	}
-	public void setMapController(FXMLExampleController mapController) {
-		this.mapController = mapController;
+	
+	@FXML
+	/*
+	 * Initiates new connection and updates rendered map
+	 */
+	private void Refresh() {
+		boolean gotRestaurants = getRestaurants();
+		if(!gotRestaurants) {
+			return;
+		}
+		
+		mainApp.updateMap();
 	}
+
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
 	
+	@FXML
 	public void Help() {
 		//check what the popup window thing was
 		System.out.println(helpText);

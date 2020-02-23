@@ -24,6 +24,7 @@ public class MainApp extends Application {
 	
 	private List<Restaurant> restaurantsFromDb;
 	private OptionsBarController optionsControl;
+	private FXMLExampleController mapControl;
 
 
 	@Override
@@ -85,13 +86,17 @@ public class MainApp extends Application {
 			GridPane mapPane = (GridPane) loader.load();
 			mainScreen.setCenter(mapPane); //change to work with correct element
 			System.out.println("bb");
-			FXMLExampleController mapController = loader.getController();
-			System.out.println("Perkele "+mapController);
-			optionsControl.setMapController(mapController);
+			this.mapControl = loader.getController();
+			System.out.println("Perkele "+mapControl);
+			this.mapControl.setMainApp(this);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void updateMap() {
+		mapControl.updateListView(this.restaurantsFromDb);
 	}
 	
     private boolean fixCoordinates() {
