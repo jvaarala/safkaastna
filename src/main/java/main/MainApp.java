@@ -77,7 +77,7 @@ public class MainApp extends Application {
 	
 	public void initMap() {
 		FXMLLoader loader = new FXMLLoader();
-		URL centerMap = getClass().getResource("/fxml_example.fxml");
+		URL centerMap = getClass().getResource("/view/fxml_example.fxml");
 		System.out.println("aa "+centerMap);
 		loader.setLocation(centerMap);
 		try {
