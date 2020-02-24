@@ -132,13 +132,13 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 			markerOptions.position(tempLatLong);
 			Marker tempMarker = new Marker(markerOptions);
 
-			/*
-			 * Tämä toteutus vaikuttaa melko hitaalta, keksi parempi
-			 * 
-			 * InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-			 * infoWindowOptions.content(restaurant.getName()); InfoWindow infoWindow = new
-			 * InfoWindow(infoWindowOptions); infoWindow.open(map, tempMarker);
-			 */
+			InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+			infoWindowOptions.content(restaurant.getName());
+			InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+
+			map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
+				infoWindow.open(map, tempMarker);
+			});
 
 			restaurantMarkers.add(tempMarker);
 		}
