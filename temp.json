@@ -1,0 +1,78 @@
+{
+  "results": [
+    {
+      "formatted_address": "Ojamogatan 5, 08100 Lojo, Finland",
+      "types": [
+        "premise"
+      ],
+      "geometry": {
+        "viewport": {
+          "southwest": {
+            "lng": 24.0412090697085,
+            "lat": 60.23869506970848
+          },
+          "northeast": {
+            "lng": 24.04390703029151,
+            "lat": 60.24139303029149
+          }
+        },
+        "bounds": {
+          "southwest": {
+            "lng": 24.0424194,
+            "lat": 60.2399763
+          },
+          "northeast": {
+            "lng": 24.0426967,
+            "lat": 60.24011179999999
+          }
+        },
+        "location": {
+          "lng": 24.042565,
+          "lat": 60.2400371
+        },
+        "location_type": "ROOFTOP"
+      },
+      "address_components": [
+        {
+          "types": [
+            "street_number"
+          ],
+          "short_name": "5",
+          "long_name": "5"
+        },
+        {
+          "types": [
+            "route"
+          ],
+          "short_name": "Ojamogatan",
+          "long_name": "Ojamogatan"
+        },
+        {
+          "types": [
+            "locality",
+            "political"
+          ],
+          "short_name": "Lojo",
+          "long_name": "Lojo"
+        },
+        {
+          "types": [
+            "country",
+            "political"
+          ],
+          "short_name": "FI",
+          "long_name": "Finland"
+        },
+        {
+          "types": [
+            "postal_code"
+          ],
+          "short_name": "08100",
+          "long_name": "08100"
+        }
+      ],
+      "place_id": "ChIJtTjc2Wy_jUYRZQQ2RTWhpwc"
+    }
+  ],
+  "status": "OK"
+}
