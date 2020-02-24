@@ -14,26 +14,28 @@
 <?import javafx.scene.layout.VBox?>
 
 
+<?import javafx.scene.control.CheckBox?>
 <GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLExampleController">
     <padding>
         <Insets bottom="10" left="25" right="25" top="25" />
     </padding>
-    <AnchorPane>
+    <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="1">
         <children>
             <ListView fx:id="listViewNames" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
         </children>
     </AnchorPane>
-    <AnchorPane fx:id="mapContainer" prefHeight="400.0" prefWidth="400.0" GridPane.columnIndex="1">
+    <AnchorPane fx:id="mapContainer" prefHeight="400.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
 
         <children>
             <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="0.0" layoutY="0.0" spacing="10.0" styleClass="panel-background" stylesheets="@Styles.css" BorderPane.alignment="CENTER">
             </VBox>
         </children>
     </AnchorPane>
-    <HBox alignment="TOP_RIGHT" prefHeight="46.0" prefWidth="274.0" spacing="10" GridPane.columnSpan="2" GridPane.rowIndex="1">
+    <HBox alignment="TOP_RIGHT" prefHeight="46.0" prefWidth="274.0" spacing="10" GridPane.columnSpan="1" GridPane.rowIndex="0">
       <TextField fx:id="searchTextBox" onKeyReleased="#handleSearchBar" promptText="Hae" />
         <Button onAction="#handleEsimButtonAction" text="Esimerkki" />
     </HBox>
+    <CheckBox fx:id="checkBox" mnemonicParsing="false" onAction="#handleCheckbox" text="Haetko osoitetta?" GridPane.columnIndex="1" />
     <stylesheets>
         <URL value="@Styles.css" />
     </stylesheets>
