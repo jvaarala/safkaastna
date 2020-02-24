@@ -32,7 +32,7 @@
         </children>
     </AnchorPane>
     <HBox alignment="TOP_RIGHT" prefHeight="46.0" prefWidth="274.0" spacing="10" GridPane.columnSpan="1" GridPane.rowIndex="0">
-      <TextField fx:id="searchTextBox" onKeyReleased="#handleSearchBar" promptText="Hae" />
+        <TextField fx:id="searchTextBox" onKeyReleased="#handleSearchBar" promptText="Hae" />
         <Button onAction="#handleEsimButtonAction" text="Esimerkki" />
     </HBox>
     <CheckBox fx:id="checkBox" mnemonicParsing="false" onAction="#handleCheckbox" text="Haetko osoitetta?" GridPane.columnIndex="1" />
