@@ -74,34 +74,17 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         listViewNames.setItems(items);
-        System.out.println("WE DID THIS");
+
         mapContainer.getChildren().add(mapView);
         
         mapView.addMapInializedListener(this);
         mapView.setKey(api);
-
-        /*
-        listViewNames.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    Restaurant restaurantToFind = new Restaurant();
-                    System.out.println(newValue);
-                    for(int i = 0; i < restaurantsFromDb.size(); i++) {
-                        if (restaurantsFromDb.get(i).getName().equals(newValue)) {
-                            restaurantToFind = restaurantsFromDb.get(i);
-                            break;
-                        }
-                    }
-                    showRestaurantDetails(restaurantToFind);
-                }
-        );
-        */
         
     }
 
     @Override
     public void mapInitialized() {
         //Set the initial properties of the map.
-    	System.out.println("mapp init");
         MapOptions mapOptions = new MapOptions();
 
         mapOptions
@@ -114,7 +97,6 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
                 .zoom(12);
 
         map = mapView.createMap(mapOptions);
-        System.out.println("mappp 2");
 /*        //Add markers to the map
         LatLong joeSmithLocation = new LatLong(47.6197, -122.3231);
         MarkerOptions markerOptions1 = new MarkerOptions();
@@ -130,7 +112,6 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
         });
 
         map.setCenter(new LatLong(60.192059, 24.945831));
-        System.out.println("mappp 3");
     }
 
     public void updateListView(List<Restaurant> restaurants) {
@@ -138,6 +119,22 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
     	System.out.println("UPDATE IN PROGRESS FOR MAPS");
     	listViewNames.getItems().clear();
         List<Marker> restaurantMarkers = new ArrayList<>();
+        
+        listViewNames.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    Restaurant restaurantToFind = new Restaurant();
+                    System.out.println(newValue);
+                    for(int i = 0; i < restaurants.size(); i++) {
+                        if (restaurants.get(i).getName().equals(newValue)) {
+                            restaurantToFind = restaurants.get(i);
+                            break;
+                        }
+                    }
+                    showRestaurantDetails(restaurantToFind);
+                }
+        );
+        
+        
 
         // Lisätään ravintoloiden nimet ObservableListiin
         for (Restaurant restaurant : restaurants) {

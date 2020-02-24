@@ -33,26 +33,13 @@ public class MainApp extends Application {
 		this.primaryStage.setTitle("SafkaaSaatana");
 		
 		initRootLayout();
-		System.out.println("perkele1");
+		
 		initConnection();
-		System.out.println("perkele2");
-		initMap();
-		System.out.println("perkele3");
 
+		initMap();
 	}
 	
 	public void initRootLayout() {
-		/*
-		FXMLLoader loader = new FXMLLoader();
-		URL testa =  getClass().getResource("SafkaaSaatana.fxml");
-		loader.setLocation(testa);
-		try {
-			mainScreen = (BorderPane) loader.load();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
 		mainScreen = new BorderPane();
 		primaryStage.setScene(new Scene(mainScreen));
         primaryStage.show();
@@ -61,8 +48,8 @@ public class MainApp extends Application {
 	
 	public void initConnection() {
 		FXMLLoader loader = new FXMLLoader();
-		URL connector = getClass().getResource("/view/OptionsBar.fxml");
-		System.out.println("a1 "+connector);
+		URL connector = getClass().getResource("/OptionsBar.fxml");
+
 		loader.setLocation(connector);
 		try {
 			ToolBar connectBar = (ToolBar) loader.load();
@@ -78,16 +65,12 @@ public class MainApp extends Application {
 	
 	public void initMap() {
 		FXMLLoader loader = new FXMLLoader();
-		URL centerMap = getClass().getResource("/view/fxml_example.fxml");
-		System.out.println("aa "+centerMap);
+		URL centerMap = getClass().getResource("/fxml_example.fxml");
 		loader.setLocation(centerMap);
 		try {
-			System.out.println("jjj");
 			GridPane mapPane = (GridPane) loader.load();
 			mainScreen.setCenter(mapPane); //change to work with correct element
-			System.out.println("bb");
 			this.mapControl = loader.getController();
-			System.out.println("Perkele "+mapControl);
 			this.mapControl.setMainApp(this);
 			
 		} catch (IOException e) {
