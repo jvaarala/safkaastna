@@ -30,146 +30,134 @@ import netscape.javascript.JSObject;
 
 public class FXMLExampleController implements Initializable, MapComponentInitializedListener {
 
-    private MainApp mainApp;
+	private MainApp mainApp;
 
-    Dotenv dotenv = Dotenv.load();
-    String api = dotenv.get("APIKEY");
+	Dotenv dotenv = Dotenv.load();
+	String api = dotenv.get("APIKEY");
 
-    SearchLogic search = new SearchLogic();
+	SearchLogic search = new SearchLogic();
 
+	@FXML
+	private ListView<String> listViewNames;
 
-    @FXML
-    private ListView<String> listViewNames;
+	@FXML
+	private ObservableList<String> items = FXCollections.observableArrayList();
 
-    @FXML
-    private ObservableList<String> items = FXCollections.observableArrayList();
+	@FXML
+	private GoogleMapView mapView = new GoogleMapView();
 
-    @FXML
-    private GoogleMapView mapView = new GoogleMapView();
+	private GoogleMap map;
 
-    private GoogleMap map;
-    
-    @FXML
-    private AnchorPane mapContainer;
+	@FXML
+	private AnchorPane mapContainer;
 
-    @FXML
-    private TextField searchTextBox;
+	@FXML
+	private TextField searchTextBox;
 
-    @FXML
-    public void handleSearchBar(KeyEvent keyEvent) {
-        String textInSearchField = searchTextBox.getText();
-       List<Restaurant> foundRestaurants = search.Search(mainApp.getRestaurants(), textInSearchField);
-        updateListView(foundRestaurants);
-    }
+	@FXML
+	public void handleSearchBar(KeyEvent keyEvent) {
+		String textInSearchField = searchTextBox.getText();
+		List<Restaurant> foundRestaurants = search.Search(mainApp.getRestaurants(), textInSearchField);
+		updateListView(foundRestaurants);
+	}
 
+	@FXML
+	protected void handleEsimButtonAction(ActionEvent event) {
+		// esimerkki napin handlerista
+		System.out.println("nappia painettu");
+	}
 
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		System.out.println("perkl init start");
+		listViewNames.setItems(items);
 
+		mapContainer.getChildren().add(mapView);
 
-    @FXML
-    protected void handleEsimButtonAction(ActionEvent event) {
-        // esimerkki napin handlerista
-        System.out.println("nappia painettu");
-    }
+		mapView.addMapInializedListener(this);
+		mapView.setKey(api);
+		System.out.println("perkl init end");
+	}
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        listViewNames.setItems(items);
+	@Override
+	public void mapInitialized() {
+		// Set the initial properties of the map.
+		System.out.println("perkl1");
+		MapOptions mapOptions = new MapOptions();
 
-        mapContainer.getChildren().add(mapView);
-        
-        mapView.addMapInializedListener(this);
-        mapView.setKey(api);
-        
-    }
+		mapOptions.overviewMapControl(false).panControl(false).rotateControl(false).scaleControl(false)
+				.streetViewControl(false).zoomControl(false).zoom(12);
 
-    @Override
-    public void mapInitialized() {
-        //Set the initial properties of the map.
-        MapOptions mapOptions = new MapOptions();
+		map = mapView.createMap(mapOptions);
+		/*
+		 * //Add markers to the map LatLong joeSmithLocation = new LatLong(47.6197,
+		 * -122.3231); MarkerOptions markerOptions1 = new MarkerOptions();
+		 * markerOptions1.position(joeSmithLocation); Marker joeSmithMarker = new
+		 * Marker(markerOptions1); map.addMarker( joeSmithMarker );
+		 */
 
-        mapOptions
-                .overviewMapControl(false)
-                .panControl(false)
-                .rotateControl(false)
-                .scaleControl(false)
-                .streetViewControl(false)
-                .zoomControl(false)
-                .zoom(12);
+		// clickin lat long tulostuu, kun klikkaa kohtaa kartalta (ei markeria)
+		map.addUIEventHandler(UIEventType.click, (JSObject obj) -> {
+			LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
+			System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
+		});
 
-        map = mapView.createMap(mapOptions);
-/*        //Add markers to the map
-        LatLong joeSmithLocation = new LatLong(47.6197, -122.3231);
-        MarkerOptions markerOptions1 = new MarkerOptions();
-        markerOptions1.position(joeSmithLocation);
-        Marker joeSmithMarker = new Marker(markerOptions1);
-        map.addMarker( joeSmithMarker );
-        */
+		map.setCenter(new LatLong(60.192059, 24.945831));
+		this.mainApp.updateMap();
+	}
 
-        // clickin lat long tulostuu, kun klikkaa kohtaa kartalta (ei markeria)
-        map.addUIEventHandler(UIEventType.click, (JSObject obj) -> {
-            LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
-            System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
-        });
+	public void updateListView(List<Restaurant> restaurants) {
+		// Tyhjennetään lista
+		System.out.println("UPDATE IN PROGRESS FOR MAPS");
+		listViewNames.getItems().clear();
+		List<Marker> restaurantMarkers = new ArrayList<>();
 
-        map.setCenter(new LatLong(60.192059, 24.945831));
-    }
+		listViewNames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			Restaurant restaurantToFind = new Restaurant();
+			System.out.println(newValue);
+			for (int i = 0; i < restaurants.size(); i++) {
+				if (restaurants.get(i).getName().equals(newValue)) {
+					restaurantToFind = restaurants.get(i);
+					break;
+				}
+			}
+			showRestaurantDetails(restaurantToFind);
+		});
 
-    public void updateListView(List<Restaurant> restaurants) {
-        // Tyhjennetään lista
-    	System.out.println("UPDATE IN PROGRESS FOR MAPS");
-    	listViewNames.getItems().clear();
-        List<Marker> restaurantMarkers = new ArrayList<>();
-        
-        listViewNames.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    Restaurant restaurantToFind = new Restaurant();
-                    System.out.println(newValue);
-                    for(int i = 0; i < restaurants.size(); i++) {
-                        if (restaurants.get(i).getName().equals(newValue)) {
-                            restaurantToFind = restaurants.get(i);
-                            break;
-                        }
-                    }
-                    showRestaurantDetails(restaurantToFind);
-                }
-        );
-        
-        
+		// Lisätään ravintoloiden nimet ObservableListiin
+		for (Restaurant restaurant : restaurants) {
+			items.add(restaurant.getName());
+			LatLong tempLatLong = new LatLong(restaurant.getLat(), restaurant.getLng());
+			MarkerOptions markerOptions = new MarkerOptions();
+			markerOptions.position(tempLatLong);
+			Marker tempMarker = new Marker(markerOptions);
 
-        // Lisätään ravintoloiden nimet ObservableListiin
-        for (Restaurant restaurant : restaurants) {
-            items.add(restaurant.getName());
-            LatLong tempLatLong = new LatLong(restaurant.getLat(), restaurant.getLng());
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(tempLatLong);
-            Marker tempMarker = new Marker(markerOptions);
+			/*
+			 * Tämä toteutus vaikuttaa melko hitaalta, keksi parempi
+			 * 
+			 * InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+			 * infoWindowOptions.content(restaurant.getName()); InfoWindow infoWindow = new
+			 * InfoWindow(infoWindowOptions); infoWindow.open(map, tempMarker);
+			 */
 
-/*          Tämä toteutus vaikuttaa melko hitaalta, keksi parempi
+			restaurantMarkers.add(tempMarker);
+		}
+		map.addMarkers(restaurantMarkers);
 
-            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-            infoWindowOptions.content(restaurant.getName());
-            InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
-            infoWindow.open(map, tempMarker);*/
+		// Asetetaan ObservableList ListViewiin
+		listViewNames.setItems(items);
+		System.out.println("UPDATE MAPS DONE");
+	}
 
-            restaurantMarkers.add(tempMarker);
-        }
-        map.addMarkers(restaurantMarkers);
+	public void setMainApp(MainApp mainApp) {
+		this.mainApp = mainApp;
+	}
 
-
-        // Asetetaan ObservableList ListViewiin
-        listViewNames.setItems(items);
-        System.out.println("UPDATE MAPS DONE");
-    }
-    
-    public void setMainApp(MainApp mainApp) {
-    	this.mainApp = mainApp;
-    }
-
-    private void showRestaurantDetails(Restaurant restaurant) {
-        if (restaurant != null) {
-            mapView.setCenter(restaurant.getLat(), restaurant.getLng());
-            mapView.setZoom(15);
-        }
-    }
+	private void showRestaurantDetails(Restaurant restaurant) {
+		if (restaurant != null) {
+			mapView.setCenter(restaurant.getLat(), restaurant.getLng());
+			mapView.setZoom(15);
+		}
+	}
 
 }

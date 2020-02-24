@@ -37,6 +37,7 @@ public class MainApp extends Application {
 		initConnection();
 
 		initMap();
+		
 	}
 	
 	public void initRootLayout() {
@@ -72,13 +73,20 @@ public class MainApp extends Application {
 			mainScreen.setCenter(mapPane); //change to work with correct element
 			this.mapControl = loader.getController();
 			this.mapControl.setMainApp(this);
-			
+					
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void updateMap() {
+		if(this.restaurantsFromDb == null) {
+			boolean success = this.optionsControl.getRestaurants();
+			if(success) {
+				mapControl.updateListView(this.restaurantsFromDb);
+			}
+			return;
+		}
 		mapControl.updateListView(this.restaurantsFromDb);
 	}
 	
