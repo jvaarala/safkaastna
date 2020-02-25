@@ -1,8 +1,8 @@
 package view;
 
-import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
+import com.mysql.jdbc.StringUtils;
 import io.github.cdimascio.dotenv.Dotenv;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +27,6 @@ import java.util.ResourceBundle;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 
-import javafx.scene.control.Button;
 import model.SearchLogic;
 import netscape.javascript.JSObject;
 import org.json.JSONArray;
@@ -39,42 +38,42 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 
 	private MainApp mainApp;
 
+	/**
+	 * Google maps api key is written on a separate, local file
+	 * Dotenv handles retrieving apikey and it is stored on a variable
+	 */
 	Dotenv dotenv = Dotenv.load();
 	String api = dotenv.get("APIKEY");
 
-	SearchLogic search = new SearchLogic();
-
-	@FXML
-	private ListView<String> listViewNames;
-
-	@FXML
-	private ObservableList<String> items = FXCollections.observableArrayList();
-
-	@FXML
-	private GoogleMapView mapView = new GoogleMapView();
-
-	private GoogleMap map;
-
-	@FXML
-	private AnchorPane mapContainer;
-
-	@FXML
-	private TextField searchTextBox;
+	@FXML private ListView<String> listViewNames;
+	@FXML private ObservableList<String> items = FXCollections.observableArrayList();
+	@FXML private AnchorPane mapContainer;
+	@FXML private TextField searchTextBox;
 	@FXML private CheckBox checkBox;
+	@FXML private GoogleMapView mapView = new GoogleMapView();
+	private GoogleMap map;
+	private SearchLogic search = new SearchLogic();
 
-
+	/**
+	 * FXML method for handling search box
+	 * @param keyEvent - Listens to every keystroke on input field
+	 */
 	@FXML
 	public void handleSearchBar(KeyEvent keyEvent) {
 		String textInSearchField = searchTextBox.getText();
 		List<Restaurant> foundRestaurants = search.Search(mainApp.getRestaurants(), textInSearchField);
-		updateListView(foundRestaurants);
+		updateView(foundRestaurants);
 	}
 
+	/**
+	 * FXML method for handling the 'Searching for an address'-checkbox
+	 * @param event Listens to every click on checkbox
+	 */
 	@FXML protected void handleCheckbox(ActionEvent event) {
 		String textInSearchField = searchTextBox.getText();
 		if (checkBox.isSelected()) {
 			LatLong ll = fetchNormalJava(textInSearchField);
-			focusMapOnCoordinate(ll);
+			focusMapOnCoordinate(ll, textInSearchField);
 		}
 	}
 
@@ -84,6 +83,11 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 		System.out.println("nappia painettu");
 	}
 
+	/**
+	 * // TODO EN OSAA KUVATA TÄTÄ!
+	 * @param location
+	 * @param resources
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("perkl init start");
@@ -96,6 +100,11 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 		System.out.println("perkl init end");
 	}
 
+	/**
+	 * mapInitializer for GmapsFX library
+	 * Sets desired map options and creates GoogleMap object
+	 * Focuses map on a predestined location (Helsinki)
+	 */
 	@Override
 	public void mapInitialized() {
 		// Set the initial properties of the map.
@@ -106,14 +115,8 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 				.streetViewControl(false).zoomControl(false).zoom(12);
 
 		map = mapView.createMap(mapOptions);
-		/*
-		 * //Add markers to the map LatLong joeSmithLocation = new LatLong(47.6197,
-		 * -122.3231); MarkerOptions markerOptions1 = new MarkerOptions();
-		 * markerOptions1.position(joeSmithLocation); Marker joeSmithMarker = new
-		 * Marker(markerOptions1); map.addMarker( joeSmithMarker );
-		 */
 
-		// clickin lat long tulostuu, kun klikkaa kohtaa kartalta (ei markeria)
+		// Prints LatLong according to map click to console
 		map.addUIEventHandler(UIEventType.click, (JSObject obj) -> {
 			LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
 			System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
@@ -123,13 +126,19 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 		this.mainApp.updateMap();
 	}
 
-	public void updateListView(List<Restaurant> restaurants) {
-		// Tyhjennetään lista
+	/**
+	 * Update ListView & map elements according to a list of restaurants
+	 * @param restaurants - List of restaurants to be iterated through
+	 *                    Names are set on ListView and Markers are set on map on restaurants location
+	 */
+	public void updateView(List<Restaurant> restaurants) {
+		// Empty list & clear markers
 		System.out.println("UPDATE IN PROGRESS FOR MAPS");
 		listViewNames.getItems().clear();
 		List<Marker> restaurantMarkers = new ArrayList<>();
 		map.clearMarkers();
 
+		// Click listener for ListView item clicks
 		listViewNames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null) {
 				Restaurant restaurantToFind = new Restaurant();
@@ -144,7 +153,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 			}
 		});
 
-		// Lisätään ravintoloiden nimet ObservableListiin
+		// Add restaurants to ObservableList
 		for (Restaurant restaurant : restaurants) {
 			items.add(restaurant.getName());
 			LatLong tempLatLong = new LatLong(restaurant.getLat(), restaurant.getLng());
@@ -152,10 +161,12 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 			markerOptions.position(tempLatLong);
 			Marker tempMarker = new Marker(markerOptions);
 
+			// Create InfoWindow for each marker
 			InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
 			infoWindowOptions.content(restaurant.getName());
 			InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
 
+			// ClickListener for InfoWindow
 			map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
 				infoWindow.open(map, tempMarker);
 			});
@@ -164,7 +175,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 		}
 		map.addMarkers(restaurantMarkers);
 
-		// Asetetaan ObservableList ListViewiin
+		// Set ObservableList to ListView
 		listViewNames.setItems(items);
 		System.out.println("UPDATE MAPS DONE");
 	}
@@ -173,6 +184,10 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 		this.mainApp = mainApp;
 	}
 
+	/**
+	 * Focus map on a certain restaurant
+	 * @param restaurant - Restaurant on which to focus the map on
+	 */
 	private void showRestaurantDetails(Restaurant restaurant) {
 		if (restaurant != null) {
 			mapView.setCenter(restaurant.getLat(), restaurant.getLng());
@@ -180,8 +195,14 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 		}
 	}
 
+	/**
+	 * Search Google Maps api for coordinates with address
+	 * @param s User input String (address) to be searched from Google maps api
+	 * @return LatLong object to be placed on map
+	 */
 	public LatLong fetchNormalJava(String s) {
-		System.out.println("FetchJava alku");
+
+		// Format string to be usable as a part of search url
 		String sWithoutSpaces = s
 				.replace(",", "")
 				.replace(" ", "+");
@@ -193,6 +214,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 		InputStream in = null;
 		BufferedReader reader = null;
 
+		// Create String from api response
 		try {
 			url = new URL(httpsUrl);
 			con = (HttpsURLConnection)url.openConnection();
@@ -218,6 +240,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 			}
 		}
 
+		// Modify api response String to a LatLong Object
 		LatLong ll = null;
 		JSONObject resultJSON = new JSONObject(result.toString());
 		JSONArray resultArray = resultJSON.getJSONArray("results");
@@ -231,16 +254,48 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 		return ll;
 	}
 
-	private void focusMapOnCoordinate(LatLong ll) {
-		System.out.printf("focusOnCoordinate alku");
+	/**
+	 * Moves map to a specific address according to user input
+	 * @param ll User input address converted to LatLong object
+	 * @param s User input address as a string to be used on markers infoWindow feature
+	 */
+
+	private void focusMapOnCoordinate(LatLong ll, String s) {
 		MarkerOptions markerOptions = new MarkerOptions();
 		markerOptions.position(ll);
-		// TODO tähän markerille uusi ulkonäkö
-		markerOptions.label("Hakemasi osoite");
+		markerOptions.icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png");
 		Marker tempMarker = new Marker(markerOptions);
+		InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+
+		// User input (address) formatting
+		String words[] = s.replaceAll("\\s+", " ").trim().split(" ");
+		String newString = "";
+		for (String word : words) {
+			if (StringUtils.isStrictlyNumeric(word)) {
+				newString += word + " ";
+				continue;
+			}
+			for (int i = 0; i < word.length(); i++) {
+				char c = word.charAt(i);
+				if (i == 0) {
+					newString = newString + word.substring(i, i + 1).toUpperCase();
+				} else {
+					if (i != word.length() - 1) {
+						newString += word.substring(i, i + 1).toLowerCase();
+					} else {
+						newString += word.substring(i, i + 1).toLowerCase() + " ";
+					}
+				}
+			}
+		}
+		infoWindowOptions.content(newString);
+		InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+		map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
+			infoWindow.open(map, tempMarker);
+		});
+		// add new marker to map on correct location & zoom in
 		map.addMarkers(Collections.singletonList(tempMarker));
 		mapView.setCenter(ll.getLatitude(), ll.getLongitude());
 		mapView.setZoom(15);
-		System.out.println("focusOnCoordinate loppu");
 	}
 }

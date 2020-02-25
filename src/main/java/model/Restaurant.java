@@ -2,6 +2,9 @@ package model;
 
 import javax.persistence.*;
 
+/**
+ * Data Transfer Object (DTO) for Restaurants
+ */
 @Entity
 @Table(name = "restaurant")
 public class Restaurant {

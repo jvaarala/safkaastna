@@ -1,7 +1,6 @@
 package main;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
@@ -83,11 +82,11 @@ public class MainApp extends Application {
 		if(this.restaurantsFromDb == null) {
 			boolean success = this.optionsControl.getRestaurants();
 			if(success) {
-				mapControl.updateListView(this.restaurantsFromDb);
+				mapControl.updateView(this.restaurantsFromDb);
 			}
 			return;
 		}
-		mapControl.updateListView(this.restaurantsFromDb);
+		mapControl.updateView(this.restaurantsFromDb);
 	}
 	
     private boolean fixCoordinates() {

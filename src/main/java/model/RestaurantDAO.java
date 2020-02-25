@@ -12,27 +12,20 @@ import org.hibernate.cfg.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object class for Restaurants
+ * Handles CRUD (Create-Read-Update-Delete) operations for Restaurant Objects
+ */
+
 public class RestaurantDAO {
 
     SessionFactory sessionFactory = null;
 
+    /**
+     * Constructor for class
+     * Initializes database connection
+     */
     public RestaurantDAO() {
-//        Dotenv dotenv = Dotenv.load();
-//        final String SECRET = dotenv.get("SECRET");
-//
-//        Configuration cfg = new Configuration()
-//                .addResource("Item.hbm.xml")
-//                .addResource("Bid.hbm.xml")
-//                .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect")
-//                .setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.driver")
-////                .setProperty("hibernate.connection.datasource", "java:comp/env/jdbc/test")
-////                .setProperty("hibernate.order_updates", "true")
-//                .setProperty("hibernate.connection.url", "jdbc.mysql://localhost:2206/restaurants")
-//                .setProperty("hibernate.connection.username", "user")
-//                .setProperty("hibernate.connection.password", SECRET)
-//                .setProperty("hibernate.hbm2ddl.auto", "update")
-//                .setProperty("show_sql", "false")
-//                .addAnnotatedClass(model.Restaurant.class);
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         System.out.println("fff..");
         try {
@@ -42,10 +35,18 @@ public class RestaurantDAO {
         }
     }
 
+    /**
+     * Needed only in unit testing where mock objects are used
+     *
+     * @param sessionFactory - takes a sessionFactory as an argument so that database connection is NOT created
+     */
     public RestaurantDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Finalize method takes care of closing the sessionFactory after program is closed
+     */
     protected void finalize() {
         try {
             if (sessionFactory != null) {
@@ -56,6 +57,12 @@ public class RestaurantDAO {
         }
     }
 
+    /**
+     * Creates a new restaurant to database
+     *
+     * @param restaurant - Restaurant to be added to database
+     * @return true if operation was successful
+     */
     public boolean createRestaurant(Restaurant restaurant) {
         boolean success = false;
 
@@ -75,7 +82,11 @@ public class RestaurantDAO {
         return success;
     }
 
-
+    /**
+     * Reads all restaurants from database
+     *
+     * @return List of restaurants
+     */
     public List<Restaurant> readRestaurants() {
         System.out.println("Fetching from database");
         List restaurants = new ArrayList<>();
@@ -94,7 +105,12 @@ public class RestaurantDAO {
         return restaurants;
     }
 
-    //TODO if necessary
+    /**
+     * Updates a certain restaurants location (latitude and longitude) information on database
+     *
+     * @param restaurant - Restaurant to be modified on database
+     * @return true if operation was successful
+     */
     public boolean updateRestaurant(Restaurant restaurant) {
         boolean success = false;
         Transaction transaction = null;
@@ -102,11 +118,11 @@ public class RestaurantDAO {
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            // muuutettavat ominaisuudet
+            // features to be changed
             int id = restaurant.getId();
             double lng = restaurant.getLng();
 
-            Restaurant r = (Restaurant)session.get(Restaurant.class, id);
+            Restaurant r = (Restaurant) session.get(Restaurant.class, id);
 
             if (r != null) {
                 // r.setFeature(feature);
@@ -121,15 +137,19 @@ public class RestaurantDAO {
         return success;
     }
 
+    /**
+     * Deletes restaurant from database permanently
+     *
+     * @param id - Restaurant is searched from database with id number
+     * @return true if operation was successful
+     */
     public boolean deleteRestaurant(int id) {
         boolean success = false;
-
         Transaction transaction = null;
 
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-
-            Restaurant r = (Restaurant)session.get(Restaurant.class, id);
+            Restaurant r = (Restaurant) session.get(Restaurant.class, id);
             if (r != null) {
                 session.delete(r);
                 transaction.commit();
@@ -139,7 +159,6 @@ public class RestaurantDAO {
             transaction.rollback();
             e.printStackTrace();
         }
-
         return success;
     }
 }
