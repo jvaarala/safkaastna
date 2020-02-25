@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -255,47 +256,56 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 	}
 
 	/**
-	 * Moves map to a specific address according to user input
+	 * Focus map to a specific coordinate & string formatting for showing user input on a markers info window
 	 * @param ll User input address converted to LatLong object
 	 * @param s User input address as a string to be used on markers infoWindow feature
 	 */
 
 	private void focusMapOnCoordinate(LatLong ll, String s) {
-		MarkerOptions markerOptions = new MarkerOptions();
-		markerOptions.position(ll);
-		markerOptions.icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png");
-		Marker tempMarker = new Marker(markerOptions);
-		InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+		try {
+			MarkerOptions markerOptions = new MarkerOptions();
+			markerOptions.position(ll);
+			markerOptions.icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png");
+			Marker tempMarker = new Marker(markerOptions);
+			InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
 
-		// User input (address) formatting
-		String words[] = s.replaceAll("\\s+", " ").trim().split(" ");
-		String newString = "";
-		for (String word : words) {
-			if (StringUtils.isStrictlyNumeric(word)) {
-				newString += word + " ";
-				continue;
-			}
-			for (int i = 0; i < word.length(); i++) {
-				char c = word.charAt(i);
-				if (i == 0) {
-					newString = newString + word.substring(i, i + 1).toUpperCase();
-				} else {
-					if (i != word.length() - 1) {
-						newString += word.substring(i, i + 1).toLowerCase();
+			// User input (address) formatting
+			String words[] = s.replaceAll("\\s+", " ").trim().split(" ");
+			String newString = "";
+			for (String word : words) {
+				if (StringUtils.isStrictlyNumeric(word)) {
+					newString += word + " ";
+					continue;
+				}
+				for (int i = 0; i < word.length(); i++) {
+					char c = word.charAt(i);
+					if (i == 0) {
+						newString = newString + word.substring(i, i + 1).toUpperCase();
 					} else {
-						newString += word.substring(i, i + 1).toLowerCase() + " ";
+						if (i != word.length() - 1) {
+							newString += word.substring(i, i + 1).toLowerCase();
+						} else {
+							newString += word.substring(i, i + 1).toLowerCase() + " ";
+						}
 					}
 				}
 			}
+			infoWindowOptions.content(newString);
+			InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+			map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
+				infoWindow.open(map, tempMarker);
+			});
+			// add new marker to map on correct location & zoom in
+			map.addMarkers(Collections.singletonList(tempMarker));
+			mapView.setCenter(ll.getLatitude(), ll.getLongitude());
+			mapView.setZoom(15);
+		} catch (Exception e ) {
+//			e.printStackTrace();
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("ADDRESS NOT FOUND");
+			alert.setHeaderText("No search results");
+			alert.setContentText("Try again! Preferred format on address is 'Streetname 1 City'");
+			alert.show();
 		}
-		infoWindowOptions.content(newString);
-		InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
-		map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
-			infoWindow.open(map, tempMarker);
-		});
-		// add new marker to map on correct location & zoom in
-		map.addMarkers(Collections.singletonList(tempMarker));
-		mapView.setCenter(ll.getLatitude(), ll.getLongitude());
-		mapView.setZoom(15);
 	}
 }
