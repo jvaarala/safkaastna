@@ -50,13 +50,18 @@ public class SearchLogic {
             searchWordwithoutWhitespace = searchWordwithoutWhitespace + stringBlocks[i];
         }
 
-        if (searchWordwithoutWhitespace.equals("")) return restaurantList;
+
+        if (searchWordwithoutWhitespace.equals(" ") || searchWordwithoutWhitespace.equals("")) return restaurantList;
+
+
+
 
         List<Restaurant> copy = new ArrayList<>();
         searchWordwithoutWhitespace = searchWordwithoutWhitespace.toUpperCase();
 
         for (Restaurant restaurant : restaurantList) {
-            if (restaurant.getName().contains(searchWordwithoutWhitespace)) {
+           String restaurantName = restaurant.getName().toUpperCase();
+            if (restaurantName.contains(searchWordwithoutWhitespace)) {
                 copy.add(restaurant);
             }
         }

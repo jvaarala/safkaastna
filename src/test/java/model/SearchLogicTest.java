@@ -14,13 +14,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SearchLogicTest {
     private Restaurant r;
+    private Restaurant d;
+    private Restaurant t;
     private SearchLogic search = new SearchLogic();
-    List<Restaurant> listRes = new ArrayList<>();
-    List<Restaurant> empty = new ArrayList<>();
+    private List<Restaurant> listOfRestaurants = new ArrayList<>();
+    private List<Restaurant> empty = new ArrayList<>();
+    private List<Restaurant> listWithOneRestaurant = new ArrayList<>();
+    private List<Restaurant> listWithFastfoodRestaurants = new ArrayList<>();
 
     @BeforeEach
     void beforeEach() {
-        listRes.clear();
+        listOfRestaurants.clear();
         r = new Restaurant(
                 666, "FASTFOOD",
                 "address",
@@ -32,22 +36,83 @@ class SearchLogicTest {
                 62.8787878,
                 23.3876387);
 
+        d = new Restaurant(
+                666, "fastfood",
+                "address",
+                00000,
+                "city",
+                "www",
+                "admin",
+                "adminwww",
+                62.8787878,
+                23.3876387);
 
-        listRes.add(r);
+        t = new Restaurant(
+                666, "burgerplace",
+                "address",
+                00000,
+                "city",
+                "www",
+                "admin",
+                "adminwww",
+                62.8787878,
+                23.3876387);
+
+        listOfRestaurants.add(r);
+        listOfRestaurants.add(d);
+        listOfRestaurants.add(t);
+
+        listWithOneRestaurant.add(t);
+
+        listWithFastfoodRestaurants.add(r);
+        listWithFastfoodRestaurants.add(d);
     }
 
     @Test
     void searchFoundNothing() {
 
-        assertEquals(empty,search.Search(listRes,"kissa"),
+        assertEquals(empty,search.Search(listOfRestaurants,"kissa"),
                 "restaurant name including kissa was found but doesn´t exist.");
     }
 
     @Test
-    void searchOneFound() {
+    void searchLowerCase() {
 
-        assertEquals(listRes,search.Search(listRes,"fo"),
-                "the one restaurant name including fo was not found");
+        assertEquals(listWithFastfoodRestaurants,search.Search(listOfRestaurants,"fo"),
+                "the two restaurants were not found including fo or FO.");
+    }
+
+    @Test
+    void searchUpperCase() {
+
+        assertEquals(listWithFastfoodRestaurants,search.Search(listOfRestaurants,"FO"),
+                "the two restaurants were not found including fo or FO.");
+    }
+
+    @Test
+    void searchUpperCaseWithWhitespace() {
+
+        assertEquals(listWithFastfoodRestaurants,search.Search(listOfRestaurants,"   FO"),
+                "the two restaurants were not found including fo or FO.");
+    }
+
+    @Test
+    void searchLowerCaseWithWhitespace() {
+
+        assertEquals(listWithFastfoodRestaurants,search.Search(listOfRestaurants,"   fo      "),
+                "the two restaurants were not found including fo or FO.");
+    }
+
+    @Test
+    void searchOnlyWhitespace() {
+        assertEquals(listOfRestaurants,search.Search(listOfRestaurants,"         "),
+                "whitespace search didn't return all the restaurants");
+    }
+
+    @Test
+    void searchForOneRestaurant() {
+        assertEquals(listWithOneRestaurant,search.Search(listOfRestaurants,"burg"),
+                "The one restaurant matching burg was not found");
     }
 
 }
