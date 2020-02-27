@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Restaurant;
 import model.RestaurantDAO;
-import view.FXMLExampleController;
+import view.MapController;
 import view.OptionsBarController;
 
 
@@ -23,7 +23,7 @@ public class MainApp extends Application {
 	
 	private List<Restaurant> restaurantsFromDb;
 	private OptionsBarController optionsControl;
-	private FXMLExampleController mapControl;
+	private MapController mapControl;
 
 
 	@Override

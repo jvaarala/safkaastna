@@ -35,7 +35,7 @@ import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class FXMLExampleController implements Initializable, MapComponentInitializedListener {
+public class MapController implements Initializable, MapComponentInitializedListener {
 
 	private MainApp mainApp;
 
@@ -43,8 +43,8 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 	 * Google maps api key is written on a separate, local file
 	 * Dotenv handles retrieving apikey and it is stored on a variable
 	 */
-	Dotenv dotenv = Dotenv.load();
-	String api = dotenv.get("APIKEY");
+	private Dotenv dotenv = Dotenv.load();
+	private String api = dotenv.get("APIKEY");
 
 	@FXML private ListView<String> listViewNames;
 	@FXML private ObservableList<String> items = FXCollections.observableArrayList();
@@ -60,7 +60,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 	 * @param keyEvent - Listens to every keystroke on input field
 	 */
 	@FXML
-	public void handleSearchBar(KeyEvent keyEvent) {
+	protected void handleSearchBar(KeyEvent keyEvent) {
 		String textInSearchField = searchTextBox.getText();
 		List<Restaurant> foundRestaurants = search.Search(mainApp.getRestaurants(), textInSearchField);
 		updateView(foundRestaurants);
@@ -73,7 +73,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 	@FXML protected void handleCheckbox(ActionEvent event) {
 		String textInSearchField = searchTextBox.getText();
 		if (checkBox.isSelected()) {
-			LatLong ll = fetchNormalJava(textInSearchField);
+			LatLong ll = fetchGoogleCoordinates(textInSearchField);
 			focusMapOnCoordinate(ll, textInSearchField);
 		}
 	}
@@ -150,7 +150,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 						break;
 					}
 				}
-				showRestaurantDetails(restaurantToFind);
+				focusMapOnRestaurant(restaurantToFind);
 			}
 		});
 
@@ -189,7 +189,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 	 * Focus map on a certain restaurant
 	 * @param restaurant - Restaurant on which to focus the map on
 	 */
-	private void showRestaurantDetails(Restaurant restaurant) {
+	private void focusMapOnRestaurant(Restaurant restaurant) {
 		if (restaurant != null) {
 			mapView.setCenter(restaurant.getLat(), restaurant.getLng());
 			mapView.setZoom(15);
@@ -201,7 +201,7 @@ public class FXMLExampleController implements Initializable, MapComponentInitial
 	 * @param s User input String (address) to be searched from Google maps api
 	 * @return LatLong object to be placed on map
 	 */
-	public LatLong fetchNormalJava(String s) {
+	private LatLong fetchGoogleCoordinates(String s) {
 
 		// Format string to be usable as a part of search url
 		String sWithoutSpaces = s

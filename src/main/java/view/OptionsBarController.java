@@ -5,11 +5,9 @@ import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import main.MainApp;
 import model.RestaurantDAO;
 import model.Restaurant;
-import view.FXMLExampleController;
 
 
 public class OptionsBarController {
