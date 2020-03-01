@@ -33,9 +33,9 @@ public class MainApp extends Application {
 		
 		initRootLayout();
 		
-		initConnection();
+		initConnection(this.mainScreen);
 
-		initMap();
+		initMap(this.mainScreen);
 		
 	}
 	
@@ -46,11 +46,12 @@ public class MainApp extends Application {
 	}
 	
 	
-	public void initConnection() {
+	public void initConnection(BorderPane mainScreen) {
 		FXMLLoader loader = new FXMLLoader();
 		URL connector = getClass().getResource("/OptionsBar.fxml");
 
 		loader.setLocation(connector);
+
 		try {
 			ToolBar connectBar = (ToolBar) loader.load();
 			mainScreen.setTop(connectBar); //change to work with correct element
@@ -63,7 +64,7 @@ public class MainApp extends Application {
 		}
 	}
 	
-	public void initMap() {
+	public void initMap(BorderPane mainScreen) {
 		FXMLLoader loader = new FXMLLoader();
 		URL centerMap = getClass().getResource("/fxml_example.fxml");
 		loader.setLocation(centerMap);
@@ -72,7 +73,6 @@ public class MainApp extends Application {
 			mainScreen.setCenter(mapPane); //change to work with correct element
 			this.mapControl = loader.getController();
 			this.mapControl.setMainApp(this);
-					
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

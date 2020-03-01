@@ -9,15 +9,13 @@ import main.MainApp;
 import model.RestaurantDAO;
 import model.Restaurant;
 
-
 public class OptionsBarController {
-	
+
 	private RestaurantDAO db_data;
 	private List<Restaurant> restaurantsFromDb;
 	private String helpText = "ApuaApua";
 	private MainApp mainApp;
-	
-	
+
 	private void popupAlert(String text) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("CONNECTION ERROR");
@@ -25,52 +23,55 @@ public class OptionsBarController {
 		alert.setContentText(text);
 		alert.show();
 	}
-	
-	private void initConnection() {
+
+	public void initConnection() {
 		this.db_data = new RestaurantDAO();
 	}
-	
-	@FXML
-	public boolean getRestaurants() {
-		initConnection();
 
+	public boolean getData() {
 		try {
 			restaurantsFromDb = db_data.readRestaurants();
 			System.out.println("perkele Saatana "+restaurantsFromDb.size());
 			mainApp.setRestaurants(restaurantsFromDb);
+			return true;
 		} catch (NullPointerException e) {
-			popupAlert("NO CONNECTION TO DATABASE, FAILED TO FETCH RESTAURANTS");
 			return false;
-		} catch (Exception e) {
-			e.printStackTrace();
-			String errorText = e.toString();
-			popupAlert(errorText);
+		}
+	}
+
+	@FXML
+	public boolean getRestaurants() {
+		initConnection();
+		boolean success = getData();
+		if(!success) {
+			popupAlert("NO CONNECTION TO DATABASE, FAILED TO FETCH RESTAURANTS");
 			return false;
 		}
 		return true;
 
 	}
-	
+
 	@FXML
 	/*
 	 * Initiates new connection and updates rendered map
 	 */
-	private void Refresh() {
+	public boolean Refresh() {
 		boolean gotRestaurants = getRestaurants();
-		if(!gotRestaurants) {
-			return;
+		if (!gotRestaurants) {
+			return false;
 		}
-		
+
 		mainApp.updateMap();
+		return true;
 	}
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
-	
+
 	@FXML
 	public void Help() {
-		//check what the popup window thing was
+		// check what the popup window thing was
 		System.out.println(helpText);
 	}
 }
