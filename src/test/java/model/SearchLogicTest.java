@@ -110,6 +110,12 @@ class SearchLogicTest {
     }
 
     @Test
+    void searchWithNoSpace() {
+        assertEquals(listOfRestaurants,search.Search(listOfRestaurants,""),
+                "empty search didn't return all the restaurants");
+    }
+
+    @Test
     void searchForOneRestaurant() {
         assertEquals(listWithOneRestaurant,search.Search(listOfRestaurants,"burg"),
                 "The one restaurant matching burg was not found");
