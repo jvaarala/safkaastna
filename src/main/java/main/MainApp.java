@@ -41,8 +41,8 @@ public class MainApp extends Application {
 	
 	public void initRootLayout() {
 		mainScreen = new BorderPane();
-		primaryStage.setMinHeight(500);
-		primaryStage.setMinWidth(1000);
+		primaryStage.setWidth(1024);
+		primaryStage.setHeight(768);
 		primaryStage.setScene(new Scene(mainScreen));
         primaryStage.show();
 	}

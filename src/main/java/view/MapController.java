@@ -114,7 +114,10 @@ public class MapController implements Initializable, MapComponentInitializedList
 
 		mapOptions.overviewMapControl(false).panControl(false).rotateControl(false).scaleControl(false)
 				.streetViewControl(false).zoomControl(false).zoom(12);
-
+		AnchorPane.setTopAnchor(mapView, 0.0);
+		AnchorPane.setRightAnchor(mapView, 0.0);
+		AnchorPane.setBottomAnchor(mapView, 0.0);
+		AnchorPane.setLeftAnchor(mapView, 0.0);
 		map = mapView.createMap(mapOptions);
 
 		// Prints LatLong according to map click to console
