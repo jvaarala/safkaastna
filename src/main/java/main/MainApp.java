@@ -6,9 +6,9 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToolBar;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Restaurant;
 import model.RestaurantDAO;
@@ -41,7 +41,7 @@ public class MainApp extends Application {
 	
 	public void initRootLayout() {
 		mainScreen = new BorderPane();
-		primaryStage.setWidth(1024);
+		primaryStage.setWidth(1200);
 		primaryStage.setHeight(768);
 		primaryStage.setScene(new Scene(mainScreen));
         primaryStage.show();
@@ -56,7 +56,7 @@ public class MainApp extends Application {
 
 		try {
 			ToolBar connectBar = (ToolBar) loader.load();
-			mainScreen.setTop(connectBar); //change to work with correct element
+			mainScreen.setBottom(connectBar); //change to work with correct element
 			
 	        this.optionsControl = loader.getController();
 	        this.optionsControl.setMainApp(this);
@@ -71,7 +71,7 @@ public class MainApp extends Application {
 		URL centerMap = getClass().getResource("/fxml_example.fxml");
 		loader.setLocation(centerMap);
 		try {
-			GridPane mapPane = (GridPane) loader.load();
+			AnchorPane mapPane = (AnchorPane) loader.load();
 			mainScreen.setCenter(mapPane); //change to work with correct element
 			this.mapControl = loader.getController();
 			this.mapControl.setMainApp(this);

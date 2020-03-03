@@ -113,7 +113,7 @@ public class MapController implements Initializable, MapComponentInitializedList
 		MapOptions mapOptions = new MapOptions();
 
 		mapOptions.overviewMapControl(false).panControl(false).rotateControl(false).scaleControl(false)
-				.streetViewControl(false).zoomControl(false).zoom(12);
+				.streetViewControl(false).zoomControl(false).zoom(12).mapTypeControl(false);
 		AnchorPane.setTopAnchor(mapView, 0.0);
 		AnchorPane.setRightAnchor(mapView, 0.0);
 		AnchorPane.setBottomAnchor(mapView, 0.0);

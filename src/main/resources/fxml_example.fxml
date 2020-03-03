@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
@@ -9,31 +9,42 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<GridPane alignment="center" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MapController">
-    <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <children>
-            <ListView fx:id="listViewNames" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-        </children>
-    </AnchorPane>
-    <AnchorPane fx:id="mapContainer" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-    <HBox alignment="TOP_RIGHT" spacing="10" GridPane.columnSpan="1" GridPane.rowIndex="0">
-        <TextField fx:id="searchTextBox" onKeyReleased="#handleSearchBar" promptText="Hae" HBox.hgrow="ALWAYS" />
-    </HBox>
-    <CheckBox fx:id="checkBox" mnemonicParsing="false" onAction="#handleCheckbox" text="Searching for address?" GridPane.columnIndex="1" />
-    <stylesheets>
-        <URL value="@Styles.css" />
-    </stylesheets>
-    <columnConstraints>
-        <ColumnConstraints hgrow="ALWAYS" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
-        <ColumnConstraints hgrow="ALWAYS" />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints fillHeight="false" vgrow="NEVER" />
-        <RowConstraints vgrow="ALWAYS" />
-        <RowConstraints />
-        <RowConstraints />
-        <RowConstraints />
-    </rowConstraints>
-
-</GridPane>
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="view.MapController">
+    <children>
+        <AnchorPane fx:id="mapContainer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS"/>
+        <GridPane prefWidth="240.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="6.0"
+                  AnchorPane.topAnchor="15.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="NEVER"/>
+                <RowConstraints minHeight="10.0" prefHeight="250.0" vgrow="ALWAYS"/>
+            </rowConstraints>
+            <children>
+                <ListView fx:id="listViewNames" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS"/>
+                <VBox GridPane.hgrow="ALWAYS">
+                    <children>
+                        <TextField fx:id="searchTextBox" onKeyReleased="#handleSearchBar" promptText="Hae"
+                                   styleClass="root">
+                            <padding>
+                                <Insets bottom="15.0" left="5.0" right="5.0" top="15.0"/>
+                            </padding>
+                        </TextField>
+                        <CheckBox fx:id="checkBox" mnemonicParsing="false" onAction="#handleCheckbox"
+                                  text="Searching for address?">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </padding>
+                        </CheckBox>
+                    </children>
+                </VBox>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>
