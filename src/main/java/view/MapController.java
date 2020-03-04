@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import main.MainApp;
@@ -51,6 +48,7 @@ public class MapController implements Initializable, MapComponentInitializedList
 	@FXML private AnchorPane mapContainer;
 	@FXML private TextField searchTextBox;
 	@FXML private CheckBox checkBox;
+	@FXML private ToggleButton filterToggle;
 	@FXML private GoogleMapView mapView = new GoogleMapView();
 	private GoogleMap map;
 	private SearchLogic search = new SearchLogic();
@@ -76,6 +74,10 @@ public class MapController implements Initializable, MapComponentInitializedList
 			LatLong ll = fetchGoogleCoordinates(textInSearchField);
 			focusMapOnCoordinate(ll, textInSearchField);
 		}
+	}
+
+	@FXML protected void handleFilterToggle(ActionEvent event) {
+		// tähän filtterin kytkimen logiikka
 	}
 
 	@FXML
