@@ -2,12 +2,9 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.*;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,53 +68,53 @@ class SearchLogicTest {
     @Test
     void searchFoundNothing() {
 
-        assertEquals(empty,search.Search(listOfRestaurants,"kissa"),
+        assertEquals(empty,search.filter(listOfRestaurants,"kissa"),
                 "restaurant name including kissa was found but doesn´t exist.");
     }
 
     @Test
     void searchLowerCase() {
 
-        assertEquals(listWithFastfoodRestaurants,search.Search(listOfRestaurants,"fo"),
+        assertEquals(listWithFastfoodRestaurants,search.filter(listOfRestaurants,"fo"),
                 "the two restaurants were not found including fo or FO.");
     }
 
     @Test
     void searchUpperCase() {
 
-        assertEquals(listWithFastfoodRestaurants,search.Search(listOfRestaurants,"FO"),
+        assertEquals(listWithFastfoodRestaurants,search.filter(listOfRestaurants,"FO"),
                 "the two restaurants were not found including fo or FO.");
     }
 
     @Test
     void searchUpperCaseWithWhitespace() {
 
-        assertEquals(listWithFastfoodRestaurants,search.Search(listOfRestaurants,"   FO"),
+        assertEquals(listWithFastfoodRestaurants,search.filter(listOfRestaurants,"   FO"),
                 "the two restaurants were not found including fo or FO.");
     }
 
     @Test
     void searchLowerCaseWithWhitespace() {
 
-        assertEquals(listWithFastfoodRestaurants,search.Search(listOfRestaurants,"   fo      "),
+        assertEquals(listWithFastfoodRestaurants,search.filter(listOfRestaurants,"   fo      "),
                 "the two restaurants were not found including fo or FO.");
     }
 
     @Test
     void searchOnlyWhitespace() {
-        assertEquals(listOfRestaurants,search.Search(listOfRestaurants,"         "),
+        assertEquals(listOfRestaurants,search.filter(listOfRestaurants,"         "),
                 "whitespace search didn't return all the restaurants");
     }
 
     @Test
     void searchWithNoSpace() {
-        assertEquals(listOfRestaurants,search.Search(listOfRestaurants,""),
+        assertEquals(listOfRestaurants,search.filter(listOfRestaurants,""),
                 "empty search didn't return all the restaurants");
     }
 
     @Test
     void searchForOneRestaurant() {
-        assertEquals(listWithOneRestaurant,search.Search(listOfRestaurants,"burg"),
+        assertEquals(listWithOneRestaurant,search.filter(listOfRestaurants,"burg"),
                 "The one restaurant matching burg was not found");
     }
 

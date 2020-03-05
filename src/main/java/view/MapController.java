@@ -63,7 +63,7 @@ public class MapController implements Initializable, MapComponentInitializedList
 	protected void handleSearchBar(KeyEvent keyEvent) {
 		textInSearchField = searchTextBox.getText();
 		if (filterToggleButton.isSelected()) {
-			List<Restaurant> foundRestaurants = search.Search(mainApp.getRestaurants(), textInSearchField);
+			List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), textInSearchField);
 			updateView(foundRestaurants);
 		}
 	}
@@ -81,7 +81,7 @@ public class MapController implements Initializable, MapComponentInitializedList
 		if(filterToggleButton.isSelected()) {
 			filterToggleButton.setText("Restaurant filter ON");
 			System.out.println("filter ON");
-			List<Restaurant> foundRestaurants = search.Search(mainApp.getRestaurants(), textInSearchField);
+			List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), textInSearchField);
 			updateView(foundRestaurants);
 		} else {
 			filterToggleButton.setText("Restaurant filter OFF");

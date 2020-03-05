@@ -15,7 +15,18 @@ public class SearchLogic {
 
     }
 
-    public List<Restaurant> Search(List<Restaurant> restaurantList, String searchWord) {
+
+    /**
+     * Search restaurant list for names that match search word.
+     *
+     * @param restaurantList all the known restaurants.
+     * @param searchWord the word that is written in the search field.
+     * @return returns a list with the restaurant that matched the search word.
+     * If search word is empty or contains only whitespace the whole list is returned.
+     */
+    public List<Restaurant> filter(List<Restaurant> restaurantList, String searchWord) {
+
+        // Splits search word and removes all whitespace from the beginning.
 
         int indexOfFirstLetter = 0;
         String[] stringBlocks = searchWord.split("");
@@ -30,6 +41,7 @@ public class SearchLogic {
             newSearchWord = newSearchWord + stringBlocks[i];
         }
 
+        //Splits search word and removes all whitespace from the end.
         int indexOfLastLetter = 0;
 
         stringBlocks = newSearchWord.split("");
@@ -46,8 +58,10 @@ public class SearchLogic {
             searchWordwithoutWhitespace = searchWordwithoutWhitespace + stringBlocks[i];
         }
 
+        // Check if the search field is empty or contains only whitespace.
         if (searchWordwithoutWhitespace.equals(" ") || searchWordwithoutWhitespace.equals("")) return restaurantList;
 
+        // Check if the search word match any of the restaurants.
         List<Restaurant> copy = new ArrayList<>();
         searchWordwithoutWhitespace = searchWordwithoutWhitespace.toUpperCase();
 
