@@ -92,14 +92,16 @@ public class MainApp extends Application {
 		}
 		mapControl.updateView(this.restaurantsFromDb);
 	}
-	
+
+	/**
+	 * method to fix restaurant coordinates to database, only used when necessary
+	 * @return true, is successful
+	 */
     private boolean fixCoordinates() {
-        boolean success = false;
         RestaurantDAO dao = new RestaurantDAO();
 
-        // korjattavat id 49, 106, 110, 142, 161, 285
         Restaurant r = new Restaurant(285, 22.279710);
-        dao.updateRestaurant(r);
+        boolean success = dao.updateRestaurant(r);
         
         return success;
     }
@@ -113,7 +115,6 @@ public class MainApp extends Application {
     
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		launch(args);
 	}
 

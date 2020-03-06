@@ -11,14 +11,11 @@ import java.util.regex.Pattern;
 
 public class SearchLogic {
 
-
     public SearchLogic() {
 
     }
 
-
     public List<Restaurant> Search(List<Restaurant> restaurantList, String searchWord) {
-
 
         int indexOfFirstLetter = 0;
         String[] stringBlocks = searchWord.split("");
@@ -35,7 +32,6 @@ public class SearchLogic {
 
         int indexOfLastLetter = 0;
 
-
         stringBlocks = newSearchWord.split("");
 
         for (int i = stringBlocks.length - 1; i > 0; i--) {
@@ -50,11 +46,7 @@ public class SearchLogic {
             searchWordwithoutWhitespace = searchWordwithoutWhitespace + stringBlocks[i];
         }
 
-
         if (searchWordwithoutWhitespace.equals(" ") || searchWordwithoutWhitespace.equals("")) return restaurantList;
-
-
-
 
         List<Restaurant> copy = new ArrayList<>();
         searchWordwithoutWhitespace = searchWordwithoutWhitespace.toUpperCase();

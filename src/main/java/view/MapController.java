@@ -69,11 +69,11 @@ public class MapController implements Initializable, MapComponentInitializedList
 	}
 
 	/**
-	 * Event handler for restaurant filter togglel button
+	 * Event handler for restaurant filter toggle button
 	 * if toggle is on, will change button text to "Restaurant filter ON"
 	 * and call updateView with limited restaurant list
 	 * if not, text set to "Restaurant filter OFF" and call updateView with list including all restaurants
-	 * @param event
+	 * @param event - event when button is toggled
 	 */
 	@FXML protected void handleFilterToggle(ActionEvent event) {
 		// tähän filtterin kytkimen logiikka

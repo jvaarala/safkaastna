@@ -32,9 +32,7 @@ public class Restaurant {
     @Column
     private double lng;
 
-    public Restaurant() {
-
-    }
+    public Restaurant() { }
 
     public Restaurant (int id, double lng) {
         this.lng = lng;
@@ -94,9 +92,7 @@ public class Restaurant {
         this.www = www;
     }
 
-    public String getAdmin() {
-        return admin;
-    }
+    public String getAdmin() { return admin; }
 
     public void setAdmin(String admin) {
         this.admin = admin;
@@ -106,9 +102,7 @@ public class Restaurant {
         return admin_www;
     }
 
-    public void setAdmin_www(String admin_www) {
-        this.admin_www = admin_www;
-    }
+    public void setAdmin_www(String admin_www) { this.admin_www = admin_www; }
 
     public int getId() { return id; }
 
