@@ -100,3 +100,17 @@ Cafe Fänriken
       "admin_www": "http://www.abo.fi/karen/index.php?page=matlistor",
       "lat": 60.456918,
       "lng": 22.282021
+
+FIX 3.3.2020
+
+    {
+      "name": "CAFÉ ANN-MARI",
+      "address": "PB 311, STRANDGATAN 2",
+      "postal_code": "65101",
+      "city": "VAASA",
+      "www": "",
+      "admin": "ISS PALVELUT OY/CATERING SERVICES",
+      "admin_www": "",
+      "lat": 63.098206,
+      "lng": 21.601253
+    }
