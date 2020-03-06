@@ -47,60 +47,86 @@ public class MapController implements Initializable, MapComponentInitializedList
 	@FXML private ObservableList<String> items = FXCollections.observableArrayList();
 	@FXML private AnchorPane mapContainer;
 	@FXML private TextField searchTextBox;
+	@FXML private Button searchButton;
 	@FXML private CheckBox checkBox;
-	@FXML private ToggleButton filterToggle;
+	@FXML private ToggleButton filterToggleButton;
 	@FXML private GoogleMapView mapView = new GoogleMapView();
 	private GoogleMap map;
 	private SearchLogic search = new SearchLogic();
+	private String textInSearchField;
 
 	/**
-	 * FXML method for handling search box
+	 * FXML method for getting text content from search box
 	 * @param keyEvent - Listens to every keystroke on input field
 	 */
 	@FXML
 	protected void handleSearchBar(KeyEvent keyEvent) {
-		String textInSearchField = searchTextBox.getText();
-		List<Restaurant> foundRestaurants = search.Search(mainApp.getRestaurants(), textInSearchField);
-		updateView(foundRestaurants);
-	}
-
-	/**
-	 * FXML method for handling the 'Searching for an address'-checkbox
-	 * @param event Listens to every click on checkbox
-	 */
-	@FXML protected void handleCheckbox(ActionEvent event) {
-		String textInSearchField = searchTextBox.getText();
-		if (checkBox.isSelected()) {
-			LatLong ll = fetchGoogleCoordinates(textInSearchField);
-			focusMapOnCoordinate(ll, textInSearchField);
+		textInSearchField = searchTextBox.getText();
+		if (filterToggleButton.isSelected()) {
+			List<Restaurant> foundRestaurants = search.Search(mainApp.getRestaurants(), textInSearchField);
+			updateView(foundRestaurants);
 		}
 	}
 
+	/**
+	 * Event handler for restaurant filter togglel button
+	 * if toggle is on, will change button text to "Restaurant filter ON"
+	 * and call updateView with limited restaurant list
+	 * if not, text set to "Restaurant filter OFF" and call updateView with list including all restaurants
+	 * @param event
+	 */
 	@FXML protected void handleFilterToggle(ActionEvent event) {
 		// tähän filtterin kytkimen logiikka
-	}
-
-	@FXML
-	protected void handleEsimButtonAction(ActionEvent event) {
-		// esimerkki napin handlerista
-		System.out.println("nappia painettu");
+		textInSearchField = searchTextBox.getText();
+		if(filterToggleButton.isSelected()) {
+			filterToggleButton.setText("Restaurant filter ON");
+			System.out.println("filter ON");
+			List<Restaurant> foundRestaurants = search.Search(mainApp.getRestaurants(), textInSearchField);
+			updateView(foundRestaurants);
+		} else {
+			filterToggleButton.setText("Restaurant filter OFF");
+			System.out.println("filter OFF ");
+			updateView(mainApp.getRestaurants());
+		}
 	}
 
 	/**
-	 * // TODO EN OSAA KUVATA TÄTÄ!
+	 * Event handler for search button
+	 * If toggle button for restaurant filtering is not selected, will continue to fetchCoordinates() &
+	 * focusMapOnCoordinate()
+	 * @param event
+	 */
+	@FXML
+	protected void handleSearchButton(ActionEvent event) {
+		System.out.println("nappia painettu");
+		if (!filterToggleButton.isSelected()) {
+			LatLong ll = fetchGoogleCoordinates(textInSearchField);
+			focusMapOnCoordinate(ll, textInSearchField);
+		} else {
+			System.out.println("FiltertoggleSTATUS " + filterToggleButton.isSelected());
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("RESTAURANT NOT FOUND");
+			alert.setHeaderText("Restaurant filter is ON");
+			alert.setContentText("If you want to search address, toggle restaurant filter off'");
+			alert.show();
+		}
+	}
+
+	/**
+	 * Initial setup for application.
+	 * sets content to observable list,
+	 * adds map to mapcontainer and sets api key for google api calls
 	 * @param location
 	 * @param resources
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("perkl init start");
 		listViewNames.setItems(items);
 
 		mapContainer.getChildren().add(mapView);
 
 		mapView.addMapInializedListener(this);
 		mapView.setKey(api);
-		System.out.println("perkl init end");
 	}
 
 	/**
@@ -169,7 +195,13 @@ public class MapController implements Initializable, MapComponentInitializedList
 
 			// Create InfoWindow for each marker
 			InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-			infoWindowOptions.content(restaurant.getName());
+			infoWindowOptions.content(
+					restaurant.getName() + " " +
+					restaurant.getAddress() + " " +
+					restaurant.getCity() + " " +
+					restaurant.getAdmin() + " " +
+					restaurant.getAdmin_www());
+			infoWindowOptions.maxWidth(300);
 			InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
 
 			// ClickListener for InfoWindow
@@ -183,6 +215,11 @@ public class MapController implements Initializable, MapComponentInitializedList
 
 		// Set ObservableList to ListView
 		listViewNames.setItems(items);
+		if(restaurants.size() < 20) {
+			focusMapOnRestaurant(restaurants.get(0));
+		} else {
+			map.setCenter(new LatLong(60.192059, 24.945831));
+		}
 		System.out.println("UPDATE MAPS DONE");
 	}
 

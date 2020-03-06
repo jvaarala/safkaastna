@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
@@ -30,22 +29,17 @@
                     <children>
                   <HBox>
                      <children>
-                              <TextField fx:id="searchTextBox" onKeyReleased="#handleSearchBar" promptText="Hae" styleClass="root">
+                              <TextField fx:id="searchTextBox" onKeyReleased="#handleSearchBar" promptText="Type searchword" styleClass="root">
                                   <padding>
                                       <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
                                   </padding>
                               </TextField>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Button" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="searchButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSearchButton" text="Find" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                   <HBox>
                      <children>
-                              <CheckBox fx:id="checkBox" mnemonicParsing="false" onAction="#handleCheckbox">
-                                  <padding>
-                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                  </padding>
-                              </CheckBox>
-                        <ToggleButton fx:id="filterToggleButton" mnemonicParsing="false" onAction="#handleFilterToggle" text="Filter" />
+                        <ToggleButton fx:id="filterToggleButton" mnemonicParsing="false" onAction="#handleFilterToggle" text="Filter restaurants" />
                      </children>
                   </HBox>
                     </children>

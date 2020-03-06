@@ -24,6 +24,7 @@ public class MainApp extends Application {
 	private List<Restaurant> restaurantsFromDb;
 	private OptionsBarController optionsControl;
 	private MapController mapControl;
+	private Scene scene;
 
 
 	@Override
@@ -43,7 +44,8 @@ public class MainApp extends Application {
 		mainScreen = new BorderPane();
 		primaryStage.setWidth(1200);
 		primaryStage.setHeight(768);
-		primaryStage.setScene(new Scene(mainScreen));
+		scene = new Scene(mainScreen);
+		primaryStage.setScene(scene);
         primaryStage.show();
 	}
 	
@@ -115,5 +117,8 @@ public class MainApp extends Application {
 		launch(args);
 	}
 
+	public Scene getScene() {
+		return scene;
+	}
 	
 }
