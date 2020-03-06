@@ -215,7 +215,7 @@ public class MapController implements Initializable, MapComponentInitializedList
 
 		// Set ObservableList to ListView
 		listViewNames.setItems(items);
-		if(restaurants.size() < 20) {
+		if(restaurants.size() < 20 && restaurants.size() != 0) {
 			focusMapOnRestaurant(restaurants.get(0));
 		} else {
 			mapView.setCenter(60.192059, 24.945831);
