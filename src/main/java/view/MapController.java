@@ -218,7 +218,8 @@ public class MapController implements Initializable, MapComponentInitializedList
 		if(restaurants.size() < 20) {
 			focusMapOnRestaurant(restaurants.get(0));
 		} else {
-			map.setCenter(new LatLong(60.192059, 24.945831));
+			mapView.setCenter(60.192059, 24.945831);
+			mapView.setZoom(12);
 		}
 		System.out.println("UPDATE MAPS DONE");
 	}
