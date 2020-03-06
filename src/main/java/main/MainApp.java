@@ -45,6 +45,7 @@ public class MainApp extends Application {
 		primaryStage.setWidth(1200);
 		primaryStage.setHeight(768);
 		scene = new Scene(mainScreen);
+		scene.getStylesheets().add("Styles.css");
 		primaryStage.setScene(scene);
         primaryStage.show();
 	}

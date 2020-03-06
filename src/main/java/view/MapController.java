@@ -146,6 +146,7 @@ public class MapController implements Initializable, MapComponentInitializedList
 		AnchorPane.setRightAnchor(mapView, 0.0);
 		AnchorPane.setBottomAnchor(mapView, 0.0);
 		AnchorPane.setLeftAnchor(mapView, 0.0);
+		filterToggleButton.getStyleClass().add("myButton");
 		map = mapView.createMap(mapOptions);
 
 		// Prints LatLong according to map click to console
