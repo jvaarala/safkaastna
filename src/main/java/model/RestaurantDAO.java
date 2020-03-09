@@ -121,12 +121,14 @@ public class RestaurantDAO {
             // features to be changed
             int id = restaurant.getId();
             double lng = restaurant.getLng();
+            double lat = restaurant.getLat();
 
             Restaurant r = (Restaurant) session.get(Restaurant.class, id);
 
             if (r != null) {
                 // r.setFeature(feature);
                 r.setLng(lng);
+                r.setLat(lat);
                 success = true;
                 transaction.commit();
             }

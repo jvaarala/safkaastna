@@ -37,7 +37,9 @@ public class MainApp extends Application {
 		initConnection(this.mainScreen);
 
 		initMap(this.mainScreen);
-		
+
+//		boolean success = fixCoordinates();
+//		System.out.println("Onnistuiko: " + success);
 	}
 	
 	public void initRootLayout() {
@@ -101,7 +103,8 @@ public class MainApp extends Application {
     private boolean fixCoordinates() {
         RestaurantDAO dao = new RestaurantDAO();
 
-        Restaurant r = new Restaurant(285, 22.279710);
+        // 63.673905, 22.705228
+        Restaurant r = new Restaurant(105, 63.673905, 22.705228);
         boolean success = dao.updateRestaurant(r);
         
         return success;

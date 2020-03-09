@@ -34,8 +34,8 @@ class RestaurantDAOTest {
     @BeforeAll
     public static void setup() {
         rMock = mock(Restaurant.class);
-        r1 = new Restaurant(1, 33.33);
-        r2 = new Restaurant(2, 66.66);
+        r1 = new Restaurant(1, 33.33, 62.3);
+        r2 = new Restaurant(2, 66.66, 63.2);
         restaurants = Arrays.asList(r1, r2);
     }
 
