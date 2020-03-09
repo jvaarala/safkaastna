@@ -96,6 +96,7 @@ public class MapController implements Initializable, MapComponentInitializedList
 	 * focusMapOnCoordinate()
 	 * @param event
 	 */
+
 	@FXML
 	protected void handleSearchButton(ActionEvent event) {
 		System.out.println("nappia painettu");
