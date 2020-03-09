@@ -6,13 +6,12 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Restaurant;
 import model.RestaurantDAO;
-import view.MapController;
+import view.MainViewController;
 import view.OptionsBarController;
 
 
@@ -23,7 +22,7 @@ public class MainApp extends Application {
 	
 	private List<Restaurant> restaurantsFromDb;
 	private OptionsBarController optionsControl;
-	private MapController mapControl;
+	private MainViewController mapControl;
 	private Scene scene;
 
 
@@ -73,7 +72,7 @@ public class MainApp extends Application {
 	
 	public void initMap(BorderPane mainScreen) {
 		FXMLLoader loader = new FXMLLoader();
-		URL centerMap = getClass().getResource("/fxml_example.fxml");
+		URL centerMap = getClass().getResource("/MainViewController.fxml");
 		loader.setLocation(centerMap);
 		try {
 			AnchorPane mapPane = (AnchorPane) loader.load();

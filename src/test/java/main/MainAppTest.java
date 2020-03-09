@@ -10,11 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Restaurant;
-import view.MapController;
+import view.MainViewController;
 import view.OptionsBarController;
 
 class MainAppTest extends Application  {
@@ -26,7 +25,7 @@ class MainAppTest extends Application  {
 	
 	private List<Restaurant> restaurantsFromDb;
 	private OptionsBarController optionsControl;
-	private MapController mapControl;
+	private MainViewController mapControl;
 	
 	
 	@BeforeAll

@@ -32,7 +32,7 @@ import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class MapController implements Initializable, MapComponentInitializedListener {
+public class MainViewController implements Initializable, MapComponentInitializedListener {
 
 	private MainApp mainApp;
 

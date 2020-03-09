@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class OptionsBarControllerTest {
 	private static OptionsBarController controller;
 	private static main.MainApp pseudoMain;
-	private static view.MapController pseudoMapControl;
+	private static MainViewController pseudoMapControl;
 
 	@BeforeAll
 	static void BeforeAll() {
