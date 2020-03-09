@@ -2,18 +2,63 @@ root {
     display: block;
 }
 
-.root {
-     -fx-background-image: url("background.jpg");
-}
-
 .button {
-    -fx-text-fill: white;
-    -fx-font-family: "Arial Narrow";
-    -fx-font-weight: bold;
-    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: #9AC5E6;
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+    -fx-background-color: #80A4BF;
+}
+
+.button:disabled {
+    -fx-background-color: #A5B2C0;
+}
+
+.button:selected {
+
+}
+
+.toggle-button {
+    -fx-background-color: #B3B8C2;
+    -fx-background-radius: 7px 7px 0 0;
+}
+
+#searchButton {
+    -fx-background-radius: 0px 7px 7px 0;
+}
+
+#searchField {
+    -fx-background-radius: 7px 0 0 7px;
+}
+
+.toggle-button:hover {
+    -fx-background-color: #80A4BF;
+}
+
+.toggle-button:hover:selected {
+    -fx-background-color: #80A4BF;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #9AC5E6;
+}
+
+.indexed-cell {
+    -fx-ellipsis-string: "...";
+    -fx-text-overrun: clip;
+}
+
+.list-cell {
+    -fx-cell-size: 40px;
+    -fx-background-color: white;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: #9AC5E6;
+    -fx-text-fill: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #80A4BF;
+    -fx-text-fill: white;
 }

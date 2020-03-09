@@ -67,9 +67,11 @@ public class SearchLogic {
 
         for (Restaurant restaurant : restaurantList) {
            String restaurantName = restaurant.getName().toUpperCase();
-            if (restaurantName.contains(searchWordwithoutWhitespace)) {
+           String restaurantCity = restaurant.getCity().toUpperCase();
+            if (restaurantName.contains(searchWordwithoutWhitespace) || restaurantCity.contains(searchWordwithoutWhitespace)) {
                 copy.add(restaurant);
             }
+
         }
         return copy;
     }

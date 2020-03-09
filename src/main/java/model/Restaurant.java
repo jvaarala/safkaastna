@@ -34,8 +34,9 @@ public class Restaurant {
 
     public Restaurant() { }
 
-    public Restaurant (int id, double lng) {
+    public Restaurant (int id, double lat, double lng) {
         this.lng = lng;
+        this.lat = lat;
         this.id = id;
     }
 
