@@ -165,7 +165,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 	}
 
 	/**
-	 * Update ListView & map elements according to a list of restaurants
+	 * Update ListView and map elements according to a list of restaurants
 	 * @param restaurants - List of restaurants to be iterated through
 	 *                    Names are set on ListView and Markers are set on map on restaurants location
 	 */
