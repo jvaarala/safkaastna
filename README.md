@@ -22,7 +22,7 @@ Original database can accessed only from educational private network of Metropol
 1. Clone project
 2. Set up SQL database - Raw data can be found in /restaurantRawData230120.json - file can be added to your database with code found below:
   
-  private static void readJSON() throws Exception {
+```java private static void readJSON() throws Exception {
         RestaurantDAO dao = new RestaurantDAO();
         File file = new File("/Users/katriaho/IdeaProjects/safkaastna/restaurantRawData230120.json");
         String content = FileUtils.readFileToString(file, "utf-8");
@@ -54,6 +54,7 @@ Original database can accessed only from educational private network of Metropol
         }
 
     }
+```
 
 3. Modify src/main/resources/hibernate.cfg.xml file to address your own SQL-database:
         <property name="hibernate.connection.url">jdbc:mysql://YOUR_DATABASE_ADDRESS</property>

@@ -40,7 +40,10 @@ public class MainViewController implements Initializable, MapComponentInitialize
 	 * Google maps api key is written on a separate, local file
 	 * Dotenv handles retrieving apikey and it is stored on a variable
 	 */
-	private Dotenv dotenv = Dotenv.load();
+	private Dotenv dotenv = Dotenv
+			.configure()
+			.ignoreIfMissing()
+			.load();
 	private String api = dotenv.get("APIKEY");
 
 	@FXML private ListView<String> listViewNames;
@@ -48,7 +51,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
 	@FXML private AnchorPane mapContainer;
 	@FXML private TextField searchTextBox;
 	@FXML private Button searchButton;
-	@FXML private CheckBox checkBox;
 	@FXML private ToggleButton filterToggleButton;
 	@FXML private GoogleMapView mapView = new GoogleMapView();
 	private GoogleMap map;
@@ -76,7 +78,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
 	 * @param event - event when button is toggled
 	 */
 	@FXML protected void handleFilterToggle(ActionEvent event) {
-		// tähän filtterin kytkimen logiikka
 		textInSearchField = searchTextBox.getText();
 		if(filterToggleButton.isSelected()) {
 			filterToggleButton.setText("Restaurant filter ON");
@@ -248,6 +249,9 @@ public class MainViewController implements Initializable, MapComponentInitialize
 	 */
 	private LatLong fetchGoogleCoordinates(String s) {
 
+		if (s == "") {
+			return null;
+		}
 		// Format string to be usable as a part of search url
 		String sWithoutSpaces = s
 				.replace(",", "")
