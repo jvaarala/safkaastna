@@ -9,29 +9,74 @@ import main.MainApp;
 import model.RestaurantDAO;
 import model.Restaurant;
 
+/**
+ * OptionsBarController controls connection and help functions, which are used by connection button and help button.
+ */
 public class OptionsBarController {
 
+	/**
+	 * RestaurantsDAO is the database service class Connect and Help buttons.
+	 */
 	private RestaurantDAO db_data;
 	private List<Restaurant> restaurantsFromDb;
-	private String helpText = "ApuaApua";
 	private MainApp mainApp;
+	
+	private String helpText = "SafkaaSTNA is a Java Desktop application desingned for students searching for student restaurants. \n"
+			+ " \n"
+			+ "With the this appliaction you can:\n"
+			+ "- See all available student restaurants in Finland:\n"
+			+ "		- Default view on app start\n"
+			+ "- Search for restaurants near your or any address\n"
+			+ "		- Turn \"Restaurant Filter\" off (default)\n"
+			+ "		- Write address, then press \"Find\" \n"
+			+ "- Search for restaurants by name \n"
+			+ "		- Turn \"Restaurant Filter\" on\n"
+			+ "		- Write restaurant name\n"
+			+ "- See additional information on each restaurant \n"
+			+ "		- Click a restaurants red marker";
 
-	private void popupAlert(String text) {
+
+
+	/**
+	 * Pop-up template for problem events
+	 * @param text
+	 * @param title
+	 */
+	private void popupAlert(String text, String title) {
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("CONNECTION ERROR");
+		alert.setTitle(title);
 		alert.setHeaderText("Error occured while fetching data");
 		alert.setContentText(text);
 		alert.show();
 	}
+	
+	/**
+	 * Pop-up template for help/information dialogs
+	 * @param text
+	 * @param title
+	 */
+	private void popupInfo(String text, String title) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(text);
+		alert.show();
+	}
 
+	/**
+	 * Initiates a fresh connection
+	 */
 	public void initConnection() {
 		this.db_data = new RestaurantDAO();
 	}
 
+	/**
+	 * Fetches restaurant data from database and gives it to MainApp.
+	 * @return boolean - true if fetch succeeded, false if not.
+	 */
 	public boolean getData() {
 		try {
 			restaurantsFromDb = db_data.readRestaurants();
-			System.out.println("perkele Saatana "+restaurantsFromDb.size());
 			mainApp.setRestaurants(restaurantsFromDb);
 			return true;
 		} catch (NullPointerException e) {
@@ -39,22 +84,28 @@ public class OptionsBarController {
 		}
 	}
 
+	
+	/**
+	 * Initiates a fresh connection and gets all restaurants from database
+	 * @return boolean - true if restaurants updated, false if failed
+	 */
 	@FXML
 	public boolean getRestaurants() {
 		initConnection();
 		boolean success = getData();
 		if(!success) {
-			popupAlert("NO CONNECTION TO DATABASE, FAILED TO FETCH RESTAURANTS");
+			popupAlert("NO CONNECTION TO DATABASE, FAILED TO FETCH RESTAURANTS", "CONNECTION ERROR");
 			return false;
 		}
 		return true;
 
 	}
 
-	@FXML
-	/*
+	/**
 	 * Initiates new connection and updates rendered map
+	 * @return boolean - true if succeeded, false if failed
 	 */
+	@FXML
 	public boolean Refresh() {
 		boolean gotRestaurants = getRestaurants();
 		if (!gotRestaurants) {
@@ -65,13 +116,20 @@ public class OptionsBarController {
 		return true;
 	}
 
+	/**
+	 * Used to give a reference to the mainApp for this controller. 
+	 * Should be done after controller initialisation, before using any of its functions.
+	 * @param mainApp
+	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
 
+	/**
+	 * Help button function that pops help dialog with instructions.
+	 */
 	@FXML
 	public void Help() {
-		// check what the popup window thing was
-		System.out.println(helpText);
+		popupInfo(helpText, "SafkaaSTNA Help");
 	}
 }

@@ -1,14 +1,12 @@
 package model;
 
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+
+/**
+ * SearchLogic class controls data filtering logic functions.
+ */
 public class SearchLogic {
 
     public SearchLogic() {

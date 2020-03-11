@@ -15,6 +15,7 @@ class MainViewControllerTest extends ApplicationTest {
 
     @BeforeAll
     public static void setup() {
+    	/*
         MainViewController mainViewController = new MainViewController();
         Restaurant mockRestaurant = mock(Restaurant.class);
         List<Restaurant> restaurants = Arrays.asList(mockRestaurant);
@@ -22,7 +23,7 @@ class MainViewControllerTest extends ApplicationTest {
         String restaurantName = "Test name";
         mainViewController.updateView(restaurants);
 
-
+		*/
     }
 
     @Test
