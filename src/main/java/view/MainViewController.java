@@ -84,12 +84,12 @@ public class MainViewController implements Initializable, MapComponentInitialize
 		textInSearchField = searchTextBox.getText();
 		if(filterToggleButton.isSelected()) {
 			filterToggleButton.setText("Restaurant filter ON");
-			System.out.println("filter ON");
+//			System.out.println("filter ON");
 			List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), textInSearchField);
 			updateView(foundRestaurants);
 		} else {
 			filterToggleButton.setText("Restaurant filter OFF");
-			System.out.println("filter OFF ");
+//			System.out.println("filter OFF ");
 			updateView(mainApp.getRestaurants());
 		}
 	}
@@ -103,12 +103,10 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
 	@FXML
 	protected void handleSearchButton(ActionEvent event) {
-		System.out.println("nappia painettu");
 		if (!filterToggleButton.isSelected()) {
 			LatLong ll = fetchGoogleCoordinates(textInSearchField);
 			focusMapOnCoordinate(ll, textInSearchField);
 		} else {
-			System.out.println("FiltertoggleSTATUS " + filterToggleButton.isSelected());
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("RESTAURANT NOT FOUND");
 			alert.setHeaderText("Restaurant filter is ON");
@@ -142,7 +140,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
 	@Override
 	public void mapInitialized() {
 		// Set the initial properties of the map.
-		System.out.println("perkl1");
 		MapOptions mapOptions = new MapOptions();
 
 		mapOptions.overviewMapControl(false).panControl(false).rotateControl(false).scaleControl(false)
@@ -157,7 +154,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 		// Prints LatLong according to map click to console
 		map.addUIEventHandler(UIEventType.click, (JSObject obj) -> {
 			LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
-			System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
+//			System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
 		});
 
 		map.setCenter(new LatLong(60.192059, 24.945831));
@@ -171,7 +168,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
 	 */
 	public void updateView(List<Restaurant> restaurants) {
 		// Empty list & clear markers
-		System.out.println("UPDATE IN PROGRESS FOR MAPS");
 		listViewNames.getItems().clear();
 		List<Marker> restaurantMarkers = new ArrayList<>();
 		map.clearMarkers();
@@ -180,7 +176,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 		listViewNames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null) {
 				Restaurant restaurantToFind = new Restaurant();
-				System.out.println(newValue);
+//				System.out.println(newValue);
 				for (int i = 0; i < restaurants.size(); i++) {
 					if (restaurants.get(i).getName().equals(newValue)) {
 						restaurantToFind = restaurants.get(i);
@@ -227,7 +223,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
 			mapView.setCenter(60.192059, 24.945831);
 			mapView.setZoom(12);
 		}
-		System.out.println("UPDATE MAPS DONE");
 	}
 
 	public void setMainApp(MainApp mainApp) {
@@ -303,7 +298,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
 			JSONObject location = geometry.getJSONObject("location");
 			ll = new LatLong(location.getDouble("lat"), location.getDouble("lng"));
 		}
-		System.out.println("fetch loppu");
 		return ll;
 	}
 

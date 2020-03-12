@@ -34,7 +34,7 @@ public class MainApp extends Application {
 		this.primaryStage.setTitle("SafkaaSTNA");
 		
 		initRootLayout();
-		
+
 		initConnection(this.mainScreen);
 
 		initMap(this.mainScreen);
@@ -107,21 +107,14 @@ public class MainApp extends Application {
 		mapControl.updateView(this.restaurantsFromDb);
 	}
 
-	   
     public void setRestaurants(List<Restaurant> restaurantsDB) {
     	this.restaurantsFromDb = restaurantsDB;
     }
     public List<Restaurant> getRestaurants() {
     	return this.restaurantsFromDb;
     }
-    
-
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		launch(args);
 	}
 
-	public Scene getScene() {
-		return scene;
-	}
-	
 }
