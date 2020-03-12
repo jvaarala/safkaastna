@@ -5,43 +5,52 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 import javafx.application.Application;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Restaurant;
-import view.MainViewController;
-import view.OptionsBarController;
+
+
 
 class MainAppTest extends Application  {
-	private MainApp mainApp;
+	static MainApp mainApp;
 	private List<Restaurant> tempList;
-	
 
 	private BorderPane mainScreen;
-	
-	private List<Restaurant> restaurantsFromDb;
-	private OptionsBarController optionsControl;
-	private MainViewController mapControl;
-	
+	static Thread fx;
 	
 	@BeforeAll
 	public static void initJFX() {
-        Thread fx = new Thread("JavaFX Init Thread") {
-            @Override
-            public void run() {
-                Application.launch(MainAppTest.class, new String[0]);
-            }
-        };
-        fx.setDaemon(true);
-        fx.start();
+
+			fx = new Thread("JavaFX Init Thread") {
+	            @Override
+	            public void run() {
+	            	try {
+	            		Application.launch(MainAppTest.class, new String[0]);
+	            	} catch (Exception e) {
+	            	}
+
+	            }
+	        };
+	        
+	        fx.setDaemon(true);
+	        fx.start();
 	}
 	
+	@AfterAll
+	public static void stopJFX() {
+		fx.interrupt();
+	}
+
+	
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage)  {
 	}
 	
 
@@ -59,9 +68,8 @@ class MainAppTest extends Application  {
                 23.3876387);
 		tempList = new ArrayList<Restaurant>();
 		tempList.add(temp);
-		mainApp = new MainApp();
 		mainScreen = new BorderPane();
-
+		mainApp = new MainApp();
 	}
 	
 	@Test
@@ -74,5 +82,4 @@ class MainAppTest extends Application  {
 	void initConnection() {
 		mainApp.initConnection(this.mainScreen);
 	}
-	
 }
