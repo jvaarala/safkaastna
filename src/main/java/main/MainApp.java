@@ -93,13 +93,14 @@ public class MainApp extends Application {
 
 			@Override
 			public void run() {
+				try {
 				if (mainApp.getRestaurants() == null) {
 					boolean success = mainApp.optionsControl.getRestaurants();
 					if (!success) {
 						return;
 					}
 				}
-				try {
+				
 					mapControl.updateView(mainApp.getRestaurants());
 				} catch (Exception e) {
 					Platform.runLater(this);
