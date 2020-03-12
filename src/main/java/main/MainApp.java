@@ -10,7 +10,6 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Restaurant;
-import model.RestaurantDAO;
 import view.MainViewController;
 import view.OptionsBarController;
 
@@ -26,21 +25,24 @@ public class MainApp extends Application {
 	private Scene scene;
 
 
+	/**
+	 * Controls the javafx components initialisation order.
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("SafkaaSaatana");
+		this.primaryStage.setTitle("SafkaaSTNA");
 		
 		initRootLayout();
 		
 		initConnection(this.mainScreen);
 
 		initMap(this.mainScreen);
-
-//		boolean success = fixCoordinates();
-//		System.out.println("Onnistuiko: " + success);
 	}
 	
+	/**
+	 * Initiates the root layout of the application.
+	 */
 	public void initRootLayout() {
 		mainScreen = new BorderPane();
 		primaryStage.setWidth(1200);
@@ -51,7 +53,10 @@ public class MainApp extends Application {
         primaryStage.show();
 	}
 	
-	
+	/**
+	 * Initialises the connection buttons and functions.
+	 * @param mainScreen
+	 */
 	public void initConnection(BorderPane mainScreen) {
 		FXMLLoader loader = new FXMLLoader();
 		URL connector = getClass().getResource("/OptionsBar.fxml");
@@ -60,7 +65,7 @@ public class MainApp extends Application {
 
 		try {
 			ToolBar connectBar = (ToolBar) loader.load();
-			mainScreen.setBottom(connectBar); //change to work with correct element
+			mainScreen.setBottom(connectBar);
 			
 	        this.optionsControl = loader.getController();
 	        this.optionsControl.setMainApp(this);
@@ -70,13 +75,17 @@ public class MainApp extends Application {
 		}
 	}
 	
+	/**
+	 * Initialises the google map view.
+	 * @param mainScreen
+	 */
 	public void initMap(BorderPane mainScreen) {
 		FXMLLoader loader = new FXMLLoader();
 		URL centerMap = getClass().getResource("/MainViewController.fxml");
 		loader.setLocation(centerMap);
 		try {
 			AnchorPane mapPane = (AnchorPane) loader.load();
-			mainScreen.setCenter(mapPane); //change to work with correct element
+			mainScreen.setCenter(mapPane);
 			this.mapControl = loader.getController();
 			this.mapControl.setMainApp(this);
 		} catch (IOException e) {
@@ -84,6 +93,9 @@ public class MainApp extends Application {
 		}
 	}
 	
+	/**
+	 * Used to re-render the maps data points. Call this when new restaurants are fetched from database.
+	 */
 	public void updateMap() {
 		if(this.restaurantsFromDb == null) {
 			boolean success = this.optionsControl.getRestaurants();
@@ -95,20 +107,7 @@ public class MainApp extends Application {
 		mapControl.updateView(this.restaurantsFromDb);
 	}
 
-	/**
-	 * method to fix restaurant coordinates to database, only used when necessary
-	 * @return true, is successful
-	 */
-    private boolean fixCoordinates() {
-        RestaurantDAO dao = new RestaurantDAO();
-
-        // 63.673905, 22.705228
-        Restaurant r = new Restaurant(105, 63.673905, 22.705228);
-        boolean success = dao.updateRestaurant(r);
-        
-        return success;
-    }
-    
+	   
     public void setRestaurants(List<Restaurant> restaurantsDB) {
     	this.restaurantsFromDb = restaurantsDB;
     }

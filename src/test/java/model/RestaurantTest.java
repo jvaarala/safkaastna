@@ -132,4 +132,10 @@ class RestaurantTest {
         r.setLng(23.05);
         assertEquals(23.05, r.getLng(), "setLng does not work");
     }
+    
+    @Test
+    void toStringTest() {
+    	String correctText = "Restaurant{id=666, name='name', address='address', postal_code=0, city='city', www='www', admin='admin', admin_www='adminwww', lat=62.8787878, lng=23.3876387}";
+    	assertEquals(correctText, r.toString(), "toString failure. Check for changes");
+    }
 }

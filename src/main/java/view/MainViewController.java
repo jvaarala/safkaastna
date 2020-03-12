@@ -32,6 +32,9 @@ import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 
+/**
+ * MainViewController Class controls the embedded google maps view.
+ */
 public class MainViewController implements Initializable, MapComponentInitializedListener {
 
 	private MainApp mainApp;
@@ -162,7 +165,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 	}
 
 	/**
-	 * Update ListView & map elements according to a list of restaurants
+	 * Update ListView and map elements according to a list of restaurants
 	 * @param restaurants - List of restaurants to be iterated through
 	 *                    Names are set on ListView and Markers are set on map on restaurants location
 	 */
@@ -327,7 +330,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 					continue;
 				}
 				for (int i = 0; i < word.length(); i++) {
-					char c = word.charAt(i);
+
 					if (i == 0) {
 						newString = newString + word.substring(i, i + 1).toUpperCase();
 					} else {
@@ -349,7 +352,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 			mapView.setCenter(ll.getLatitude(), ll.getLongitude());
 			mapView.setZoom(15);
 		} catch (Exception e ) {
-//			e.printStackTrace();
+
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("ADDRESS NOT FOUND");
 			alert.setHeaderText("No search results");

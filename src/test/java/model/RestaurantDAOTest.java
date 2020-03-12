@@ -65,7 +65,7 @@ class RestaurantDAOTest {
         when(sessionFactory.openSession())
                 .thenReturn(session);
         when(session.beginTransaction())
-                .thenThrow(new NullPointerException());
+        	.thenThrow(NullPointerException.class);
 
         boolean success = dao.createRestaurant(rMock);
 
@@ -109,7 +109,7 @@ class RestaurantDAOTest {
                 .thenReturn(transaction);
         Query queryMock = mock(Query.class);
         when(queryMock.getResultList())
-                .thenThrow(new NullPointerException());
+        	.thenThrow(NullPointerException.class);
         when(session.createQuery("from Restaurant"))
                 .thenReturn(queryMock);
 
@@ -146,7 +146,7 @@ class RestaurantDAOTest {
         when(session.beginTransaction())
                 .thenReturn(transaction);
         when(session.get(Restaurant.class, 1))
-                .thenThrow(new NullPointerException());
+        	.thenThrow(NullPointerException.class);
 
         boolean success = dao.updateRestaurant(r1);
 
@@ -180,7 +180,7 @@ class RestaurantDAOTest {
         when(session.beginTransaction())
                 .thenReturn(transaction);
         when(session.get(Restaurant.class, 1))
-                .thenThrow(new NullPointerException());
+        	.thenThrow(NullPointerException.class);
 
         boolean success = dao.deleteRestaurant(1);
         verify(session, times(0))
