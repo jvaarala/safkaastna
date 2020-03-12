@@ -36,7 +36,14 @@ public class OptionsBarController {
 			+ "		- Click a restaurants red marker";
 
 
-
+	/**
+	 * Used for mockit JUnit tests.
+	 * @param db_data
+	 */
+	public void setDB_DATA(RestaurantDAO db_data) {
+		this.db_data = db_data;
+	}
+	
 	/**
 	 * Pop-up template for problem events
 	 * @param text
@@ -132,4 +139,5 @@ public class OptionsBarController {
 	public void Help() {
 		popupInfo(helpText, "SafkaaSTNA Help");
 	}
+	
 }
