@@ -157,8 +157,9 @@ public class MainViewController implements Initializable, MapComponentInitialize
 		});
 
 		map.setCenter(new LatLong(60.192059, 24.945831));
-		this.mainApp.updateMap();
+		this.mainApp.firstMapUpdate();
 	}
+	
 
 	/**
 	 * Update ListView & map elements according to a list of restaurants
