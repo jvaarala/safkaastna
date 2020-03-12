@@ -60,8 +60,14 @@ Original database can accessed only from educational private network of Metropol
         <property name="hibernate.connection.url">jdbc:mysql://YOUR_DATABASE_ADDRESS</property>
         <property name="hibernate.connection.username">YOUR USERNAME</property>
         <property name="hibernate.connection.password">YOUR PASSWORD</property>
-        
-4. ENJOY!
+ 
+4. You need .env file on project root. Following needs to be written on the file:
+APIKEY='YOUR GOOGLE MAPS API KEY'
+
+You need to give environment variable as a parameter, when you run jar-file
+for example APIKEY='your api key' java -jar 'yourJarFile.jar'
+       
+5. ENJOY!
 
 
 
