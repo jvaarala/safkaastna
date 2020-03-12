@@ -23,7 +23,7 @@ class MainViewControllerTest extends ApplicationTest {
         String restaurantName = "Test name";
         mainViewController.updateView(restaurants);
 
-*/
+    	 */
     }
 
     @Test
