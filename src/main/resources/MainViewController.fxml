@@ -13,53 +13,43 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="view.MainViewController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainViewController">
     <children>
-        <AnchorPane fx:id="mapContainer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS"/>
-        <GridPane prefWidth="240.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="6.0"
-                  AnchorPane.topAnchor="15.0">
+        <AnchorPane fx:id="mapContainer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS" />
+        <GridPane prefWidth="240.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="15.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints prefHeight="40.0" vgrow="NEVER"/>
-                <RowConstraints maxHeight="1.7976931348623157E308"/>
-                <RowConstraints minHeight="10.0" prefHeight="250.0" vgrow="ALWAYS"/>
+                <RowConstraints prefHeight="40.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="1.7976931348623157E308" />
+                <RowConstraints minHeight="10.0" prefHeight="250.0" vgrow="ALWAYS" />
             </rowConstraints>
             <children>
-                <ListView fx:id="listViewNames" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                          GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS"/>
+                <ListView fx:id="listViewNames" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
                 <VBox GridPane.hgrow="ALWAYS">
                     <children>
                         <HBox>
                             <children>
-                                <TextField id="searchField" fx:id="searchTextBox" maxHeight="1.7976931348623157E308"
-                                           maxWidth="1.7976931348623157E308" onKeyReleased="#handleSearchBar"
-                                           promptText="Type searchword">
+                                <TextField id="searchField" fx:id="searchTextBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyReleased="#handleSearchBar" promptText="Type searchword">
                                     <padding>
-                                        <Insets bottom="15.0" left="5.0" right="5.0" top="15.0"/>
+                                        <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
                                     </padding>
                                 </TextField>
-                                <Button id="searchButton" fx:id="searchButton" maxHeight="1.7976931348623157E308"
-                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#handleSearchButton" text="Find" HBox.hgrow="ALWAYS"/>
+                                <Button id="searchButton" fx:id="searchButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSearchButton" text="Find" HBox.hgrow="ALWAYS" />
                             </children>
                         </HBox>
-                        <HBox/>
+                        <HBox />
                     </children>
                 </VBox>
-                <ToggleButton fx:id="filterToggleButton" mnemonicParsing="false" onAction="#handleFilterToggle"
-                              prefHeight="40.0" prefWidth="240.0" text="Filter restaurants" GridPane.hgrow="ALWAYS"
-                              GridPane.rowIndex="1">
+                <ToggleButton fx:id="filterToggleButton" mnemonicParsing="false" onAction="#handleFilterToggle" prefHeight="40.0" prefWidth="240.0" text="Filter restaurants" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                     <GridPane.margin>
-                        <Insets top="10.0"/>
+                        <Insets top="10.0" />
                     </GridPane.margin>
                 </ToggleButton>
-                <ScrollBar visible="false" GridPane.rowIndex="2"/>
+                <ScrollBar visible="false" GridPane.rowIndex="2" />
             </children>
         </GridPane>
+      <Button fx:id="locateNearestButton" mnemonicParsing="false" onAction="#handleLocateNearestButton" text="DEBUG NEAREST" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="2.0" />
     </children>
 </AnchorPane>

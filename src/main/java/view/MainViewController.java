@@ -7,11 +7,18 @@ import io.github.cdimascio.dotenv.Dotenv;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import main.MainApp;
 import model.Restaurant;
 
@@ -56,9 +63,11 @@ public class MainViewController implements Initializable, MapComponentInitialize
 	@FXML private Button searchButton;
 	@FXML private ToggleButton filterToggleButton;
 	@FXML private GoogleMapView mapView = new GoogleMapView();
+	@FXML private Button debugNearestButton;
 	private GoogleMap map;
 	private SearchLogic search = new SearchLogic();
 	private String textInSearchField;
+	private LatLong userLocation;
 
 	/**
 	 * FXML method for getting text content from search box
@@ -71,6 +80,48 @@ public class MainViewController implements Initializable, MapComponentInitialize
 			List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), textInSearchField);
 			updateView(foundRestaurants);
 		}
+	}
+
+
+	/*
+	TODO JESSE MOVE THIS TO YOUR NEW BUTTON, WHEN EXECUTED
+	 */
+	@FXML
+	protected void handleLocateNearestButton(ActionEvent event) {
+		if (userLocation == null) {
+			final Stage dialog = new Stage();
+			dialog.initModality(Modality.APPLICATION_MODAL);
+			dialog.initOwner(mainApp.getPrimaryStage());
+			VBox dialogVbox = new VBox(20);
+			dialogVbox.getChildren().add(new Text("Where are you? Type your address below"));
+			TextField startAddress = new TextField("Type address");
+			Button searchButton = new Button("Let's go!");
+			dialogVbox.getChildren().addAll(startAddress, searchButton);
+			Scene dialogScene = new Scene(dialogVbox, 300, 200);
+			dialog.setScene(dialogScene);
+			dialog.show();
+			searchButton.setOnAction(
+					event1 -> {
+						String address = startAddress.getText();
+						userLocation = fetchGoogleCoordinates(address);
+						dialog.close();
+						//		userLocation = new LatLong(60.240165, 24.042544);
+						focusMapOnCoordinate(userLocation, address);
+						findNearestAndFitBounds(mainApp.getRestaurants(), userLocation);
+					});
+		} else {
+			findNearestAndFitBounds(mainApp.getRestaurants(), userLocation);
+		}
+	}
+
+	public void findNearestAndFitBounds(List<Restaurant> restaurants, LatLong userLocation) {
+		//		userLocation = new LatLong(60.240165, 24.042544);
+		Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
+		System.out.println(nearest);
+		map.fitBounds(new LatLongBounds(userLocation, new LatLong(nearest.getLat(), nearest.getLng())));
+		// zoom out by 1 so that markers are not hidden behind ListView
+		int zoomValue = map.getZoom();
+		map.setZoom(zoomValue-1);
 	}
 
 	/**
@@ -104,8 +155,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
 	@FXML
 	protected void handleSearchButton(ActionEvent event) {
 		if (!filterToggleButton.isSelected()) {
-			LatLong ll = fetchGoogleCoordinates(textInSearchField);
-			focusMapOnCoordinate(ll, textInSearchField);
+			userLocation = fetchGoogleCoordinates(textInSearchField);
+			focusMapOnCoordinate(userLocation, textInSearchField);
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("RESTAURANT NOT FOUND");
