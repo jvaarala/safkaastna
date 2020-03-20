@@ -195,6 +195,11 @@ public class MainViewController implements Initializable, MapComponentInitialize
 			markerOptions.position(tempLatLong);
 			Marker tempMarker = new Marker(markerOptions);
 
+			/*
+
+
+			// THIS CODE IS DEPRECATED
+			//
 			// Create InfoWindow for each marker
 			InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
 			infoWindowOptions.content(
@@ -210,6 +215,13 @@ public class MainViewController implements Initializable, MapComponentInitialize
 			map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
 				infoWindow.open(map, tempMarker);
 			});
+			 */
+
+			map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
+				mainApp.setInfoText(restaurant.getName());
+			});
+
+
 
 			restaurantMarkers.add(tempMarker);
 		}

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import model.Restaurant;
 import view.MainViewController;
 import view.OptionsBarController;
+import view.SideBarController;
 
 
 public class MainApp extends Application {
@@ -22,6 +23,7 @@ public class MainApp extends Application {
 	private List<Restaurant> restaurantsFromDb;
 	private OptionsBarController optionsControl;
 	private MainViewController mapControl;
+	private SideBarController sidebarControl;
 	private Scene scene;
 
 
@@ -35,9 +37,9 @@ public class MainApp extends Application {
 		
 		initRootLayout();
 
-		initConnection(this.mainScreen);
-
-		initMap(this.mainScreen);
+		initOptionsBar(this.mainScreen);
+		initMainView(this.mainScreen);
+		initSideBar(this.mainScreen);
 	}
 	
 	/**
@@ -54,10 +56,10 @@ public class MainApp extends Application {
 	}
 	
 	/**
-	 * Initialises the connection buttons and functions.
+	 * Initialises the optionsbar.
 	 * @param mainScreen
 	 */
-	public void initConnection(BorderPane mainScreen) {
+	public void initOptionsBar(BorderPane mainScreen) {
 		FXMLLoader loader = new FXMLLoader();
 		URL connector = getClass().getResource("/OptionsBar.fxml");
 
@@ -74,14 +76,37 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * Initialises the google map view.
+	 * Initialises the sidebar.
 	 * @param mainScreen
 	 */
-	public void initMap(BorderPane mainScreen) {
+	public void initSideBar(BorderPane mainScreen) {
 		FXMLLoader loader = new FXMLLoader();
-		URL centerMap = getClass().getResource("/MainViewController.fxml");
+		URL connector = getClass().getResource("/SideBar.fxml");
+
+		loader.setLocation(connector);
+
+		try {
+			AnchorPane sideBar = (AnchorPane) loader.load();
+			mainScreen.setRight(sideBar);
+
+			this.sidebarControl = loader.getController();
+			this.sidebarControl.setMainApp(this);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	/**
+	 * Initialises the mainView with google maps.
+	 * @param mainScreen
+	 */
+	public void initMainView(BorderPane mainScreen) {
+		FXMLLoader loader = new FXMLLoader();
+		URL centerMap = getClass().getResource("/MainView.fxml");
 		loader.setLocation(centerMap);
 		try {
 			AnchorPane mapPane = (AnchorPane) loader.load();
@@ -115,6 +140,10 @@ public class MainApp extends Application {
     }
     public static void main(String[] args) {
 		launch(args);
+	}
+
+	public void setInfoText(String text) {
+		this.sidebarControl.setRestaurantName(text);
 	}
 
 }
