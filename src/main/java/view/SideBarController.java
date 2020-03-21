@@ -3,6 +3,7 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import main.MainApp;
+import model.Restaurant;
 
 
 public class SideBarController {
@@ -19,7 +20,7 @@ public class SideBarController {
      */
     public void setMainApp(MainApp mainApp) { this.mainApp = mainApp; }
 
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName.setText(restaurantName);
+    public void showRestaurantInfo(Restaurant restaurant) {
+        this.restaurantName.setText(restaurant.getName());
     }
 }

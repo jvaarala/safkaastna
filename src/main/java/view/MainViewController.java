@@ -7,10 +7,8 @@ import io.github.cdimascio.dotenv.Dotenv;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
@@ -45,6 +43,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class MainViewController implements Initializable, MapComponentInitializedListener {
 
 	private MainApp mainApp;
+	private SideBarController sidebarControl;
 
 	/**
 	 * Google maps api key is written on a separate, local file
@@ -118,8 +117,10 @@ public class MainViewController implements Initializable, MapComponentInitialize
 		//		userLocation = new LatLong(60.240165, 24.042544);
 		Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
 		System.out.println(nearest);
+
 		map.fitBounds(new LatLongBounds(userLocation, new LatLong(nearest.getLat(), nearest.getLng())));
 		// zoom out by 1 so that markers are not hidden behind ListView
+		System.out.println(map.getZoom());
 		int zoomValue = map.getZoom();
 		map.setZoom(zoomValue-1);
 	}
@@ -210,6 +211,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
 		map.setCenter(new LatLong(60.192059, 24.945831));
 		this.mainApp.updateMap();
+		this.sidebarControl = mainApp.getSidebarControl();
 	}
 
 	/**
@@ -269,7 +271,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 			 */
 
 			map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
-				mainApp.setInfoText(restaurant.getName());
+				sidebarControl.showRestaurantInfo(restaurant);
 			});
 
 

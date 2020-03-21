@@ -143,9 +143,7 @@ public class MainApp extends Application {
 	}
 
 
-	public void setInfoText(String text) {
-		this.sidebarControl.setRestaurantName(text);
-	}
+	public SideBarController getSidebarControl() { return sidebarControl; }
 
 	public Stage getPrimaryStage() {
 		return primaryStage;
