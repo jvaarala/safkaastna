@@ -63,6 +63,7 @@ Original database can accessed only from educational private network of Metropol
 ```
 
 4. You need Google Maps API key from https://developers.google.com/maps/documentation/javascript/get-api-key and .env file on project root with following content:
+
 ```APIKEY='YOUR GOOGLE MAPS API KEY'```
 
 You need to give environment variable as a parameter, when you run jar-file
