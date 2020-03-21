@@ -25,7 +25,8 @@ Original database can accessed only from educational private network of Metropol
 
 2. Set up SQL database and modify src/main/resources/hibernate.cfg.xml file to address your own SQL-database:
 
-```     <property name="hibernate.connection.url">jdbc:mysql://YOUR_DATABASE_ADDRESS</property>
+```     
+        <property name="hibernate.connection.url">jdbc:mysql://YOUR_DATABASE_ADDRESS</property>
         <property name="hibernate.connection.username">YOUR USERNAME</property>
         <property name="hibernate.connection.password">YOUR PASSWORD</property>
 ```
@@ -33,7 +34,8 @@ Original database can accessed only from educational private network of Metropol
 
 3. Raw data can be found in restaurantRawData210320.json - file can be added to your database with code found below:
   
-```java private static void readJSON() throws Exception {
+```
+java private static void readJSON() throws Exception {
         RestaurantDAO dao = new RestaurantDAO();
         File file = new File("restaurantRawData210320.json");
         String content = FileUtils.readFileToString(file, "utf-8");
