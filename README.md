@@ -20,11 +20,11 @@ If you are NOT a student at Metropolia University of Applied Sciences:
 Original database can accessed only from educational private network of Metropolia University of Applied Sciences. 
 
 1. Clone project
-2. Set up SQL database - Raw data can be found in /restaurantRawData230120.json - file can be added to your database with code found below:
+2. Set up SQL database - Raw data can be found in restaurantRawData210320.json - file can be added to your database with code found below:
   
 ```java private static void readJSON() throws Exception {
         RestaurantDAO dao = new RestaurantDAO();
-        File file = new File("/Users/katriaho/IdeaProjects/safkaastna/restaurantRawData230120.json");
+        File file = new File("restaurantRawData210320.json");
         String content = FileUtils.readFileToString(file, "utf-8");
 
         // Convert JSON string to JSONObject
