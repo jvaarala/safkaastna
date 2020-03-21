@@ -246,6 +246,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 			LatLong tempLatLong = new LatLong(restaurant.getLat(), restaurant.getLng());
 			MarkerOptions markerOptions = new MarkerOptions();
 			markerOptions.position(tempLatLong);
+			markerOptions.icon("https://users.metropolia.fi/~jessevaa/safkaa/151-placeholder-4-32px-darker.png");
 			Marker tempMarker = new Marker(markerOptions);
 
 			/*
