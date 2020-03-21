@@ -19,12 +19,25 @@ If you are NOT a student at Metropolia University of Applied Sciences:
 
 Original database can accessed only from educational private network of Metropolia University of Applied Sciences. 
 
+
 1. Clone project
-2. Set up SQL database - Raw data can be found in /restaurantRawData230120.json - file can be added to your database with code found below:
+
+
+2. Set up SQL database and modify src/main/resources/hibernate.cfg.xml file to address your own SQL-database:
+
+```     
+<property name="hibernate.connection.url">jdbc:mysql://YOUR_DATABASE_ADDRESS</property>
+<property name="hibernate.connection.username">YOUR USERNAME</property>
+<property name="hibernate.connection.password">YOUR PASSWORD</property>
+```
+
+
+3. Raw data can be found in restaurantRawData210320.json - file can be added to your database with code found below:
   
-```java private static void readJSON() throws Exception {
+```
+java private static void readJSON() throws Exception {
         RestaurantDAO dao = new RestaurantDAO();
-        File file = new File("/Users/katriaho/IdeaProjects/safkaastna/restaurantRawData230120.json");
+        File file = new File("restaurantRawData210320.json");
         String content = FileUtils.readFileToString(file, "utf-8");
 
         // Convert JSON string to JSONObject
@@ -56,17 +69,21 @@ Original database can accessed only from educational private network of Metropol
     }
 ```
 
-3. Modify src/main/resources/hibernate.cfg.xml file to address your own SQL-database:
-        <property name="hibernate.connection.url">jdbc:mysql://YOUR_DATABASE_ADDRESS</property>
-        <property name="hibernate.connection.username">YOUR USERNAME</property>
-        <property name="hibernate.connection.password">YOUR PASSWORD</property>
- 
-4. You need .env file on project root. Following needs to be written on the file:
+
+4. You need Google Maps API key from https://developers.google.com/maps/documentation/javascript/get-api-key and .env file on project root with following content:
+
+```
 APIKEY='YOUR GOOGLE MAPS API KEY'
+```
 
 You need to give environment variable as a parameter, when you run jar-file
-for example APIKEY='your api key' java -jar 'yourJarFile.jar'
-       
+for example:
+
+```
+APIKEY='your api key' java -jar 'yourJarFile.jar'
+```
+
+
 5. ENJOY!
 
 
