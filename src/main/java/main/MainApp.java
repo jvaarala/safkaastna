@@ -1,4 +1,5 @@
 package main;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -17,136 +18,144 @@ import view.SideBarController;
 
 public class MainApp extends Application {
 
-	private Stage primaryStage;
-	private BorderPane mainScreen;
-	
-	private List<Restaurant> restaurantsFromDb;
-	private OptionsBarController optionsControl;
-	private MainViewController mapControl;
-	private SideBarController sidebarControl;
-	private Scene scene;
+    private Stage primaryStage;
+    private BorderPane mainScreen;
+
+    private List<Restaurant> restaurantsFromDb;
+    private OptionsBarController optionsControl;
+    private MainViewController mapControl;
+    private SideBarController sidebarControl;
+    private Scene scene;
 
 
-	/**
-	 * Controls the javafx components initialisation order.
-	 */
-	@Override
-	public void start(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("SafkaaSTNA");
-		
-		initRootLayout();
+    /**
+     * Controls the javafx components initialisation order.
+     */
+    @Override
+    public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("SafkaaSTNA");
 
-		initOptionsBar(this.mainScreen);
-		initMainView(this.mainScreen);
-		initSideBar(this.mainScreen);
-	}
-	
-	/**
-	 * Initiates the root layout of the application.
-	 */
-	public void initRootLayout() {
-		mainScreen = new BorderPane();
-		primaryStage.setWidth(1200);
-		primaryStage.setHeight(768);
-		scene = new Scene(mainScreen);
-		scene.getStylesheets().add("Styles.css");
-		primaryStage.setScene(scene);
+        initRootLayout();
+
+        initOptionsBar(this.mainScreen);
+        initMainView(this.mainScreen);
+        initSideBar(this.mainScreen);
+    }
+
+    /**
+     * Initiates the root layout of the application.
+     */
+    public void initRootLayout() {
+        mainScreen = new BorderPane();
+        primaryStage.setWidth(1200);
+        primaryStage.setHeight(768);
+        scene = new Scene(mainScreen);
+        scene.getStylesheets().add("Styles.css");
+        primaryStage.setScene(scene);
         primaryStage.show();
-	}
-	
-	/**
-	 * Initialises the optionsbar.
-	 * @param mainScreen
-	 */
-	public void initOptionsBar(BorderPane mainScreen) {
-		FXMLLoader loader = new FXMLLoader();
-		URL connector = getClass().getResource("/OptionsBar.fxml");
+    }
 
-		loader.setLocation(connector);
+    /**
+     * Initialises the optionsbar.
+     *
+     * @param mainScreen
+     */
+    public void initOptionsBar(BorderPane mainScreen) {
+        FXMLLoader loader = new FXMLLoader();
+        URL connector = getClass().getResource("/OptionsBar.fxml");
 
-		try {
-			ToolBar connectBar = (ToolBar) loader.load();
-			mainScreen.setBottom(connectBar);
-			
-	        this.optionsControl = loader.getController();
-	        this.optionsControl.setMainApp(this);
+        loader.setLocation(connector);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            ToolBar connectBar = (ToolBar) loader.load();
+            mainScreen.setBottom(connectBar);
 
-	/**
-	 * Initialises the sidebar.
-	 * @param mainScreen
-	 */
-	public void initSideBar(BorderPane mainScreen) {
-		FXMLLoader loader = new FXMLLoader();
-		URL connector = getClass().getResource("/SideBar.fxml");
+            this.optionsControl = loader.getController();
+            this.optionsControl.setMainApp(this);
 
-		loader.setLocation(connector);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-		try {
-			AnchorPane sideBar = (AnchorPane) loader.load();
-			mainScreen.setRight(sideBar);
+    /**
+     * Initialises the sidebar.
+     *
+     * @param mainScreen
+     */
+    public void initSideBar(BorderPane mainScreen) {
+        FXMLLoader loader = new FXMLLoader();
+        URL connector = getClass().getResource("/SideBar.fxml");
 
-			this.sidebarControl = loader.getController();
-			this.sidebarControl.setMainApp(this);
+        loader.setLocation(connector);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            AnchorPane sideBar = (AnchorPane) loader.load();
+            mainScreen.setRight(sideBar);
 
-	
-	/**
-	 * Initialises the mainView with google maps.
-	 * @param mainScreen
-	 */
-	public void initMainView(BorderPane mainScreen) {
-		FXMLLoader loader = new FXMLLoader();
-		URL centerMap = getClass().getResource("/MainView.fxml");
-		loader.setLocation(centerMap);
-		try {
-			AnchorPane mapPane = (AnchorPane) loader.load();
-			mainScreen.setCenter(mapPane);
-			this.mapControl = loader.getController();
-			this.mapControl.setMainApp(this);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Used to re-render the maps data points. Call this when new restaurants are fetched from database.
-	 */
-	public void updateMap() {
-		if(this.restaurantsFromDb == null) {
-			boolean success = this.optionsControl.getRestaurants();
-			if(success) {
-				mapControl.updateView(this.restaurantsFromDb);
-			}
-			return;
-		}
-		mapControl.updateView(this.restaurantsFromDb);
-	}
+            this.sidebarControl = loader.getController();
+            this.sidebarControl.setMainApp(this);
+            this.sidebarControl.showDefaultView();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Initialises the mainView with google maps.
+     *
+     * @param mainScreen
+     */
+    public void initMainView(BorderPane mainScreen) {
+        FXMLLoader loader = new FXMLLoader();
+        URL centerMap = getClass().getResource("/MainView.fxml");
+        loader.setLocation(centerMap);
+        try {
+            AnchorPane mapPane = (AnchorPane) loader.load();
+            mainScreen.setCenter(mapPane);
+            this.mapControl = loader.getController();
+            this.mapControl.setMainApp(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Used to re-render the maps data points. Call this when new restaurants are fetched from database.
+     */
+    public void updateMap() {
+        if (this.restaurantsFromDb == null) {
+            boolean success = this.optionsControl.getRestaurants();
+            if (success) {
+                mapControl.updateView(this.restaurantsFromDb);
+            }
+            return;
+        }
+        mapControl.updateView(this.restaurantsFromDb);
+    }
 
     public void setRestaurants(List<Restaurant> restaurantsDB) {
-    	this.restaurantsFromDb = restaurantsDB;
+        this.restaurantsFromDb = restaurantsDB;
     }
+
     public List<Restaurant> getRestaurants() {
-    	return this.restaurantsFromDb;
+        return this.restaurantsFromDb;
     }
+
     public static void main(String[] args) {
-		launch(args);
-	}
+        launch(args);
+    }
 
 
-	public SideBarController getSidebarControl() { return sidebarControl; }
+    public SideBarController getSidebarControl() {
+        return sidebarControl;
+    }
 
-	public Stage getPrimaryStage() {
-		return primaryStage;
-	}
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
 }

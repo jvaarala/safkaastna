@@ -2,6 +2,10 @@ package view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import main.MainApp;
 import model.Restaurant;
@@ -12,11 +16,24 @@ public class SideBarController {
     private MainApp mainApp;
 
     @FXML
-    private Text restaurantName;
+    private AnchorPane sidebarContainer;
     @FXML
-    private Text restaurantAddr;
+    private GridPane sidebarInfoContainer;
+
     @FXML
-    private Hyperlink restaurantUrl;
+    private ImageView headerIcon;
+    @FXML
+    private Text headerText;
+
+    @FXML
+    private ImageView topParagraphIcon;
+    @FXML
+    private Text topParagraph;
+
+    @FXML
+    private ImageView restaurantUrlIcon;
+    @FXML
+    private Hyperlink bottomParagraph;
 
     /**
      * Used to give a reference to the mainApp for this controller.
@@ -28,19 +45,36 @@ public class SideBarController {
         this.mainApp = mainApp;
     }
 
-    public void showRestaurantInfo(Restaurant restaurant) {
-        this.restaurantName.setText(restaurant.getName());
-        this.restaurantName.setVisible(true);
+    public void showDefaultView() {
+        headerIcon.setImage(new Image("icons/png/309-heart.png"));
+        headerText.setText("Nice to see you here!");
+        topParagraph.setText("Feel free to look at restaurant locations, look up an address and filter visible results");
 
-        this.restaurantAddr.setText(restaurant.getAddress() + ", " + restaurant.getPostal_code() + " " + restaurant.getCity());
-        this.restaurantAddr.setVisible(true);
+        headerIcon.setVisible(true);
+        headerText.setVisible(true);
+        topParagraph.setVisible(true);
+    }
+
+    public void showRestaurantInfo(Restaurant restaurant) {
+
+        headerIcon.setImage(new Image("icons/png/073-house-3.png"));
+        headerText.setText(restaurant.getName());
+        topParagraph.setText(restaurant.getAddress() + ", " + restaurant.getPostal_code() + " " + restaurant.getCity());
+
+
+        headerIcon.setVisible(true);
+        headerText.setVisible(true);
+        topParagraphIcon.setVisible(true);
+        topParagraph.setVisible(true);
 
         // if there is a url address set it to open in default web browser
         if (restaurant.getWww().contentEquals("")) {
-            restaurantUrl.setVisible(false);
+            bottomParagraph.setVisible(false);
+            restaurantUrlIcon.setVisible(false);
         } else {
-            restaurantUrl.setVisible(true);
-            this.restaurantUrl.setOnAction(event -> {
+            bottomParagraph.setVisible(true);
+            restaurantUrlIcon.setVisible(true);
+            this.bottomParagraph.setOnAction(event -> {
                 if (!java.awt.Desktop.isDesktopSupported()) {
                     System.err.println("Desktop is not supported (fatal)");
                     System.exit(1);
@@ -61,6 +95,8 @@ public class SideBarController {
                 }
             });
         }
+
+
     }
 }
 
