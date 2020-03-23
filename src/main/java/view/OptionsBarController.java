@@ -162,5 +162,5 @@ public class OptionsBarController {
 	public void Help() {
 		popupInfo(helpTextENG, "SafkaaSTNA Help");
 	}
-	
+
 }

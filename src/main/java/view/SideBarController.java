@@ -60,7 +60,7 @@ public class SideBarController {
         headerIcon.setImage(new Image("icons/png/073-house-3.png"));
         headerText.setText(restaurant.getName());
         topParagraph.setText(restaurant.getAddress() + ", " + restaurant.getPostal_code() + " " + restaurant.getCity());
-
+        topParagraphIcon.setImage(new Image("icons/png/316-placeholder-2.png"));
 
         headerIcon.setVisible(true);
         headerText.setVisible(true);
@@ -73,6 +73,7 @@ public class SideBarController {
             restaurantUrlIcon.setVisible(false);
         } else {
             bottomParagraph.setVisible(true);
+            restaurantUrlIcon.setImage(new Image("icons/png/106-link-1.png"));
             restaurantUrlIcon.setVisible(true);
             this.bottomParagraph.setOnAction(event -> {
                 if (!java.awt.Desktop.isDesktopSupported()) {
