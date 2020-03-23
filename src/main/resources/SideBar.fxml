@@ -12,72 +12,57 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="sidebarContainer" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SideBarController">
+<AnchorPane fx:id="sidebarContainer" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SideBarController">
     <children>
-        <GridPane visible="true" fx:id="sidebarInfoContainer" layoutX="20.0" layoutY="30.0"
-                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-                  AnchorPane.topAnchor="30.0">
+      <ImageView fx:id="closeIcon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@icons/png/237-cancel.png" />
+         </image>
+      </ImageView>
+        <GridPane fx:id="sidebarInfoContainer" layoutX="20.0" layoutY="30.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="45.0">
             <columnConstraints>
-                <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity"
-                                   minWidth="-Infinity" prefWidth="40.0"/>
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="1.7976931348623157E308"
-                                   minWidth="100.0"/>
-                <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity"
-                                   minWidth="-Infinity" prefWidth="40.0"/>
+                <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="40.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="1.7976931348623157E308" minWidth="100.0" />
+                <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="40.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints fillHeight="false" valignment="CENTER" vgrow="NEVER"/>
-                <RowConstraints minHeight="-Infinity" prefHeight="100.0" valignment="CENTER" vgrow="NEVER"/>
-                <RowConstraints minHeight="-Infinity" prefHeight="50.0" valignment="CENTER" vgrow="NEVER"/>
-                <RowConstraints minHeight="-Infinity" prefHeight="50.0" valignment="CENTER" vgrow="NEVER"/>
+                <RowConstraints fillHeight="false" valignment="CENTER" vgrow="NEVER" />
+                <RowConstraints minHeight="-Infinity" prefHeight="100.0" valignment="CENTER" vgrow="NEVER" />
+                <RowConstraints minHeight="-Infinity" prefHeight="50.0" valignment="CENTER" vgrow="NEVER" />
+                <RowConstraints minHeight="-Infinity" prefHeight="50.0" valignment="CENTER" vgrow="NEVER" />
             </rowConstraints>
             <children>
-                <ImageView visible="false" fx:id="headerIcon" fitWidth="125.0" pickOnBounds="true" preserveRatio="true"
-                           GridPane.columnIndex="1" GridPane.valignment="CENTER">
+                <ImageView fx:id="headerIcon" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.valignment="CENTER">
                     <viewport>
-                        <Rectangle2D/>
+                        <Rectangle2D />
                     </viewport>
                 </ImageView>
-                <Text visible="false" fx:id="headerText" strokeType="OUTSIDE" strokeWidth="0.0"
-                      text="LOREM IPSUM IPSUM LROME"
-                      textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="200.0" GridPane.columnIndex="1"
-                      GridPane.rowIndex="1">
+                <Text fx:id="headerText" strokeType="OUTSIDE" strokeWidth="0.0" text="LOREM IPSUM IPSUM LROME" textAlignment="CENTER" textOrigin="CENTER" visible="false" wrappingWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <font>
-                        <Font name="System Bold" size="18.0"/>
+                        <Font name="System Bold" size="18.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets/>
+                        <Insets />
                     </GridPane.margin>
                 </Text>
-                <ImageView visible="false" fx:id="topParagraphIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true"
-                           preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2"
-                           GridPane.valignment="CENTER">
+                <ImageView fx:id="topParagraphIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                 </ImageView>
-                <Text visible="false" fx:id="topParagraph" strokeType="OUTSIDE" strokeWidth="0.0"
-                      text="LOREM IPSUM IPSUM LROME"
-                      wrappingWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                <Text fx:id="topParagraph" strokeType="OUTSIDE" strokeWidth="0.0" text="LOREM IPSUM IPSUM LROME" visible="false" wrappingWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                     <GridPane.margin>
-                        <Insets left="4.0"/>
+                        <Insets left="4.0" />
                     </GridPane.margin>
                 </Text>
-                <ImageView visible="false" fx:id="restaurantUrlIcon" fitHeight="30.0" fitWidth="30.0"
-                           pickOnBounds="true"
-                           preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="3"
-                           GridPane.valignment="CENTER">
+                <ImageView fx:id="restaurantUrlIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                 </ImageView>
-                <Hyperlink visible="false" fx:id="bottomParagraph" contentDisplay="CENTER" graphicTextGap="0.0"
-                           maxHeight="-Infinity"
-                           maxWidth="1.7976931348623157E308" prefHeight="50.0" text="Ravintolan sivusto"
-                           GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                <Hyperlink fx:id="bottomParagraph" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="50.0" text="Ravintolan sivusto" visible="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                     <GridPane.margin>
-                        <Insets/>
+                        <Insets />
                     </GridPane.margin>
                 </Hyperlink>
             </children>
         </GridPane>
     </children>
     <padding>
-        <Insets left="20.0" right="20.0" top="30.0"/>
+        <Insets left="20.0" right="20.0" top="30.0" />
     </padding>
 </AnchorPane>

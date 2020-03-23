@@ -4,11 +4,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import main.MainApp;
 import model.Restaurant;
+
+import java.util.List;
 
 
 public class SideBarController {
@@ -19,6 +23,9 @@ public class SideBarController {
     private AnchorPane sidebarContainer;
     @FXML
     private GridPane sidebarInfoContainer;
+
+    @FXML
+    public ImageView closeIcon;
 
     @FXML
     private ImageView headerIcon;
@@ -35,6 +42,7 @@ public class SideBarController {
     @FXML
     private Hyperlink bottomParagraph;
 
+
     /**
      * Used to give a reference to the mainApp for this controller.
      * Should be done after controller initialisation, before using any of its functions.
@@ -43,6 +51,10 @@ public class SideBarController {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+        closeIcon.setOnMouseClicked((MouseEvent e) -> {
+            System.out.println("Clicked!"); // change functionality
+            mainApp.sidebarOff();
+        });
     }
 
     public void showDefaultView() {
@@ -96,6 +108,7 @@ public class SideBarController {
                 }
             });
         }
+
 
 
     }

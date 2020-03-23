@@ -3,6 +3,7 @@ package main;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +20,9 @@ import view.SideBarController;
 public class MainApp extends Application {
 
     private Stage primaryStage;
+
     private BorderPane mainScreen;
+    private AnchorPane sidebar;
 
     private List<Restaurant> restaurantsFromDb;
     private OptionsBarController optionsControl;
@@ -84,6 +87,7 @@ public class MainApp extends Application {
      *
      * @param mainScreen
      */
+
     public void initSideBar(BorderPane mainScreen) {
         FXMLLoader loader = new FXMLLoader();
         URL connector = getClass().getResource("/SideBar.fxml");
@@ -91,8 +95,9 @@ public class MainApp extends Application {
         loader.setLocation(connector);
 
         try {
-            AnchorPane sideBar = (AnchorPane) loader.load();
-            mainScreen.setRight(sideBar);
+            sidebar = (AnchorPane) loader.load();
+            mainScreen.setRight(sidebar);
+            mainScreen.setRight(null);
 
             this.sidebarControl = loader.getController();
             this.sidebarControl.setMainApp(this);
@@ -158,4 +163,11 @@ public class MainApp extends Application {
         return primaryStage;
     }
 
+    public void sidebarOn() {
+        mainScreen.setRight(sidebar);
+    }
+
+    public void sidebarOff() {
+        mainScreen.setRight(null);
+    }
 }
