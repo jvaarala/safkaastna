@@ -153,6 +153,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
         if (filterToggleButton.isSelected()) {
             filterToggleButton.setText("Restaurant filter ON");
 //			System.out.println("filter ON");
+            searchTextBox.setText("");
+            textInSearchField = searchTextBox.getText();
             List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), textInSearchField);
             updateView(foundRestaurants);
         } else {
@@ -244,6 +246,10 @@ public class MainViewController implements Initializable, MapComponentInitialize
         List<Marker> restaurantMarkers = new ArrayList<>();
         map.clearMarkers();
 
+        if (userLocation != null) {
+            restaurantMarkers.add(setUserLocationMarker());
+        }
+
         // Click listener for ListView item clicks
         listViewNames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -265,7 +271,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
             LatLong tempLatLong = new LatLong(restaurant.getLat(), restaurant.getLng());
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(tempLatLong);
-            markerOptions.icon("https://users.metropolia.fi/~jessevaa/safkaa/151-placeholder-4-32px-darker.png");
+            markerOptions.icon("https://www.kela.fi/documents/10180/24327790/Logo_Tunnus_rgb.gif/7a417c63-36b0-4ef0-ad4c-3e29fb5196e9?t=1553685514309");
             Marker tempMarker = new Marker(markerOptions);
 
 			/*
@@ -302,8 +308,13 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
         // Set ObservableList to ListView
         listViewNames.setItems(items);
-        if (restaurants.size() < 20 && restaurants.size() != 0) {
+
+        // Map zoom & focus options
+        if(restaurants.size() < 20 && restaurants.size() != 0) {
             focusMapOnRestaurant(restaurants.get(0));
+        } else if (userLocation != null) {
+            map.setCenter(userLocation);
+            map.setZoom(12);
         } else {
             mapView.setCenter(60.192059, 24.945831);
             mapView.setZoom(12);
@@ -397,49 +408,55 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
     private void focusMapOnCoordinate(LatLong ll, String s) {
         try {
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(ll);
-            markerOptions.icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png");
-            Marker tempMarker = new Marker(markerOptions);
+            Marker tempMarker = setUserLocationMarker();
             InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-
-            // User input (address) formatting
-            String words[] = s.replaceAll("\\s+", " ").trim().split(" ");
-            String newString = "";
-            for (String word : words) {
-                if (StringUtils.isStrictlyNumeric(word)) {
-                    newString += word + " ";
-                    continue;
-                }
-                for (int i = 0; i < word.length(); i++) {
-
-                    if (i == 0) {
-                        newString = newString + word.substring(i, i + 1).toUpperCase();
-                    } else {
-                        if (i != word.length() - 1) {
-                            newString += word.substring(i, i + 1).toLowerCase();
-                        } else {
-                            newString += word.substring(i, i + 1).toLowerCase() + " ";
-                        }
-                    }
-                }
-            }
-            infoWindowOptions.content(newString);
+            infoWindowOptions.content(formatString(s));
             InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
             map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
                 infoWindow.open(map, tempMarker);
             });
             // add new marker to map on correct location & zoom in
-            map.addMarkers(Collections.singletonList(tempMarker));
+            map.addMarkers(Collections.singletonList(setUserLocationMarker()));
             mapView.setCenter(ll.getLatitude(), ll.getLongitude());
             mapView.setZoom(15);
-        } catch (Exception e) {
-
+        } catch (Exception e ) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ADDRESS NOT FOUND");
             alert.setHeaderText("No search results");
             alert.setContentText("Try again! Preferred format on address is 'Streetname 1 City'");
             alert.show();
         }
+    }
+
+    public Marker setUserLocationMarker() {
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(userLocation);
+        markerOptions.icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png");
+        Marker tempMarker = new Marker(markerOptions);
+        return tempMarker;
+    }
+
+    public String formatString (String s) {
+        String words[] = s.replaceAll("\\s+", " ").trim().split(" ");
+        String newString = "";
+        for (String word : words) {
+            if (StringUtils.isStrictlyNumeric(word)) {
+                newString += word + " ";
+                continue;
+            }
+            for (int i = 0; i < word.length(); i++) {
+
+                if (i == 0) {
+                    newString = newString + word.substring(i, i + 1).toUpperCase();
+                } else {
+                    if (i != word.length() - 1) {
+                        newString += word.substring(i, i + 1).toLowerCase();
+                    } else {
+                        newString += word.substring(i, i + 1).toLowerCase() + " ";
+                    }
+                }
+            }
+        }
+        return newString;
     }
 }
