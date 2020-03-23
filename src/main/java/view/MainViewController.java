@@ -122,7 +122,12 @@ public class MainViewController implements Initializable, MapComponentInitialize
 		// zoom out by 1 so that markers are not hidden behind ListView
 		System.out.println(map.getZoom());
 		int zoomValue = map.getZoom();
-		map.setZoom(zoomValue-1);
+		if (zoomValue < 10) {
+			map.setCenter(new LatLong(nearest.getLat(), nearest.getLng()));
+			map.setZoom(15);
+		} else {
+			map.setZoom(zoomValue - 1);
+		}
 	}
 
 	/**
