@@ -21,7 +21,7 @@ public class OptionsBarController {
 	private List<Restaurant> restaurantsFromDb;
 	private MainApp mainApp;
 	
-	private String helpText = "SafkaaSTNA is a Java Desktop application desingned for students searching for student restaurants. \n"
+	private String helpTextENG = "SafkaaSTNA is a Java Desktop application desingned for students searching for student restaurants. \n"
 			+ " \n"
 			+ "With the this appliaction you can:\n"
 			+ "- See all available student restaurants in Finland:\n"
@@ -34,6 +34,29 @@ public class OptionsBarController {
 			+ "		- Write restaurant name\n"
 			+ "- See additional information on each restaurant \n"
 			+ "		- Click a restaurants red marker";
+
+	private String helpTextFI = "SafkaaSTNA on Java Työpöytä applikaatio suuniteltu opiskelijoille jotka etsivät opiskelija ravintolaa. \n"
+			+ " \n"
+			+ "With the this appliaction you can:\n"
+			+ "- See all available student restaurants in Finland:\n"
+			+ "		- Default view on app start\n"
+			+ "- Search for restaurants near your or any address\n"
+			+ "		- Turn \"Restaurant Filter\" off (default)\n"
+			+ "		- Write address, then press \"Find\" \n"
+			+ "- Search for restaurants by name \n"
+			+ "		- Turn \"Restaurant Filter\" on\n"
+			+ "		- Write restaurant name\n"
+			+ "- See additional information on each restaurant \n"
+			+ "		- Click a restaurants red marker";
+
+	private String helpTextSWE = "SafkaaSTNA är en Java Desktop applikation desingnad för studerande som lätar efter  studie restauranger. \n"
+			+ " \n"
+			+ "Med denna applikation kan du:\n"
+			+ "- Se all studie restauranger tillängliga i Finland:\n"
+			+ "		- Välja  utsikten när applikationen startas\n";
+
+
+
 
 
 	/**
@@ -137,7 +160,7 @@ public class OptionsBarController {
 	 */
 	@FXML
 	public void Help() {
-		popupInfo(helpText, "SafkaaSTNA Help");
+		popupInfo(helpTextENG, "SafkaaSTNA Help");
 	}
 	
 }
