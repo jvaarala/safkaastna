@@ -1553,14 +1553,14 @@
     },
     {
       "name": "OULUN YLIOPISTOLLINEN SAIRAALA",
-      "address": "PL 50",
-      "postal_code": "90029",
-      "city": "OYS",
+      "address": "Kajaanintie 50",
+      "postal_code": "90220",
+      "city": "OULU",
       "www": "http://www.ppshp.fi/ravintolapalvelut/",
       "admin": "POHJOIS-POHJANMAAN SAIRAANHOITOPIIRIN KUNTAYHTYMÄ",
       "admin_www": "http://www.ppshp.fi/ravintolapalvelut/",
-      "lat": 34.0880507,
-      "lng": -118.2965121
+      "lat": 65.007202,
+      "lng": 25.518100
     },
     {
       "name": "OULUN YO:N HARJOITTELUKOULU (0242) KOSKELAN YKSIKKÖ",
