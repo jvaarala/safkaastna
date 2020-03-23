@@ -119,6 +119,9 @@ public class SideBarController {
 
     public void setUserLocationText(String userLocationText) {
         this.userLocationText.setText(userLocationText);
+        this.userLocationText.setOnMouseClicked(event -> {
+            mainApp.getMapControl().focusMapOnLocation(mainApp.getUserLocation());
+        });
     }
 }
 

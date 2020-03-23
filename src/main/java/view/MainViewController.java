@@ -43,7 +43,6 @@ import javax.net.ssl.HttpsURLConnection;
 public class MainViewController implements Initializable, MapComponentInitializedListener {
 
     private MainApp mainApp;
-    private SideBarController sidebarControl;
 
     /**
      * Google maps api key is written on a separate, local file
@@ -74,7 +73,10 @@ public class MainViewController implements Initializable, MapComponentInitialize
     private GoogleMap map;
     private SearchLogic search = new SearchLogic();
     private String textInSearchField;
-    private LatLong userLocation;
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
 
     /**
      * FXML method for getting text content from search box
@@ -90,13 +92,12 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
     }
 
-
     /*
     TODO JESSE MOVE THIS TO YOUR NEW BUTTON, WHEN EXECUTED
      */
     @FXML
     protected void handleLocateNearestButton(ActionEvent event) {
-        if (userLocation == null) {
+        if (mainApp.getUserLocation() == null) {
             final Stage dialog = new Stage();
             dialog.initModality(Modality.APPLICATION_MODAL);
             dialog.initOwner(mainApp.getPrimaryStage());
@@ -111,31 +112,14 @@ public class MainViewController implements Initializable, MapComponentInitialize
             searchButton.setOnAction(
                     event1 -> {
                         String address = startAddress.getText();
-                        userLocation = fetchGoogleCoordinates(address);
+                        mainApp.setUserLocation(fetchGoogleCoordinates(address));
                         dialog.close();
                         //		userLocation = new LatLong(60.240165, 24.042544);
-                        focusMapOnCoordinate(userLocation, address);
-                        findNearestAndFitBounds(mainApp.getRestaurants(), userLocation);
+                        createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
+                        findNearestAndFitBounds(mainApp.getUserLocation());
                     });
         } else {
-            findNearestAndFitBounds(mainApp.getRestaurants(), userLocation);
-        }
-    }
-
-    public void findNearestAndFitBounds(List<Restaurant> restaurants, LatLong userLocation) {
-        //		userLocation = new LatLong(60.240165, 24.042544);
-        Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
-        System.out.println(nearest);
-
-        map.fitBounds(new LatLongBounds(userLocation, new LatLong(nearest.getLat(), nearest.getLng())));
-        // zoom out by 1 so that markers are not hidden behind ListView
-        System.out.println(map.getZoom());
-        int zoomValue = map.getZoom();
-        if (zoomValue < 10) {
-            map.setCenter(new LatLong(nearest.getLat(), nearest.getLng()));
-            map.setZoom(15);
-        } else {
-            map.setZoom(zoomValue - 1);
+            findNearestAndFitBounds(mainApp.getUserLocation());
         }
     }
 
@@ -177,11 +161,11 @@ public class MainViewController implements Initializable, MapComponentInitialize
     @FXML
     protected void handleSearchButton(ActionEvent event) {
         if (!filterToggleButton.isSelected()) {
-            userLocation = fetchGoogleCoordinates(textInSearchField);
-            focusMapOnCoordinate(userLocation, textInSearchField);
+            mainApp.setUserLocation(fetchGoogleCoordinates(textInSearchField));
+            createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
 
             // TERVEISIÄ KATRILLE :D
-			sidebarControl.setUserLocationText(formatString(textInSearchField));
+			mainApp.getSidebarControl().setUserLocationText(formatString(textInSearchField));
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("RESTAURANT NOT FOUND");
@@ -236,7 +220,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
         map.setCenter(new LatLong(60.192059, 24.945831));
         this.mainApp.updateMap();
-        this.sidebarControl = mainApp.getSidebarControl();
     }
 
     /**
@@ -251,8 +234,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
         List<Marker> restaurantMarkers = new ArrayList<>();
         map.clearMarkers();
 
-        if (userLocation != null) {
-            restaurantMarkers.add(setUserLocationMarker());
+        if (mainApp.getUserLocation() != null) {
+            restaurantMarkers.add(createUserLocationMarker());
         }
 
         // Click listener for ListView item clicks
@@ -302,7 +285,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 			 */
 
             map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
-                sidebarControl.showRestaurantInfo(restaurant);
+                mainApp.getSidebarControl().showRestaurantInfo(restaurant);
                 mainApp.sidebarOn();
             });
 
@@ -317,8 +300,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
         // Map zoom & focus options
         if(restaurants.size() < 20 && restaurants.size() != 0) {
             focusMapOnRestaurant(restaurants.get(0));
-        } else if (userLocation != null) {
-            map.setCenter(userLocation);
+        } else if (mainApp.getUserLocation() != null) {
+            map.setCenter(mainApp.getUserLocation());
             map.setZoom(12);
         } else {
             mapView.setCenter(60.192059, 24.945831);
@@ -326,19 +309,20 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
     }
 
-    public void setMainApp(MainApp mainApp) {
-        this.mainApp = mainApp;
-    }
+    private void findNearestAndFitBounds(LatLong userLocation) {
+        //		userLocation = new LatLong(60.240165, 24.042544);
+        Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
+        System.out.println(nearest);
 
-    /**
-     * Focus map on a certain restaurant
-     *
-     * @param restaurant - Restaurant on which to focus the map on
-     */
-    private void focusMapOnRestaurant(Restaurant restaurant) {
-        if (restaurant != null) {
-            mapView.setCenter(restaurant.getLat(), restaurant.getLng());
-            mapView.setZoom(15);
+        map.fitBounds(new LatLongBounds(userLocation, new LatLong(nearest.getLat(), nearest.getLng())));
+        // zoom out by 1 so that markers are not hidden behind ListView
+        System.out.println(map.getZoom());
+        int zoomValue = map.getZoom();
+        if (zoomValue < 10) {
+            map.setCenter(new LatLong(nearest.getLat(), nearest.getLng()));
+            map.setZoom(15);
+        } else {
+            map.setZoom(zoomValue - 1);
         }
     }
 
@@ -404,24 +388,22 @@ public class MainViewController implements Initializable, MapComponentInitialize
         return ll;
     }
 
-    /**
-     * Focus map to a specific coordinate & string formatting for showing user input on a markers info window
-     *
-     * @param ll User input address converted to LatLong object
-     * @param s  User input address as a string to be used on markers infoWindow feature
-     */
+    private Marker createUserLocationMarker() {
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(mainApp.getUserLocation());
+        markerOptions.icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png");
+        return new Marker(markerOptions);
+    }
 
-    private void focusMapOnCoordinate(LatLong ll, String s) {
+    /**
+     * Creates a new marker for user location and focuses mapview to given marker
+     *
+     * @param ll User location as LatLong object
+     */
+    private void createAndFocusOnUserLocationMarker(LatLong ll) {
         try {
-            Marker tempMarker = setUserLocationMarker();
-            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-            infoWindowOptions.content(formatString(s));
-            InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
-            map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
-                infoWindow.open(map, tempMarker);
-            });
             // add new marker to map on correct location & zoom in
-            map.addMarkers(Collections.singletonList(setUserLocationMarker()));
+            map.addMarkers(Collections.singletonList(createUserLocationMarker()));
             mapView.setCenter(ll.getLatitude(), ll.getLongitude());
             mapView.setZoom(15);
         } catch (Exception e ) {
@@ -433,16 +415,30 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
     }
 
-    public Marker setUserLocationMarker() {
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(userLocation);
-        markerOptions.icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png");
-        Marker tempMarker = new Marker(markerOptions);
-        return tempMarker;
+    /**
+     * Focuses mapview to given location
+     *
+     * @param ll User location as LatLong object
+     */
+    void focusMapOnLocation(LatLong ll) {
+        mapView.setCenter(ll.getLatitude(), ll.getLongitude());
+        mapView.setZoom(15);
+    }
+
+    /**
+     * Focus map on a certain restaurant
+     *
+     * @param restaurant - Restaurant on which to focus the map on
+     */
+    private void focusMapOnRestaurant(Restaurant restaurant) {
+        if (restaurant != null) {
+            mapView.setCenter(restaurant.getLat(), restaurant.getLng());
+            mapView.setZoom(15);
+        }
     }
 
     public String formatString (String s) {
-        String words[] = s.replaceAll("\\s+", " ").trim().split(" ");
+        String[] words = s.replaceAll("\\s+", " ").trim().split(" ");
         String newString = "";
         for (String word : words) {
             if (StringUtils.isStrictlyNumeric(word)) {
@@ -464,4 +460,5 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
         return newString;
     }
+
 }

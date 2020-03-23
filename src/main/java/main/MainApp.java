@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.lynden.gmapsfx.javascript.object.LatLong;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,6 +31,11 @@ public class MainApp extends Application {
     private SideBarController sidebarControl;
     private Scene scene;
 
+    private LatLong userLocation;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     /**
      * Controls the javafx components initialisation order.
@@ -96,18 +102,14 @@ public class MainApp extends Application {
 
         try {
             sidebar = (AnchorPane) loader.load();
-            mainScreen.setRight(sidebar);
             mainScreen.setRight(null);
 
             this.sidebarControl = loader.getController();
             this.sidebarControl.setMainApp(this);
-            this.sidebarControl.showDefaultView();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Initialises the mainView with google maps.
@@ -146,17 +148,24 @@ public class MainApp extends Application {
         this.restaurantsFromDb = restaurantsDB;
     }
 
+    public LatLong getUserLocation() {
+        return userLocation;
+    }
+
+    public void setUserLocation(LatLong userLocation) {
+        this.userLocation = userLocation;
+    }
+
     public List<Restaurant> getRestaurants() {
         return this.restaurantsFromDb;
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-
     public SideBarController getSidebarControl() {
         return sidebarControl;
+    }
+
+    public MainViewController getMapControl() {
+        return mapControl;
     }
 
     public Stage getPrimaryStage() {
