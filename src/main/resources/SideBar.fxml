@@ -61,6 +61,7 @@
                 </Hyperlink>
             </children>
         </GridPane>
+      <Text fx:id="userLocationText" strokeType="OUTSIDE" strokeWidth="0.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
     </children>
     <padding>
         <Insets left="20.0" right="20.0" top="30.0" />

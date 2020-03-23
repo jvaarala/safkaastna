@@ -2,10 +2,11 @@
     main-button-color: #a4c2f7;
     main-button-color-hover: #7facfa;
     main-button-color-disabled: #e3e7f2;
-    main-toggle-button-color: lightgrey;
     main-toggle-button-color-hover: #7facfa;
     main-toggle-button-color-hover-selected: #7facfa;
     main-toggle-button-color-selected: #a4c2f7;
+    main-text-color: black;
+    main-text-color-disabled: grey;
 }
 
 root {
@@ -15,6 +16,7 @@ root {
 .button {
     /*-fx-background-color: #9AC5E6;*/
     -fx-background-color: main-button-color;
+    -fx-text-fill: main-text-color;
 }
 
 .button:hover {
@@ -25,6 +27,8 @@ root {
 .button:disabled {
     /*-fx-background-color: #A5B2C0;*/
     -fx-background-color: main-button-color-disabled;
+    -fx-text-fill: main-text-color-disabled;
+    -fx-opacity: 100;
 }
 
 .button:selected {
@@ -33,8 +37,9 @@ root {
 
 .toggle-button {
     /*-fx-background-color: #B3B8C2;*/
-    -fx-background-color: main-toggle-button-color;
+    -fx-background-color: main-button-color-disabled;
     -fx-background-radius: 7px 7px 0 0;
+    -fx-text-fill: main-text-color-disabled;
 }
 
 #searchButton {
@@ -58,6 +63,7 @@ root {
 .toggle-button:selected {
     /*-fx-background-color: #9AC5E6;*/
     -fx-background-color: main-toggle-button-color-selected;
+    -fx-text-fill: main-text-color;
 }
 
 .indexed-cell {

@@ -151,6 +151,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
     protected void handleFilterToggle(ActionEvent event) {
         textInSearchField = searchTextBox.getText();
         if (filterToggleButton.isSelected()) {
+            searchButton.setDisable(true);
             filterToggleButton.setText("Restaurant filter ON");
 //			System.out.println("filter ON");
             searchTextBox.setText("");
@@ -158,6 +159,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
             List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), textInSearchField);
             updateView(foundRestaurants);
         } else {
+            searchButton.setDisable(false);
             filterToggleButton.setText("Restaurant filter OFF");
 //			System.out.println("filter OFF ");
             updateView(mainApp.getRestaurants());
@@ -177,6 +179,9 @@ public class MainViewController implements Initializable, MapComponentInitialize
         if (!filterToggleButton.isSelected()) {
             userLocation = fetchGoogleCoordinates(textInSearchField);
             focusMapOnCoordinate(userLocation, textInSearchField);
+
+            // TERVEISIÄ KATRILLE :D
+			sidebarControl.setUserLocationText(userLocation.toString());
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("RESTAURANT NOT FOUND");
