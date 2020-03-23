@@ -181,7 +181,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
             focusMapOnCoordinate(userLocation, textInSearchField);
 
             // TERVEISIÄ KATRILLE :D
-			sidebarControl.setUserLocationText(userLocation.toString());
+			sidebarControl.setUserLocationText(formatString(textInSearchField));
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("RESTAURANT NOT FOUND");
