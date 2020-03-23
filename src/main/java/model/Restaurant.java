@@ -18,7 +18,7 @@ public class Restaurant {
     @Column
     private String address;
     @Column
-    private int postal_code;
+    private String postal_code;
     @Column
     private String city;
     @Column
@@ -40,7 +40,7 @@ public class Restaurant {
         this.id = id;
     }
 
-    public Restaurant(int id, String name, String address, int postal_code, String city, String www, String admin, String admin_www, double lat, double lng) {
+    public Restaurant(int id, String name, String address, String postal_code, String city, String www, String admin, String admin_www, double lat, double lng) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -69,11 +69,11 @@ public class Restaurant {
         this.address = address;
     }
 
-    public int getPostal_code() {
+    public String getPostal_code() {
         return postal_code;
     }
 
-    public void setPostal_code(int postal_code) {
+    public void setPostal_code(String postal_code) {
         this.postal_code = postal_code;
     }
 

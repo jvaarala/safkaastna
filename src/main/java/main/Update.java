@@ -15,7 +15,7 @@ public class Update {
         // HOX HIBERNATE UPDATE VS. CREATE & AUTH
 
         RestaurantDAO dao = new RestaurantDAO();
-        File file = new File("/Users/jessevaarala/IdeaProjects/safkaastna/restaurantRawData210320.json");
+        File file = new File("restaurantRawData210320.json");
         String content = FileUtils.readFileToString(file, "utf-8");
 
         // Convert JSON string to JSONObject
@@ -27,7 +27,7 @@ public class Update {
             JSONObject obj = restArray.getJSONObject(i);
             restaurant.setName(obj.getString("name"));
             restaurant.setAddress(obj.getString("address"));
-            restaurant.setPostal_code(obj.getInt("postal_code"));
+            restaurant.setPostal_code(obj.getString("postal_code"));
             restaurant.setCity(obj.getString("city"));
             restaurant.setWww(obj.getString("www"));
             restaurant.setAdmin(obj.getString("admin"));

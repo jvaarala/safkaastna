@@ -14,7 +14,7 @@ class RestaurantTest {
         r = new Restaurant(
                 666, "name",
                 "address",
-                00000,
+                "00000",
                 "city",
                 "www",
                 "admin",
@@ -52,8 +52,8 @@ class RestaurantTest {
 
     @Test
     void setPostal_code() {
-        r.setPostal_code(99999);
-        assertEquals(99999, r.getPostal_code(), "setPostal_code does not work");
+        r.setPostal_code("99999");
+        assertEquals("99999", r.getPostal_code(), "setPostal_code does not work");
     }
 
     @Test

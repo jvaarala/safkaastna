@@ -35,7 +35,7 @@ class MainAppTest  {
 		Restaurant temp = new Restaurant(
                 666, "name",
                 "address",
-                00000,
+                "00000",
                 "city",
                 "www",
                 "admin",
