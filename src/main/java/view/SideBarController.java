@@ -42,6 +42,9 @@ public class SideBarController {
     @FXML
     private Hyperlink bottomParagraph;
 
+    @FXML
+    private Text userLocationText;
+
 
     /**
      * Used to give a reference to the mainApp for this controller.
@@ -108,9 +111,14 @@ public class SideBarController {
                 }
             });
         }
+    }
 
+    public String getUserLocationText() {
+        return userLocationText.getText();
+    }
 
-
+    public void setUserLocationText(String userLocationText) {
+        this.userLocationText.setText(userLocationText);
     }
 }
 

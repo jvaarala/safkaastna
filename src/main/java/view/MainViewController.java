@@ -175,6 +175,9 @@ public class MainViewController implements Initializable, MapComponentInitialize
         if (!filterToggleButton.isSelected()) {
             userLocation = fetchGoogleCoordinates(textInSearchField);
             focusMapOnCoordinate(userLocation, textInSearchField);
+
+            // TERVEISIÄ KATRILLE :D
+			sidebarControl.setUserLocationText(userLocation.toString());
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("RESTAURANT NOT FOUND");
