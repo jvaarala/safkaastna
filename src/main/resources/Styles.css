@@ -22,6 +22,7 @@ root {
 .button:hover {
     /*-fx-background-color: #80A4BF;*/
     -fx-background-color: main-button-color-hover;
+    -fx-cursor: HAND;
 }
 
 .button:disabled {
@@ -35,13 +36,6 @@ root {
 
 }
 
-.toggle-button {
-    /*-fx-background-color: #B3B8C2;*/
-    -fx-background-color: main-button-color-disabled;
-    -fx-background-radius: 7px 7px 0 0;
-    -fx-text-fill: main-text-color-disabled;
-}
-
 #searchButton {
     -fx-background-radius: 0px 7px 7px 0;
 }
@@ -50,9 +44,17 @@ root {
     -fx-background-radius: 7px 0 0 7px;
 }
 
+.toggle-button {
+    /*-fx-background-color: #B3B8C2;*/
+    -fx-background-color: main-button-color-disabled;
+    -fx-background-radius: 7px 7px 0 0;
+    -fx-text-fill: main-text-color-disabled;
+}
+
 .toggle-button:hover {
     /*-fx-background-color: #80A4BF;*/
     -fx-background-color: main-toggle-button-color-hover;
+    -fx-cursor: HAND;
 }
 
 .toggle-button:hover:selected {
