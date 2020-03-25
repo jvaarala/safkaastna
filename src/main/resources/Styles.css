@@ -1,16 +1,25 @@
 * {
     main-button-color: #a4c2f7;
+    main-bg-color: #F0F3F7;
+    main-bg-color-alt: #DCE6F7;
     main-button-color-hover: #7facfa;
     main-button-color-disabled: #e3e7f2;
     main-toggle-button-color-hover: #7facfa;
     main-toggle-button-color-hover-selected: #7facfa;
     main-toggle-button-color-selected: #a4c2f7;
-    main-text-color: black;
-    main-text-color-disabled: grey;
+    main-text-color: #37386e;
+    main-text-color-light: #364f85;
+    main-text-color-disabled: #9DABC4;
+
+    -fx-font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 root {
     display: block;
+}
+
+.text {
+    -fx-text-fill: red;
 }
 
 .button {
@@ -22,6 +31,7 @@ root {
 .button:hover {
     /*-fx-background-color: #80A4BF;*/
     -fx-background-color: main-button-color-hover;
+    -fx-text-fill: main-bg-color;
     -fx-cursor: HAND;
 }
 
@@ -54,6 +64,7 @@ root {
 .toggle-button:hover {
     /*-fx-background-color: #80A4BF;*/
     -fx-background-color: main-toggle-button-color-hover;
+    -fx-text-fill: main-bg-color;
     -fx-cursor: HAND;
 }
 
@@ -71,11 +82,13 @@ root {
 .indexed-cell {
     -fx-ellipsis-string: "...";
     -fx-text-overrun: clip;
+    -fx-cursor: HAND;
 }
 
 .list-cell {
     -fx-cell-size: 40px;
     -fx-background-color: white;
+    -fx-text-fill: main-text-color-light;
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
@@ -88,4 +101,24 @@ root {
     /*-fx-background-color: #80A4BF;*/
     -fx-background-color: main-button-color-hover;
     -fx-text-fill: white;
+}
+
+.sidebar-text {
+     -fx-fill: main-text-color;
+ }
+
+.sidebar-link {
+    -fx-text-fill: main-text-color-light;
+}
+
+.sidebar-link:hover{
+    -fx-text-fill: main-text-color;
+}
+
+.sidebarContainer {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, main-bg-color, main-bg-color-alt);
+}
+
+.optionsbarContainer {
+    -fx-background-color: linear-gradient(main-bg-color, main-bg-color-alt);
 }
