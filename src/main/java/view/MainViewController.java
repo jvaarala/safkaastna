@@ -222,38 +222,33 @@ public class MainViewController implements Initializable, MapComponentInitialize
         this.mainApp.updateMap();
     }
 
-    /**
-     * Update ListView and map elements according to a list of restaurants
-     *
-     * @param restaurants - List of restaurants to be iterated through
-     *                    Names are set on ListView and Markers are set on map on restaurants location
-     */
-    public void updateView(List<Restaurant> restaurants) {
-        // Empty list & clear markers
+    private void updateListView(List<Restaurant> restaurants) {
         listViewNames.getItems().clear();
-        List<Marker> restaurantMarkers = new ArrayList<>();
-        map.clearMarkers();
-
-        if (mainApp.getUserLocation() != null) {
-            restaurantMarkers.add(createUserLocationMarker());
-        }
 
         // Click listener for ListView item clicks
         listViewNames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                Restaurant restaurantToFind = new Restaurant();
 //				System.out.println(newValue);
-                for (int i = 0; i < restaurants.size(); i++) {
-                    if (restaurants.get(i).getName().equals(newValue)) {
-                        restaurantToFind = restaurants.get(i);
+                for (Restaurant restaurant : restaurants) {
+                    if (restaurant.getName().equals(newValue)) {
+                        focusMapOnRestaurant(restaurant);
                         break;
                     }
                 }
-                focusMapOnRestaurant(restaurantToFind);
             }
         });
 
-        // Add restaurants to ObservableList
+        // Set ObservableList to ListView
+        listViewNames.setItems(items);
+    }
+
+    private void updateMarkers(List<Restaurant> restaurants) {
+        List<Marker> restaurantMarkers = new ArrayList<>();
+        map.clearMarkers();
+        if (mainApp.getUserLocation() != null) {
+            restaurantMarkers.add(createUserLocationMarker());
+        }
+
         for (Restaurant restaurant : restaurants) {
             items.add(restaurant.getName());
             LatLong tempLatLong = new LatLong(restaurant.getLat(), restaurant.getLng());
@@ -261,28 +256,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
             markerOptions.position(tempLatLong);
             markerOptions.icon("https://www.kela.fi/documents/10180/24327790/Logo_Tunnus_rgb.gif/7a417c63-36b0-4ef0-ad4c-3e29fb5196e9?t=1553685514309");
             Marker tempMarker = new Marker(markerOptions);
-
-			/*
-
-
-			// THIS CODE IS DEPRECATED
-			//
-			// Create InfoWindow for each marker
-			InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-			infoWindowOptions.content(
-					restaurant.getName() + " " +
-					restaurant.getAddress() + " " +
-					restaurant.getCity() + " " +
-					restaurant.getAdmin() + " " +
-					restaurant.getAdmin_www());
-			infoWindowOptions.maxWidth(300);
-			InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
-
-			// ClickListener for InfoWindow
-			map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
-				infoWindow.open(map, tempMarker);
-			});
-			 */
 
             map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
                 mainApp.getSidebarControl().showRestaurantInfo(restaurant);
@@ -294,9 +267,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
         map.addMarkers(restaurantMarkers);
 
-        // Set ObservableList to ListView
-        listViewNames.setItems(items);
-
         // Map zoom & focus options
         if(restaurants.size() < 20 && restaurants.size() != 0) {
             focusMapOnRestaurant(restaurants.get(0));
@@ -307,6 +277,17 @@ public class MainViewController implements Initializable, MapComponentInitialize
             mapView.setCenter(60.192059, 24.945831);
             mapView.setZoom(12);
         }
+    }
+
+    /**
+     * Update ListView and map elements according to a list of restaurants
+     *
+     * @param restaurants - List of restaurants to be iterated through
+     *                    Names are set on ListView and Markers are set on map on restaurants location
+     */
+    public void updateView(List<Restaurant> restaurants) {
+        updateListView(restaurants);
+        updateMarkers(restaurants);
     }
 
     private void findNearestAndFitBounds(LatLong userLocation) {
