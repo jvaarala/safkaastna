@@ -19,13 +19,14 @@ root {
 }
 
 .text {
-    -fx-text-fill: red;
+    -fx-font-size: 1em;
 }
 
 .button {
     /*-fx-background-color: #9AC5E6;*/
     -fx-background-color: main-button-color;
     -fx-text-fill: main-text-color;
+    -fx-font-size: 16pt;
 }
 
 .button:hover {
@@ -48,10 +49,13 @@ root {
 
 #searchButton {
     -fx-background-radius: 0px 7px 7px 0;
+    -fx-font-size: 14pt;
 }
 
 #searchField {
     -fx-background-radius: 7px 0 0 7px;
+    -fx-font-size: 12pt;
+    -fx-padding: 0 0 0 10px;
 }
 
 .toggle-button {
@@ -59,6 +63,7 @@ root {
     -fx-background-color: main-button-color-disabled;
     -fx-background-radius: 7px 7px 0 0;
     -fx-text-fill: main-text-color-disabled;
+    -fx-font-size: 13pt;
 }
 
 .toggle-button:hover {
@@ -86,9 +91,10 @@ root {
 }
 
 .list-cell {
-    -fx-cell-size: 40px;
+    -fx-cell-size: 60px;
     -fx-background-color: white;
     -fx-text-fill: main-text-color-light;
+    -fx-font-size: 11pt;
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
@@ -103,12 +109,19 @@ root {
     -fx-text-fill: white;
 }
 
+.sidebar-header {
+    -fx-fill: main-text-color;
+    -fx-font-size: 18pt;
+}
+
 .sidebar-text {
-     -fx-fill: main-text-color;
+    -fx-fill: main-text-color;
+    -fx-font-size: 12pt;
  }
 
 .sidebar-link {
     -fx-text-fill: main-text-color-light;
+    -fx-font-size: 12pt;
 }
 
 .sidebar-link:hover{

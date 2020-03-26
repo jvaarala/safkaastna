@@ -133,21 +133,17 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @FXML
     protected void handleFilterToggle(ActionEvent event) {
-        textInSearchField = searchTextBox.getText();
         if (filterToggleButton.isSelected()) {
             searchButton.setDisable(true);
-            filterToggleButton.setText("Restaurant filter ON");
-//			System.out.println("filter ON");
-            searchTextBox.setText("");
-            textInSearchField = searchTextBox.getText();
-            List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), textInSearchField);
+            filterToggleButton.setText("Filtering.");
+            List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), searchTextBox.getText());
             updateView(foundRestaurants);
         } else {
             searchButton.setDisable(false);
-            filterToggleButton.setText("Restaurant filter OFF");
-//			System.out.println("filter OFF ");
+            filterToggleButton.setText("Toggle filter");
             updateView(mainApp.getRestaurants());
         }
+        searchTextBox.requestFocus();
     }
 
     /**
@@ -161,17 +157,12 @@ public class MainViewController implements Initializable, MapComponentInitialize
     @FXML
     protected void handleSearchButton(ActionEvent event) {
         if (!filterToggleButton.isSelected()) {
+            map.clearMarkers();
+            updateMarkers(mainApp.getRestaurants());
             mainApp.setUserLocation(fetchGoogleCoordinates(textInSearchField));
             createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
-
-            // TERVEISIÄ KATRILLE :D
 			mainApp.getSidebarControl().setUserLocationText(formatString(textInSearchField));
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("RESTAURANT NOT FOUND");
-            alert.setHeaderText("Restaurant filter is ON");
-            alert.setContentText("If you want to search address, toggle restaurant filter off'");
-            alert.show();
         }
     }
 
@@ -212,7 +203,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
         filterToggleButton.getStyleClass().add("myButton");
         map = mapView.createMap(mapOptions);
 
-        // Prints LatLong according to map click to console
         map.addUIEventHandler(UIEventType.click, (JSObject obj) -> {
             LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
 //			System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
@@ -224,11 +214,9 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
     private void updateListView(List<Restaurant> restaurants) {
         listViewNames.getItems().clear();
-
         // Click listener for ListView item clicks
         listViewNames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-//				System.out.println(newValue);
                 for (Restaurant restaurant : restaurants) {
                     if (restaurant.getName().equals(newValue)) {
                         focusMapOnRestaurant(restaurant);
@@ -237,7 +225,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
                 }
             }
         });
-
         // Set ObservableList to ListView
         listViewNames.setItems(items);
     }
@@ -315,7 +302,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     private LatLong fetchGoogleCoordinates(String s) {
 
-        if (s == "") {
+        if (s.equals("")) {
             return null;
         }
         // Format string to be usable as a part of search url
@@ -382,6 +369,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
      * @param ll User location as LatLong object
      */
     private void createAndFocusOnUserLocationMarker(LatLong ll) {
+        map.clearMarkers();
+        updateMarkers(mainApp.getRestaurants());
         try {
             // add new marker to map on correct location & zoom in
             map.addMarkers(Collections.singletonList(createUserLocationMarker()));
