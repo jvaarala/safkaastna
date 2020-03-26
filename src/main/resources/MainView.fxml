@@ -26,12 +26,12 @@
             <children>
                   <HBox>
                       <children>
-                          <TextField id="searchField" fx:id="searchTextBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleSearchButton" onKeyReleased="#handleSearchBar" promptText="Type searchword">
+                          <TextField id="searchField" fx:id="searchTextBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyReleased="#handleSearchBar" promptText="Type searchword">
                               <padding>
                                   <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
                               </padding>
                           </TextField>
-                          <Button id="searchButton" fx:id="searchButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSearchButton" text="Find" HBox.hgrow="ALWAYS" />
+                          <Button id="searchButton" defaultButton="true" fx:id="searchButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSearchButton" text="Find" HBox.hgrow="ALWAYS" />
                       </children>
                   </HBox>
                 <ToggleButton fx:id="filterToggleButton" mnemonicParsing="false" onAction="#handleFilterToggle" prefHeight="40.0" prefWidth="240.0" text="Filter restaurants" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">

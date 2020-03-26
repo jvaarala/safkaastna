@@ -5,6 +5,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import main.MainApp;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.URL;
@@ -17,7 +18,8 @@ import java.util.List;
  */
 public class SearchLogic {
 
-    public SearchLogic() { }
+    public SearchLogic() {
+    }
 
     /**
      * Google maps api key is written on a separate, local file
@@ -34,7 +36,7 @@ public class SearchLogic {
      * Search restaurant list for names that match search word.
      *
      * @param restaurantList all the known restaurants.
-     * @param searchWord the word that is written in the search field.
+     * @param searchWord     the word that is written in the search field.
      * @return returns a list with the restaurant that matched the search word.
      * If search word is empty or contains only whitespace the whole list is returned.
      */
@@ -97,7 +99,8 @@ public class SearchLogic {
 
     /**
      * uses haversine formula to calculate which restaurant is nearest to user input address
-     * @param restaurants list of all restaurants
+     *
+     * @param restaurants  list of all restaurants
      * @param userLocation LatLong object for location given by user
      * @return Restaurant object that is nearest to user provided address
      */
@@ -105,7 +108,7 @@ public class SearchLogic {
         Restaurant nearest = new Restaurant();
         double distance = 1300000;      // some big value to start with (Finlands maximum length is lower than this) in meters!
 
-        for( Restaurant restaurant : restaurants) {
+        for (Restaurant restaurant : restaurants) {
             final int R = 6371; // Radius of the earth
             double latDistance = Math.toRadians(restaurant.getLat() - userLocation.getLatitude());
             double lonDistance = Math.toRadians(restaurant.getLng() - userLocation.getLongitude());
@@ -114,7 +117,6 @@ public class SearchLogic {
                     * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
             double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             double distanceFromRestaurant = R * c * 1000; // convert to meters
-//            System.out.printf(distanceFromRestaurant + "\n");
             if (distanceFromRestaurant < distance) {
                 distance = distanceFromRestaurant;
                 nearest = restaurant;

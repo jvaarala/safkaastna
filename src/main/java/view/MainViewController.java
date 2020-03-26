@@ -58,6 +58,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
     private String textInSearchField;
 
     private MainApp mainApp;
+
     /**
      * Used to give a reference to the mainApp for this controller.
      * Should be done after controller initialisation, before using any of its functions.
@@ -91,7 +92,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
         mapView.setKey(api);
         mapContainer.getChildren().add(mapView);
         mapView.addMapInializedListener(this);
-        mapView.setPrefSize(0,0);
+        mapView.setPrefSize(0, 0);
     }
 
     /**

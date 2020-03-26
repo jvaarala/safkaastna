@@ -39,6 +39,7 @@ public class SideBarController {
     private Text userLocationText;
 
     private MainApp mainApp;
+
     /**
      * Used to give a reference to the mainApp for this controller.
      * Should be done after controller initialisation, before using any of its functions.

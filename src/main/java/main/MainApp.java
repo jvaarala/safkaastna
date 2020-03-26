@@ -3,10 +3,8 @@ package main;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
-import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,16 +22,28 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
 
-    private BorderPane mainScreen;
-    private AnchorPane sidebar;
-
-    private List<Restaurant> restaurantsFromDb;
+    private SideBarController sidebarControl;
     private OptionsBarController optionsControl;
     private MainViewController mapControl;
-    private SideBarController sidebarControl;
-    private Scene scene;
 
+    public SideBarController getSidebarControl() {
+        return sidebarControl;
+    }
+
+    public OptionsBarController getOptionsControl() {
+        return optionsControl;
+    }
+
+    public MainViewController getMapControl() {
+        return mapControl;
+    }
+
+    private BorderPane mainScreen;
+    private AnchorPane sidebar;
     private LatLong userLocation;
+
+    private List<Restaurant> restaurantsFromDb;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -50,10 +60,9 @@ public class MainApp extends Application {
         updateRestaurantsFromDb();
 
         initRootLayout();
-
-        initSideBar(this.mainScreen);
-        initOptionsBar(this.mainScreen);
-        initMainView(this.mainScreen);
+        initSideBar();
+        initOptionsBar();
+        initMainView();
     }
 
     /**
@@ -63,7 +72,7 @@ public class MainApp extends Application {
         mainScreen = new BorderPane();
         primaryStage.setWidth(1200);
         primaryStage.setHeight(768);
-        scene = new Scene(mainScreen);
+        Scene scene = new Scene(mainScreen);
         scene.getStylesheets().add("Styles.css");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -71,10 +80,8 @@ public class MainApp extends Application {
 
     /**
      * Initialises the optionsbar.
-     *
-     * @param mainScreen
      */
-    public void initOptionsBar(BorderPane mainScreen) {
+    private void initOptionsBar() {
         FXMLLoader loader = new FXMLLoader();
         URL connector = getClass().getResource("/OptionsBar.fxml");
 
@@ -94,11 +101,8 @@ public class MainApp extends Application {
 
     /**
      * Initialises the sidebar.
-     *
-     * @param mainScreen
      */
-
-    public void initSideBar(BorderPane mainScreen) {
+    private void initSideBar() {
         FXMLLoader loader = new FXMLLoader();
         URL connector = getClass().getResource("/SideBar.fxml");
 
@@ -117,10 +121,8 @@ public class MainApp extends Application {
 
     /**
      * Initialises the mainView with google maps.
-     *
-     * @param mainScreen
      */
-    public void initMainView(BorderPane mainScreen) {
+    private void initMainView() {
         FXMLLoader loader = new FXMLLoader();
         URL centerMap = getClass().getResource("/MainView.fxml");
         loader.setLocation(centerMap);
@@ -142,6 +144,13 @@ public class MainApp extends Application {
         this.restaurantsFromDb = dao.readRestaurants();
     }
 
+    /**
+     * Returns restaurants currently stored in memory
+     */
+    public List<Restaurant> getRestaurants() {
+        return this.restaurantsFromDb;
+    }
+
     public void setRestaurants(List<Restaurant> restaurantsDB) {
         this.restaurantsFromDb = restaurantsDB;
     }
@@ -152,18 +161,6 @@ public class MainApp extends Application {
 
     public void setUserLocation(LatLong userLocation) {
         this.userLocation = userLocation;
-    }
-
-    public List<Restaurant> getRestaurants() {
-        return this.restaurantsFromDb;
-    }
-
-    public SideBarController getSidebarControl() {
-        return sidebarControl;
-    }
-
-    public MainViewController getMapControl() {
-        return mapControl;
     }
 
     public Stage getPrimaryStage() {

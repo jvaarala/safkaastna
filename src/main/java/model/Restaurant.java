@@ -32,9 +32,10 @@ public class Restaurant {
     @Column
     private double lng;
 
-    public Restaurant() { }
+    public Restaurant() {
+    }
 
-    public Restaurant (int id, double lat, double lng) {
+    public Restaurant(int id, double lat, double lng) {
         this.lng = lng;
         this.lat = lat;
         this.id = id;
@@ -93,7 +94,9 @@ public class Restaurant {
         this.www = www;
     }
 
-    public String getAdmin() { return admin; }
+    public String getAdmin() {
+        return admin;
+    }
 
     public void setAdmin(String admin) {
         this.admin = admin;
@@ -103,19 +106,33 @@ public class Restaurant {
         return admin_www;
     }
 
-    public void setAdmin_www(String admin_www) { this.admin_www = admin_www; }
+    public void setAdmin_www(String admin_www) {
+        this.admin_www = admin_www;
+    }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public double getLat() { return lat; }
+    public double getLat() {
+        return lat;
+    }
 
-    public void setLat(double lat) { this.lat = lat; }
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
 
-    public double getLng() { return lng; }
+    public double getLng() {
+        return lng;
+    }
 
-    public void setLng(double lng) { this.lng = lng; }
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
 
     @Override
     public String toString() {
