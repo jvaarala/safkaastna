@@ -20,6 +20,7 @@ public class OptionsBarController {
 	private RestaurantDAO db_data;
 	private List<Restaurant> restaurantsFromDb;
 	private MainApp mainApp;
+	String languange = "ENG";
 	
 	private String helpTextENG = "SafkaaSTNA is a Java Desktop application desingned for students searching for student restaurants. \n"
 			+ " \n"
@@ -136,7 +137,7 @@ public class OptionsBarController {
 	 * @return boolean - true if succeeded, false if failed
 	 */
 	@FXML
-	public boolean Refresh() {
+	public boolean refresh() {
 		boolean gotRestaurants = getRestaurants();
 		if (!gotRestaurants) {
 			return false;
@@ -159,8 +160,32 @@ public class OptionsBarController {
 	 * Help button function that pops help dialog with instructions.
 	 */
 	@FXML
-	public void Help() {
-		popupInfo(helpTextENG, "SafkaaSTNA Help");
+	public void help() {
+		if(languange.equals("SWE")) {
+			popupInfo(helpTextSWE, "SafkaaSTNA Hjälp");
+		} else if (languange.equals("FI")) {
+			popupInfo(helpTextFI, "SafkaaSTNA Apu");
+		} else {
+			popupInfo(helpTextENG, "SafkaaSTNA Help");
+		}
 	}
 
+
+	@FXML
+	public void changeFI() {
+		languange = "FI";
+
+	}
+
+	@FXML
+	public void changeENG() {
+		languange = "ENG";
+
+	}
+
+	@FXML
+	public void changeSWE() {
+		languange = "SWE";
+
+	}
 }

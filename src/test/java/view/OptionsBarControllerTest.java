@@ -55,13 +55,13 @@ class OptionsBarControllerTest {
 	
 	@Test
 	void Refresh() {
-		assertEquals(true, controller.Refresh(), "Refresh not working, should return true on success");
+		assertEquals(true, controller.refresh(), "Refresh not working, should return true on success");
 	}
 	
 	@Test
 	void RefreshFail() {
 		OptionsBarController controllerTemp = mock(OptionsBarController.class);
 		when(controllerTemp.getRestaurants()).thenReturn(false);
-		assertEquals(false, controllerTemp.Refresh(), "Refresh not working, should return false on failure");
+		assertEquals(false, controllerTemp.refresh(), "Refresh not working, should return false on failure");
 	}
 }
