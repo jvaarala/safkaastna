@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
+import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Restaurant;
+import model.RestaurantDAO;
 import view.MainViewController;
 import view.OptionsBarController;
 import view.SideBarController;
@@ -45,11 +47,13 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("SafkaaSTNA");
 
+        updateRestaurantsFromDb();
+
         initRootLayout();
 
+        initSideBar(this.mainScreen);
         initOptionsBar(this.mainScreen);
         initMainView(this.mainScreen);
-        initSideBar(this.mainScreen);
     }
 
     /**
@@ -131,17 +135,11 @@ public class MainApp extends Application {
     }
 
     /**
-     * Used to re-render the maps data points. Call this when new restaurants are fetched from database.
+     * Call this to fetch new restaurants from database.
      */
-    public void updateMap() {
-        if (this.restaurantsFromDb == null) {
-            boolean success = this.optionsControl.getRestaurants();
-            if (success) {
-                mapControl.updateView(this.restaurantsFromDb);
-            }
-            return;
-        }
-        mapControl.updateView(this.restaurantsFromDb);
+    public void updateRestaurantsFromDb() {
+        RestaurantDAO dao = new RestaurantDAO();
+        this.restaurantsFromDb = dao.readRestaurants();
     }
 
     public void setRestaurants(List<Restaurant> restaurantsDB) {
@@ -179,4 +177,5 @@ public class MainApp extends Application {
     public void sidebarOff() {
         mainScreen.setRight(null);
     }
+
 }

@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import main.MainApp;
 import model.Restaurant;
 
-import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,27 +31,11 @@ import com.lynden.gmapsfx.MapComponentInitializedListener;
 
 import model.SearchLogic;
 import netscape.javascript.JSObject;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
- * MainViewController Class controls the embedded google maps view.
+ * MainViewController Class controls the listView of restaurants and embedded google maps view.
  */
 public class MainViewController implements Initializable, MapComponentInitializedListener {
-
-    private MainApp mainApp;
-
-    /**
-     * Google maps api key is written on a separate, local file
-     * Dotenv handles retrieving apikey and it is stored on a variable
-     */
-    private Dotenv dotenv = Dotenv
-            .configure()
-            .ignoreIfMissing()
-            .load();
-    private String api = dotenv.get("APIKEY");
 
     @FXML
     private ListView<String> listViewNames;
@@ -74,8 +57,135 @@ public class MainViewController implements Initializable, MapComponentInitialize
     private SearchLogic search = new SearchLogic();
     private String textInSearchField;
 
+    private MainApp mainApp;
+    /**
+     * Used to give a reference to the mainApp for this controller.
+     * Should be done after controller initialisation, before using any of its functions.
+     *
+     * @param mainApp
+     */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+    }
+
+    /**
+     * Google maps api key is written on a separate, local file
+     * Dotenv handles retrieving apikey and it is stored on a variable
+     */
+    private Dotenv dotenv = Dotenv
+            .configure()
+            .ignoreIfMissing()
+            .load();
+    private String api = dotenv.get("APIKEY");
+
+    /**
+     * Initial setup for application.
+     * sets content to observable list,
+     * adds map to mapcontainer and sets api key for google api calls
+     *
+     * @param location
+     * @param resources
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        mapView.setKey(api);
+        mapContainer.getChildren().add(mapView);
+        mapView.addMapInializedListener(this);
+        mapView.setPrefSize(0,0);
+    }
+
+    /**
+     * mapInitializer for GmapsFX library
+     * Sets desired map options and creates GoogleMap object
+     * Focuses map on a predestined location (Helsinki)
+     */
+    @Override
+    public void mapInitialized() {
+        // Set the initial properties of the map.
+        MapOptions mapOptions = new MapOptions();
+
+        mapOptions.overviewMapControl(false).panControl(false).rotateControl(false).scaleControl(false)
+                .streetViewControl(false).zoomControl(false).zoom(12).mapTypeControl(false);
+        AnchorPane.setTopAnchor(mapView, 0.0);
+        AnchorPane.setRightAnchor(mapView, 0.0);
+        AnchorPane.setBottomAnchor(mapView, 0.0);
+        AnchorPane.setLeftAnchor(mapView, 0.0);
+        map = mapView.createMap(mapOptions);
+
+/*        map.addUIEventHandler(UIEventType.click, (JSObject obj) -> {
+            LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
+			System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
+        });*/
+
+        map.setCenter(new LatLong(60.192059, 24.945831));
+        updateView(mainApp.getRestaurants());
+    }
+
+    /**
+     * Update ListView and map elements according to a list of restaurants
+     *
+     * @param restaurants - List of restaurants to be iterated through
+     *                    Names are set on ListView and Markers are set on map on restaurants location
+     */
+    public void updateView(List<Restaurant> restaurants) {
+        updateListView(restaurants);
+        updateMarkers(restaurants);
+    }
+
+    public void updateListView(List<Restaurant> restaurants) {
+        listViewNames.getItems().clear();
+        for (Restaurant restaurant : restaurants) {
+            items.add(restaurant.getName());
+        }
+
+        // Click listener for ListView item clicks
+        listViewNames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                for (Restaurant restaurant : restaurants) {
+                    if (restaurant.getName().equals(newValue)) {
+                        focusMapOnRestaurant(restaurant);
+                        mainApp.getSidebarControl().showRestaurantInfo(restaurant);
+                        break;
+                    }
+                }
+            }
+        });
+        // Set ObservableList to ListView
+        listViewNames.setItems(items);
+    }
+
+    private void updateMarkers(List<Restaurant> restaurants) {
+        List<Marker> restaurantMarkers = new ArrayList<>();
+        map.clearMarkers();
+        if (mainApp.getUserLocation() != null) {
+            restaurantMarkers.add(createUserLocationMarker());
+        }
+
+        for (Restaurant restaurant : restaurants) {
+            LatLong tempLatLong = new LatLong(restaurant.getLat(), restaurant.getLng());
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(tempLatLong);
+            markerOptions.icon("https://www.kela.fi/documents/10180/24327790/Logo_Tunnus_rgb.gif/7a417c63-36b0-4ef0-ad4c-3e29fb5196e9?t=1553685514309");
+            Marker tempMarker = new Marker(markerOptions);
+
+            map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
+                mainApp.getSidebarControl().showRestaurantInfo(restaurant);
+                mainApp.sidebarOn();
+            });
+            restaurantMarkers.add(tempMarker);
+        }
+        map.addMarkers(restaurantMarkers);
+
+        // Map zoom & focus options
+        if (restaurants.size() < 20 && restaurants.size() != 0) {
+            focusMapOnRestaurant(restaurants.get(0));
+        } else if (mainApp.getUserLocation() != null) {
+            map.setCenter(mainApp.getUserLocation());
+            map.setZoom(12);
+        } else {
+            mapView.setCenter(60.192059, 24.945831);
+            mapView.setZoom(12);
+        }
     }
 
     /**
@@ -92,8 +202,27 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
     }
 
+    /**
+     * Event handler for search button
+     * If toggle button for restaurant filtering is not selected, will continue to fetchCoordinates() &
+     * focusMapOnCoordinate()
+     *
+     * @param event
+     */
+    @FXML
+    protected void handleSearchButton(ActionEvent event) {
+        if (!filterToggleButton.isSelected()) {
+            map.clearMarkers();
+            updateMarkers(mainApp.getRestaurants());
+            mainApp.setUserLocation(search.fetchGoogleCoordinates(textInSearchField));
+            createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
+            mainApp.getSidebarControl().setUserLocationText(formatString(textInSearchField));
+        } else {
+        }
+    }
+
     /*
-    TODO JESSE MOVE THIS TO YOUR NEW BUTTON, WHEN EXECUTED
+    TODO MOVE THIS TO YOUR NEW BUTTON, WHEN EXECUTED
      */
     @FXML
     protected void handleLocateNearestButton(ActionEvent event) {
@@ -112,7 +241,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
             searchButton.setOnAction(
                     event1 -> {
                         String address = startAddress.getText();
-                        mainApp.setUserLocation(fetchGoogleCoordinates(address));
+                        mainApp.setUserLocation(search.fetchGoogleCoordinates(address));
                         dialog.close();
                         //		userLocation = new LatLong(60.240165, 24.042544);
                         createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
@@ -146,139 +275,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
         searchTextBox.requestFocus();
     }
 
-    /**
-     * Event handler for search button
-     * If toggle button for restaurant filtering is not selected, will continue to fetchCoordinates() &
-     * focusMapOnCoordinate()
-     *
-     * @param event
-     */
-
-    @FXML
-    protected void handleSearchButton(ActionEvent event) {
-        if (!filterToggleButton.isSelected()) {
-            map.clearMarkers();
-            updateMarkers(mainApp.getRestaurants());
-            mainApp.setUserLocation(fetchGoogleCoordinates(textInSearchField));
-            createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
-			mainApp.getSidebarControl().setUserLocationText(formatString(textInSearchField));
-        } else {
-        }
-    }
-
-    /**
-     * Initial setup for application.
-     * sets content to observable list,
-     * adds map to mapcontainer and sets api key for google api calls
-     *
-     * @param location
-     * @param resources
-     */
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        listViewNames.setItems(items);
-
-        mapContainer.getChildren().add(mapView);
-
-        mapView.addMapInializedListener(this);
-        mapView.setKey(api);
-    }
-
-    /**
-     * mapInitializer for GmapsFX library
-     * Sets desired map options and creates GoogleMap object
-     * Focuses map on a predestined location (Helsinki)
-     */
-    @Override
-    public void mapInitialized() {
-        // Set the initial properties of the map.
-        MapOptions mapOptions = new MapOptions();
-
-        mapOptions.overviewMapControl(false).panControl(false).rotateControl(false).scaleControl(false)
-                .streetViewControl(false).zoomControl(false).zoom(12).mapTypeControl(false);
-        AnchorPane.setTopAnchor(mapView, 0.0);
-        AnchorPane.setRightAnchor(mapView, 0.0);
-        AnchorPane.setBottomAnchor(mapView, 0.0);
-        AnchorPane.setLeftAnchor(mapView, 0.0);
-        filterToggleButton.getStyleClass().add("myButton");
-        map = mapView.createMap(mapOptions);
-
-        map.addUIEventHandler(UIEventType.click, (JSObject obj) -> {
-            LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
-//			System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
-        });
-
-        map.setCenter(new LatLong(60.192059, 24.945831));
-        this.mainApp.updateMap();
-    }
-
-    private void updateListView(List<Restaurant> restaurants) {
-        listViewNames.getItems().clear();
-        // Click listener for ListView item clicks
-        listViewNames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                for (Restaurant restaurant : restaurants) {
-                    if (restaurant.getName().equals(newValue)) {
-                        focusMapOnRestaurant(restaurant);
-                        break;
-                    }
-                }
-            }
-        });
-        // Set ObservableList to ListView
-        listViewNames.setItems(items);
-    }
-
-    private void updateMarkers(List<Restaurant> restaurants) {
-        List<Marker> restaurantMarkers = new ArrayList<>();
-        map.clearMarkers();
-        if (mainApp.getUserLocation() != null) {
-            restaurantMarkers.add(createUserLocationMarker());
-        }
-
-        for (Restaurant restaurant : restaurants) {
-            items.add(restaurant.getName());
-            LatLong tempLatLong = new LatLong(restaurant.getLat(), restaurant.getLng());
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(tempLatLong);
-            markerOptions.icon("https://www.kela.fi/documents/10180/24327790/Logo_Tunnus_rgb.gif/7a417c63-36b0-4ef0-ad4c-3e29fb5196e9?t=1553685514309");
-            Marker tempMarker = new Marker(markerOptions);
-
-            map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
-                mainApp.getSidebarControl().showRestaurantInfo(restaurant);
-                mainApp.sidebarOn();
-            });
-
-
-            restaurantMarkers.add(tempMarker);
-        }
-        map.addMarkers(restaurantMarkers);
-
-        // Map zoom & focus options
-        if(restaurants.size() < 20 && restaurants.size() != 0) {
-            focusMapOnRestaurant(restaurants.get(0));
-        } else if (mainApp.getUserLocation() != null) {
-            map.setCenter(mainApp.getUserLocation());
-            map.setZoom(12);
-        } else {
-            mapView.setCenter(60.192059, 24.945831);
-            mapView.setZoom(12);
-        }
-    }
-
-    /**
-     * Update ListView and map elements according to a list of restaurants
-     *
-     * @param restaurants - List of restaurants to be iterated through
-     *                    Names are set on ListView and Markers are set on map on restaurants location
-     */
-    public void updateView(List<Restaurant> restaurants) {
-        updateListView(restaurants);
-        updateMarkers(restaurants);
-    }
-
     private void findNearestAndFitBounds(LatLong userLocation) {
-        //		userLocation = new LatLong(60.240165, 24.042544);
+        // userLocation = new LatLong(60.240165, 24.042544);
         Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
         System.out.println(nearest);
 
@@ -292,68 +290,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
         } else {
             map.setZoom(zoomValue - 1);
         }
-    }
-
-    /**
-     * Search Google Maps api for coordinates with address
-     *
-     * @param s User input String (address) to be searched from Google maps api
-     * @return LatLong object to be placed on map
-     */
-    private LatLong fetchGoogleCoordinates(String s) {
-
-        if (s.equals("")) {
-            return null;
-        }
-        // Format string to be usable as a part of search url
-        String sWithoutSpaces = s
-                .replace(",", "")
-                .replace(" ", "+");
-        String httpsUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + sWithoutSpaces +
-                "&key=" + api;
-        URL url;
-        HttpsURLConnection con = null;
-        StringBuilder result = new StringBuilder();
-        InputStream in = null;
-        BufferedReader reader = null;
-
-        // Create String from api response
-        try {
-            url = new URL(httpsUrl);
-            con = (HttpsURLConnection) url.openConnection();
-            in = new BufferedInputStream(con.getInputStream());
-            reader = new BufferedReader(new InputStreamReader(in));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                in.close();
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-            if (con != null) {
-                con.disconnect();
-            }
-        }
-
-        // Modify api response String to a LatLong Object
-        LatLong ll = null;
-        JSONObject resultJSON = new JSONObject(result.toString());
-        JSONArray resultArray = resultJSON.getJSONArray("results");
-        for (int i = 0; i < resultArray.length(); i++) {
-            JSONObject results = resultArray.getJSONObject(i);
-            JSONObject geometry = results.getJSONObject("geometry");
-            JSONObject location = geometry.getJSONObject("location");
-            ll = new LatLong(location.getDouble("lat"), location.getDouble("lng"));
-        }
-        return ll;
     }
 
     private Marker createUserLocationMarker() {
@@ -374,9 +310,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
         try {
             // add new marker to map on correct location & zoom in
             map.addMarkers(Collections.singletonList(createUserLocationMarker()));
-            mapView.setCenter(ll.getLatitude(), ll.getLongitude());
-            mapView.setZoom(15);
-        } catch (Exception e ) {
+            focusMapOnLocation(ll);
+        } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ADDRESS NOT FOUND");
             alert.setHeaderText("No search results");
@@ -407,7 +342,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
     }
 
-    public String formatString (String s) {
+    private String formatString(String s) {
         String[] words = s.replaceAll("\\s+", " ").trim().split(" ");
         String newString = "";
         for (String word : words) {
@@ -430,5 +365,4 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
         return newString;
     }
-
 }

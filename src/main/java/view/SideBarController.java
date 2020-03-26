@@ -17,35 +17,28 @@ import java.util.List;
 
 public class SideBarController {
 
-    private MainApp mainApp;
-
     @FXML
     private AnchorPane sidebarContainer;
     @FXML
     private GridPane sidebarInfoContainer;
-
     @FXML
     public ImageView closeIcon;
-
     @FXML
     private ImageView headerIcon;
     @FXML
     private Text headerText;
-
     @FXML
     private ImageView topParagraphIcon;
     @FXML
     private Text topParagraph;
-
     @FXML
     private ImageView restaurantUrlIcon;
     @FXML
     private Hyperlink bottomParagraph;
-
     @FXML
     private Text userLocationText;
 
-
+    private MainApp mainApp;
     /**
      * Used to give a reference to the mainApp for this controller.
      * Should be done after controller initialisation, before using any of its functions.
@@ -54,23 +47,12 @@ public class SideBarController {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+    }
+
+    void showRestaurantInfo(Restaurant restaurant) {
         closeIcon.setOnMouseClicked((MouseEvent e) -> {
-            System.out.println("Clicked!"); // change functionality
             mainApp.sidebarOff();
         });
-    }
-
-    public void showDefaultView() {
-        headerIcon.setImage(new Image("icons/png/309-heart.png"));
-        headerText.setText("Nice to see you here!");
-        topParagraph.setText("Feel free to look at restaurant locations, look up an address and filter visible results");
-
-        headerIcon.setVisible(true);
-        headerText.setVisible(true);
-        topParagraph.setVisible(true);
-    }
-
-    public void showRestaurantInfo(Restaurant restaurant) {
 
         headerIcon.setImage(new Image("icons/png/073-house-3.png"));
         headerText.setText(restaurant.getName());
@@ -111,13 +93,11 @@ public class SideBarController {
                 }
             });
         }
+
+        mainApp.sidebarOn();
     }
 
-    public String getUserLocationText() {
-        return userLocationText.getText();
-    }
-
-    public void setUserLocationText(String userLocationText) {
+    void setUserLocationText(String userLocationText) {
         this.userLocationText.setText(userLocationText);
         this.userLocationText.setOnMouseClicked(event -> {
             mainApp.getMapControl().focusMapOnLocation(mainApp.getUserLocation());
