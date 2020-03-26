@@ -24,7 +24,7 @@ public class MainApp extends Application {
 
     private SideBarController sidebarControl;
     private OptionsBarController optionsControl;
-    private MainViewController mapControl;
+    private MainViewController mainViewControl;
 
     public SideBarController getSidebarControl() {
         return sidebarControl;
@@ -34,8 +34,8 @@ public class MainApp extends Application {
         return optionsControl;
     }
 
-    public MainViewController getMapControl() {
-        return mapControl;
+    public MainViewController getMainViewControl() {
+        return mainViewControl;
     }
 
     private BorderPane mainScreen;
@@ -129,8 +129,8 @@ public class MainApp extends Application {
         try {
             AnchorPane mapPane = (AnchorPane) loader.load();
             mainScreen.setCenter(mapPane);
-            this.mapControl = loader.getController();
-            this.mapControl.setMainApp(this);
+            this.mainViewControl = loader.getController();
+            this.mainViewControl.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }

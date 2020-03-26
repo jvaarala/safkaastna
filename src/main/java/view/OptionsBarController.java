@@ -1,14 +1,10 @@
 package view;
 
-import java.util.List;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import main.MainApp;
-import model.RestaurantDAO;
-import model.Restaurant;
 
 /**
  * OptionsBarController controls connection and help functions, which are used by connection button and help button.
@@ -67,6 +63,6 @@ public class OptionsBarController {
     @FXML
     public void Refresh(ActionEvent actionEvent) {
         mainApp.updateRestaurantsFromDb();
-        mainApp.getMapControl().updateView(mainApp.getRestaurants());
+        mainApp.getMainViewControl().updateView(mainApp.getRestaurants());
     }
 }
