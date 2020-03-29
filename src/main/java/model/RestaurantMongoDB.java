@@ -102,7 +102,7 @@ public class RestaurantMongoDB {
 	 * @param restaurantsFromDb
 	 * @return boolean - true if successful upload, false if partial or complete failure
 	 */
-	public boolean uploadRestaurants(List<Restaurant> restaurantsFromDb) {
+	public boolean uploadRestaurants(List<Restaurant> restaurantsFromDb) throws Exception {
 		if(!this.isAdmin) {
 			System.out.println("REQUIRES ADMIN USER");
 			return false;
@@ -141,9 +141,11 @@ public class RestaurantMongoDB {
 	
 	/**
 	 * Downloads all Restaurants in MongoDB
+	 * Probably throws exception when no Internet
+	 * or when data is in invalid format
 	 * @return ArrayList<Restaurant>
 	 */
-	public List<Restaurant> downloadRestaurants() {
+	public List<Restaurant> downloadRestaurants() throws Exception {
 		
 		MongoClient mongoClient = MongoClients.create(MongoURI);
 		MongoDatabase database = mongoClient.getDatabase(dbName);
