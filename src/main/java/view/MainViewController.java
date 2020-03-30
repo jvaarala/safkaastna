@@ -90,6 +90,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("initialize");
         mapView.setKey(api);
         mapContainer.getChildren().add(mapView);
         mapView.addMapInializedListener(this);
@@ -103,6 +104,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @Override
     public void mapInitialized() {
+        System.out.println("mapInitialized");
         // Set the initial properties of the map.
         MapOptions mapOptions = new MapOptions();
 
@@ -130,11 +132,13 @@ public class MainViewController implements Initializable, MapComponentInitialize
      *                    Names are set on ListView and Markers are set on map on restaurants location
      */
     public void updateView(List<Restaurant> restaurants) {
+        System.out.println("updateView");
         updateListView(restaurants);
         updateMarkers(restaurants);
     }
 
     public void updateListView(List<Restaurant> restaurants) {
+        System.out.println("updateListView");
         listViewNames.getItems().clear();
         for (Restaurant restaurant : restaurants) {
             items.add(restaurant.getName());
@@ -157,6 +161,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
     }
 
     private void updateMarkers(List<Restaurant> restaurants) {
+        System.out.println("updateMarkers");
         List<Marker> restaurantMarkers = new ArrayList<>();
         map.clearMarkers();
         if (mainApp.getUserLocation() != null) {
@@ -197,6 +202,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @FXML
     protected void handleSearchBar(KeyEvent keyEvent) {
+        System.out.println("handleSearchBar");
         textInSearchField = searchTextBox.getText();
         if (filterToggleButton.isSelected()) {
             List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), textInSearchField);
@@ -213,6 +219,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @FXML
     protected void handleSearchButton(ActionEvent event) {
+        System.out.println("handleSearchButton");
         if (!filterToggleButton.isSelected()) {
             map.clearMarkers();
             updateMarkers(mainApp.getRestaurants());
@@ -228,6 +235,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @FXML
     protected void handleLocateNearestButton(ActionEvent event) {
+        System.out.println("handleLocateNearestButton");
         if (mainApp.getUserLocation() == null) {
             final Stage dialog = new Stage();
             dialog.initModality(Modality.APPLICATION_MODAL);
@@ -250,7 +258,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
                         findNearestAndFitBounds(mainApp.getUserLocation());
                     });
         } else {
-            findNearestAndFitBounds(mainApp.getUserLocation());
+            this.findNearestAndFitBounds(mainApp.getUserLocation());
         }
     }
 
@@ -264,6 +272,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @FXML
     protected void handleFilterToggle(ActionEvent event) {
+        System.out.println("handleFilterToggle");
         if (filterToggleButton.isSelected()) {
             searchButton.setDisable(true);
             filterToggleButton.setText("Filtering.");
@@ -277,14 +286,15 @@ public class MainViewController implements Initializable, MapComponentInitialize
         searchTextBox.requestFocus();
     }
 
-    private void findNearestAndFitBounds(LatLong userLocation) {
+    public void findNearestAndFitBounds(LatLong userLocation) {
+        System.out.println("findNearestAndFitBounds");
         // userLocation = new LatLong(60.240165, 24.042544);
         Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
         System.out.println(nearest);
 
         mainApp.getSidebarControl().showRestaurantInfo(nearest);
 
-// zooming with different approach THIS WORKS BETTER!
+        // zooming with different approach THIS WORKS BETTER!
         double distance = search.calculateDistanceToNearest(nearest, userLocation);
         Circle circle = new Circle();
         circle.setRadius(distance);
@@ -305,6 +315,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
     }
 
     private Marker createUserLocationMarker() {
+        System.out.println("createUserLocationMarker");
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(mainApp.getUserLocation());
         markerOptions.icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png");
@@ -317,6 +328,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      * @param ll User location as LatLong object
      */
     private void createAndFocusOnUserLocationMarker(LatLong ll) {
+        System.out.println("createAndFocusOnUserLocationMarker");
         map.clearMarkers();
         updateMarkers(mainApp.getRestaurants());
         try {
@@ -338,6 +350,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      * @param ll User location as LatLong object
      */
     void focusMapOnLocation(LatLong ll) {
+        System.out.println("focusMapOnLocation");
         mapView.setCenter(ll.getLatitude(), ll.getLongitude());
         mapView.setZoom(15);
     }
@@ -348,6 +361,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      * @param restaurant - Restaurant on which to focus the map on
      */
     private void focusMapOnRestaurant(Restaurant restaurant) {
+        System.out.println("focusMapOnRestaurant");
         if (restaurant != null) {
             mapView.setCenter(restaurant.getLat(), restaurant.getLng());
             mapView.setZoom(15);
@@ -355,6 +369,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
     }
 
     private String formatString(String s) {
+        System.out.println("formatString");
         String[] words = s.replaceAll("\\s+", " ").trim().split(" ");
         String newString = "";
         for (String word : words) {

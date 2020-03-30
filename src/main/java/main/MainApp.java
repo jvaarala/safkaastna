@@ -103,7 +103,7 @@ public class MainApp extends Application {
     /**
      * Initialises the sidebar.
      */
-    private void initSideBar() {
+    public void initSideBar() {
         FXMLLoader loader = new FXMLLoader();
         URL connector = getClass().getResource("/SideBar.fxml");
 
@@ -123,7 +123,7 @@ public class MainApp extends Application {
     /**
      * Initialises the mainView with google maps.
      */
-    private void initMainView() {
+    public void initMainView() {
         FXMLLoader loader = new FXMLLoader();
         URL centerMap = getClass().getResource("/MainView.fxml");
         loader.setLocation(centerMap);
@@ -153,6 +153,7 @@ public class MainApp extends Application {
      * Returns restaurants currently stored in memory
      */
     public List<Restaurant> getRestaurants() {
+        System.out.println("TÄÄLLÄÄ");
         return this.restaurantsFromDb;
     }
 
