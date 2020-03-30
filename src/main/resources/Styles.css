@@ -1,53 +1,76 @@
 * {
     main-button-color: #a4c2f7;
+    main-bg-color: #F0F3F7;
+    main-bg-color-alt: #DCE6F7;
     main-button-color-hover: #7facfa;
     main-button-color-disabled: #e3e7f2;
-    main-toggle-button-color: lightgrey;
     main-toggle-button-color-hover: #7facfa;
     main-toggle-button-color-hover-selected: #7facfa;
     main-toggle-button-color-selected: #a4c2f7;
+    main-text-color: #37386e;
+    main-text-color-light: #364f85;
+    main-text-color-disabled: #9DABC4;
+
+    -fx-font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 root {
     display: block;
 }
 
+.text {
+    -fx-font-size: 1em;
+}
+
 .button {
     /*-fx-background-color: #9AC5E6;*/
     -fx-background-color: main-button-color;
+    -fx-text-fill: main-text-color;
+    -fx-font-size: 16pt;
 }
 
 .button:hover {
     /*-fx-background-color: #80A4BF;*/
     -fx-background-color: main-button-color-hover;
+    -fx-text-fill: main-bg-color;
+    -fx-cursor: HAND;
 }
 
 .button:disabled {
     /*-fx-background-color: #A5B2C0;*/
     -fx-background-color: main-button-color-disabled;
+    -fx-text-fill: main-text-color-disabled;
+    -fx-opacity: 100;
 }
 
 .button:selected {
 
 }
 
-.toggle-button {
-    /*-fx-background-color: #B3B8C2;*/
-    -fx-background-color: main-toggle-button-color;
-    -fx-background-radius: 7px 7px 0 0;
-}
-
 #searchButton {
     -fx-background-radius: 0px 7px 7px 0;
+    -fx-font-size: 14pt;
 }
 
 #searchField {
     -fx-background-radius: 7px 0 0 7px;
+    -fx-font-size: 12pt;
+    -fx-padding: 0 0 0 10px;
+}
+
+.toggle-button {
+    /*-fx-background-color: #B3B8C2;*/
+    -fx-background-color: main-button-color-disabled;
+    -fx-background-radius: 7px 7px 0 0;
+    -fx-text-fill: main-text-color-disabled;
+    -fx-font-size: 13pt;
 }
 
 .toggle-button:hover {
     /*-fx-background-color: #80A4BF;*/
     -fx-background-color: main-toggle-button-color-hover;
+    -fx-text-fill: main-bg-color;
+    -fx-cursor: HAND;
 }
 
 .toggle-button:hover:selected {
@@ -58,16 +81,20 @@ root {
 .toggle-button:selected {
     /*-fx-background-color: #9AC5E6;*/
     -fx-background-color: main-toggle-button-color-selected;
+    -fx-text-fill: main-text-color;
 }
 
 .indexed-cell {
     -fx-ellipsis-string: "...";
     -fx-text-overrun: clip;
+    -fx-cursor: HAND;
 }
 
 .list-cell {
-    -fx-cell-size: 40px;
+    -fx-cell-size: 60px;
     -fx-background-color: white;
+    -fx-text-fill: main-text-color-light;
+    -fx-font-size: 11pt;
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
@@ -80,4 +107,31 @@ root {
     /*-fx-background-color: #80A4BF;*/
     -fx-background-color: main-button-color-hover;
     -fx-text-fill: white;
+}
+
+.sidebar-header {
+    -fx-fill: main-text-color;
+    -fx-font-size: 18pt;
+}
+
+.sidebar-text {
+    -fx-fill: main-text-color;
+    -fx-font-size: 12pt;
+ }
+
+.sidebar-link {
+    -fx-text-fill: main-text-color-light;
+    -fx-font-size: 12pt;
+}
+
+.sidebar-link:hover{
+    -fx-text-fill: main-text-color;
+}
+
+.sidebarContainer {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, main-bg-color, main-bg-color-alt);
+}
+
+.optionsbarContainer {
+    -fx-background-color: linear-gradient(main-bg-color, main-bg-color-alt);
 }

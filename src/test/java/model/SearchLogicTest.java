@@ -25,7 +25,7 @@ class SearchLogicTest {
         r = new Restaurant(
                 666, "FASTFOOD",
                 "address",
-                00000,
+                "00000",
                 "city",
                 "www",
                 "admin",
@@ -36,7 +36,7 @@ class SearchLogicTest {
         d = new Restaurant(
                 666, "fastfood",
                 "address",
-                00000,
+                "00000",
                 "city",
                 "www",
                 "admin",
@@ -47,7 +47,7 @@ class SearchLogicTest {
         t = new Restaurant(
                 666, "burgerplace",
                 "address",
-                00000,
+                "00000",
                 "city",
                 "www",
                 "admin",

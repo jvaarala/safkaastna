@@ -14,7 +14,7 @@ class RestaurantTest {
         r = new Restaurant(
                 666, "name",
                 "address",
-                00000,
+                "00000",
                 "city",
                 "www",
                 "admin",
@@ -47,13 +47,13 @@ class RestaurantTest {
 
     @Test
     void getPostal_code() {
-        assertEquals(00000, r.getPostal_code(), "getPostal_code does not work");
+        assertEquals("00000", r.getPostal_code(), "getPostal_code does not work");
     }
 
     @Test
     void setPostal_code() {
-        r.setPostal_code(99999);
-        assertEquals(99999, r.getPostal_code(), "setPostal_code does not work");
+        r.setPostal_code("99999");
+        assertEquals("99999", r.getPostal_code(), "setPostal_code does not work");
     }
 
     @Test
@@ -135,7 +135,7 @@ class RestaurantTest {
     
     @Test
     void toStringTest() {
-    	String correctText = "Restaurant{id=666, name='name', address='address', postal_code=0, city='city', www='www', admin='admin', admin_www='adminwww', lat=62.8787878, lng=23.3876387}";
+    	String correctText = "Restaurant{id=666, name='name', address='address', postal_code=00000, city='city', www='www', admin='admin', admin_www='adminwww', lat=62.8787878, lng=23.3876387}";
     	assertEquals(correctText, r.toString(), "toString failure. Check for changes");
     }
 }
