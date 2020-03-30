@@ -1,0 +1,5 @@
+helpEN = SafkaaSTNA is a Java Desktop application desingned for students searching for student restaurants. With the this appliaction you can: See all available student restaurants in Finland: - Default view on app start - Search for restaurants near your or any address - Turn \Restaurant Filter\ off (default) - Write address, then press \Find\ - Search for restaurants by name - Turn \"Restaurant Filter - Write restaurant name - See additional information on each restaurant - Click a restaurants red marker
+
+helpFI = SafkaaSTNA on Java Työasema applikaatio suuniteltu
+
+helpSE = SafkaaSTNA är en Java Desktop applikation menad för
