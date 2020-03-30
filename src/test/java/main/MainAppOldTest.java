@@ -19,16 +19,16 @@ import model.Restaurant;
 
 
 
-class MainAppTest  {
+class MainAppOldTest {
 	static MainApp mainApp;
 	private List<Restaurant> tempList;
 
 	private BorderPane mainScreen;
 	static Thread fx;
-	
 
-	
-	
+
+
+
 
 	@BeforeEach
 	void beforeEach() {
@@ -47,12 +47,12 @@ class MainAppTest  {
 		mainScreen = new BorderPane();
 		mainApp = new MainApp();
 	}
-	
+
 	@Test
 	void getRestaurants() {
 		mainApp.setRestaurants(tempList);
 		assertEquals(1, mainApp.getRestaurants().size(), "getRestaurants not working for mainapp");
 	}
-	
+
 
 }
