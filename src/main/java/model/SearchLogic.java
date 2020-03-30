@@ -106,24 +106,34 @@ public class SearchLogic {
      */
     public Restaurant findNearestRestaurant(List<Restaurant> restaurants, LatLong userLocation) {
         Restaurant nearest = new Restaurant();
-        double distance = 1300000;      // some big value to start with (Finlands maximum length is lower than this) in meters!
+        double distance = 1300000;      // some big value to start with (Finland's maximum length is lower than this) in meters!
 
         for (Restaurant restaurant : restaurants) {
-            final int R = 6371; // Radius of the earth
-            double latDistance = Math.toRadians(restaurant.getLat() - userLocation.getLatitude());
-            double lonDistance = Math.toRadians(restaurant.getLng() - userLocation.getLongitude());
-            double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                    + Math.cos(Math.toRadians(restaurant.getLat())) * Math.cos(Math.toRadians(userLocation.getLatitude()))
-                    * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            double distanceFromRestaurant = R * c * 1000; // convert to meters
+            double distanceFromRestaurant = calculateDistanceToNearest(restaurant, userLocation);
             if (distanceFromRestaurant < distance) {
-                distance = distanceFromRestaurant;
                 nearest = restaurant;
+                distance = distanceFromRestaurant;
             }
         }
 
         return nearest;
+    }
+
+    public double calculateDistanceToNearest(Restaurant restaurant, LatLong userLocation) {
+
+        final int R = 6371; // Radius of the earth
+        double latDistance = Math.toRadians(restaurant.getLat() - userLocation.getLatitude());
+        double lonDistance = Math.toRadians(restaurant.getLng() - userLocation.getLongitude());
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(restaurant.getLat())) * Math.cos(Math.toRadians(userLocation.getLatitude()))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distanceFromRestaurant = R * c * 1000; // convert to meters
+//        if (distanceFromRestaurant < distance) {
+//            distance = distanceFromRestaurant;
+//        }
+
+        return distanceFromRestaurant;
     }
 
     /**

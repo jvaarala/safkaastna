@@ -2,6 +2,7 @@ package view;
 
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
+import com.lynden.gmapsfx.shapes.Circle;
 import com.mysql.jdbc.StringUtils;
 import io.github.cdimascio.dotenv.Dotenv;
 import javafx.collections.FXCollections;
@@ -281,16 +282,26 @@ public class MainViewController implements Initializable, MapComponentInitialize
         Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
         System.out.println(nearest);
 
-        map.fitBounds(new LatLongBounds(userLocation, new LatLong(nearest.getLat(), nearest.getLng())));
-        // zoom out by 1 so that markers are not hidden behind ListView
-        System.out.println(map.getZoom());
-        int zoomValue = map.getZoom();
-        if (zoomValue < 10) {
-            map.setCenter(new LatLong(nearest.getLat(), nearest.getLng()));
-            map.setZoom(15);
-        } else {
-            map.setZoom(zoomValue - 1);
-        }
+        mainApp.getSidebarControl().showRestaurantInfo(nearest);
+
+// zooming with different approach THIS WORKS BETTER!
+        double distance = search.calculateDistanceToNearest(nearest, userLocation);
+        Circle circle = new Circle();
+        circle.setRadius(distance);
+        circle.setCenter(new LatLong(nearest.getLat(), nearest.getLng()));
+        map.fitBounds(circle.getBounds());
+        System.out.println("zoom level " + map.getZoom());
+
+//        map.fitBounds(new LatLongBounds(userLocation, new LatLong(nearest.getLat(), nearest.getLng())));
+//        // zoom out by 1 so that markers are not hidden behind ListView
+//        System.out.println(map.getZoom());
+//        int zoomValue = map.getZoom();
+//        if (zoomValue < 10) {
+//            map.setCenter(new LatLong(nearest.getLat(), nearest.getLng()));
+//            map.setZoom(15);
+//        } else {
+//            map.setZoom(zoomValue - 1);
+//        }
     }
 
     private Marker createUserLocationMarker() {
