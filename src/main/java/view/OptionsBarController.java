@@ -31,11 +31,19 @@ public class OptionsBarController {
     private String helpSE = "fungerar inte";
     Properties props = new Properties(settings());
 
+
+    /**
+     *  set the location for map when program starts
+     */
     @FXML
     private void mapLocation() {
 
     }
 
+    /**
+     * Read properties file
+     * @return Properties that was read.
+     */
     private Properties settings() {
         Properties prop = new Properties();
         try (InputStream input = new FileInputStream("./src/main/resources/settings/language.properties.txt")) {
@@ -130,12 +138,22 @@ public class OptionsBarController {
         }
     }
 
+
+    /**
+     * List refresh
+     * @param actionEvent
+     */
     @FXML
     public void Refresh(ActionEvent actionEvent) {
         mainApp.updateRestaurantsFromDb();
         mainApp.getMainViewControl().updateView(mainApp.getRestaurants());
 
     }
+
+    /**
+     * Change Buttons for  language selection
+     */
+
 
     @FXML
     public void changeFI() {
