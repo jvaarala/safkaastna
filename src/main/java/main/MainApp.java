@@ -141,16 +141,12 @@ public class MainApp extends Application {
      * Call this to fetch new restaurants from database.
      */
     public void updateRestaurantsFromDb() {
-    	/* REMOVE COMMENTS AND LINES 153 + 154 to use the mongoDB version */
     	RestaurantMongoDB mongo = new RestaurantMongoDB();
     	try {
     		this.restaurantsFromDb = mongo.downloadRestaurants();
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
-    	
-//        RestaurantDAO dao = new RestaurantDAO();
-//        this.restaurantsFromDb = dao.readRestaurants();
     }
 
     /**
