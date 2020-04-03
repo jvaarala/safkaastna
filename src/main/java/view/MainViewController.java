@@ -60,6 +60,13 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
     private MainApp mainApp;
 
+    public void setGoogleMapStuff(GoogleMapView mapView, GoogleMap map) {
+        this.mapView = mapView;
+        this.map = map;
+        System.out.println(map);
+        System.out.println(mapView);
+    }
+
     /**
      * Used to give a reference to the mainApp for this controller.
      * Should be done after controller initialisation, before using any of its functions.
@@ -314,7 +321,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 //        }
     }
 
-    private Marker createUserLocationMarker() {
+    public Marker createUserLocationMarker() {
         System.out.println("createUserLocationMarker");
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(mainApp.getUserLocation());
@@ -327,7 +334,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      *
      * @param ll User location as LatLong object
      */
-    private void createAndFocusOnUserLocationMarker(LatLong ll) {
+    public void createAndFocusOnUserLocationMarker(LatLong ll) {
         System.out.println("createAndFocusOnUserLocationMarker");
         map.clearMarkers();
         updateMarkers(mainApp.getRestaurants());
@@ -349,7 +356,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      *
      * @param ll User location as LatLong object
      */
-    void focusMapOnLocation(LatLong ll) {
+    public void focusMapOnLocation(LatLong ll) {
         System.out.println("focusMapOnLocation");
         mapView.setCenter(ll.getLatitude(), ll.getLongitude());
         mapView.setZoom(15);
@@ -360,7 +367,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      *
      * @param restaurant - Restaurant on which to focus the map on
      */
-    private void focusMapOnRestaurant(Restaurant restaurant) {
+    public void focusMapOnRestaurant(Restaurant restaurant) {
         System.out.println("focusMapOnRestaurant");
         if (restaurant != null) {
             mapView.setCenter(restaurant.getLat(), restaurant.getLng());
@@ -368,7 +375,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
     }
 
-    private String formatString(String s) {
+    public static String formatString(String s) {
         System.out.println("formatString");
         String[] words = s.replaceAll("\\s+", " ").trim().split(" ");
         String newString = "";
@@ -378,7 +385,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
                 continue;
             }
             for (int i = 0; i < word.length(); i++) {
-
                 if (i == 0) {
                     newString = newString + word.substring(i, i + 1).toUpperCase();
                 } else {
@@ -390,6 +396,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
                 }
             }
         }
+        newString = newString.trim();
         return newString;
     }
 }
