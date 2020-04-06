@@ -153,7 +153,6 @@ public class MainApp extends Application {
      * Returns restaurants currently stored in memory
      */
     public List<Restaurant> getRestaurants() {
-        System.out.println("TÄÄLLÄÄ");
         return this.restaurantsFromDb;
     }
 

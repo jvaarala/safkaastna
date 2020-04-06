@@ -57,6 +57,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
     private GoogleMap map;
     private SearchLogic search = new SearchLogic();
     private String textInSearchField;
+    private Restaurant nearest;
 
     private MainApp mainApp;
 
@@ -172,16 +173,25 @@ public class MainViewController implements Initializable, MapComponentInitialize
         List<Marker> restaurantMarkers = new ArrayList<>();
         map.clearMarkers();
         if (mainApp.getUserLocation() != null) {
+
             restaurantMarkers.add(createUserLocationMarker());
         }
 
         for (Restaurant restaurant : restaurants) {
             LatLong tempLatLong = new LatLong(restaurant.getLat(), restaurant.getLng());
             MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(tempLatLong);
-            markerOptions.icon("https://www.kela.fi/documents/10180/24327790/Logo_Tunnus_rgb.gif/7a417c63-36b0-4ef0-ad4c-3e29fb5196e9?t=1553685514309");
+            // if nearest restaurant is known, highlight it somehow
+            if (nearest != null && tempLatLong.getLatitude() == nearest.getLat() && tempLatLong.getLongitude() == nearest.getLng()) {
+                markerOptions
+                        .position(tempLatLong)
+                        .icon("https://users.metropolia.fi/~katriras/OTP1/kela_nearest.gif")
+                        ;
+                System.out.println("Nearest marker should be different");
+            } else {
+                markerOptions.position(tempLatLong);
+                markerOptions.icon("https://www.kela.fi/documents/10180/24327790/Logo_Tunnus_rgb.gif/7a417c63-36b0-4ef0-ad4c-3e29fb5196e9?t=1553685514309");
+            }
             Marker tempMarker = new Marker(markerOptions);
-
             map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
                 mainApp.getSidebarControl().showRestaurantInfo(restaurant);
                 mainApp.sidebarOn();
@@ -193,6 +203,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
         // Map zoom & focus options
         if (restaurants.size() < 20 && restaurants.size() != 0) {
             focusMapOnRestaurant(restaurants.get(0));
+        } else if (mainApp.getUserLocation() != null && nearest != null) {
+            fitBounds(mainApp.getUserLocation(), nearest);
         } else if (mainApp.getUserLocation() != null) {
             map.setCenter(mainApp.getUserLocation());
             map.setZoom(12);
@@ -253,6 +265,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
             Button searchButton = new Button("Let's go!");
             dialogVbox.getChildren().addAll(startAddress, searchButton);
             Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            dialogScene.getStylesheets().add("Styles.css");
             dialog.setScene(dialogScene);
             dialog.show();
             searchButton.setOnAction(
@@ -262,11 +275,13 @@ public class MainViewController implements Initializable, MapComponentInitialize
                         dialog.close();
                         //		userLocation = new LatLong(60.240165, 24.042544);
                         createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
-                        findNearestAndFitBounds(mainApp.getUserLocation());
+                        nearest = findNearest(mainApp.getUserLocation());
                     });
         } else {
-            this.findNearestAndFitBounds(mainApp.getUserLocation());
+            nearest = this.findNearest(mainApp.getUserLocation());
         }
+        System.out.println("nearest " + nearest + " updateMarkers next line");
+        updateMarkers(mainApp.getRestaurants());
     }
 
     /**
@@ -293,14 +308,16 @@ public class MainViewController implements Initializable, MapComponentInitialize
         searchTextBox.requestFocus();
     }
 
-    public void findNearestAndFitBounds(LatLong userLocation) {
+    public Restaurant findNearest(LatLong userLocation) {
         System.out.println("findNearestAndFitBounds");
         // userLocation = new LatLong(60.240165, 24.042544);
         Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
         System.out.println(nearest);
-
         mainApp.getSidebarControl().showRestaurantInfo(nearest);
+        return nearest;
+    }
 
+    public void fitBounds(LatLong userLocation, Restaurant nearest) {
         // zooming with different approach THIS WORKS BETTER!
         double distance = search.calculateDistanceToNearest(nearest, userLocation);
         Circle circle = new Circle();
@@ -324,8 +341,11 @@ public class MainViewController implements Initializable, MapComponentInitialize
     public Marker createUserLocationMarker() {
         System.out.println("createUserLocationMarker");
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(mainApp.getUserLocation());
-        markerOptions.icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png");
+        markerOptions
+                .position(mainApp.getUserLocation())
+                .icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png")
+                .animation(Animation.BOUNCE)
+                ;
         return new Marker(markerOptions);
     }
 
