@@ -205,7 +205,9 @@ public class MainApp extends Application {
     public void updateAllViews() {
         this.mainViewControl.updateView(restaurantsFromDb);
         sidebarOff();
-        this.sidebarControl.showRestaurantInfo(this.sidebarControl.getLastSelectedRestaurant(), bundle);
+        if(this.sidebarControl.getLastSelectedRestaurant() != null) {
+            this.sidebarControl.showRestaurantInfo(this.sidebarControl.getLastSelectedRestaurant(), bundle);
+        }
         //this.optionsControl.update();
     }
 }

@@ -61,7 +61,9 @@ public class SideBarController {
         });
 
         headerIcon.setImage(new Image("icons/png/073-house-3.png"));
-        headerText.setText(restaurant.getName());
+        if(restaurant.getName() != null) {
+            headerText.setText(restaurant.getName());
+        }
         topParagraph.setText(restaurant.getAddress() + ", " + restaurant.getPostal_code() + " " + restaurant.getCity());
         topParagraphIcon.setImage(new Image("icons/png/316-placeholder-2.png"));
 

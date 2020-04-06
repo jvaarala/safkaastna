@@ -128,7 +128,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
         map.setCenter(new LatLong(60.192059, 24.945831));
         updateView(mainApp.getRestaurants());
-
     }
 
     /**
@@ -144,13 +143,21 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
         /// nämä pois täältä
         mainApp.sidebarOff();
+
+        // asettaa tekstin hakunapille
         searchButton.setText(mainApp.getBundle().getString("search"));
 
-
+        // asettaa tekstin filter napille joka voi olla päällä tai pois päältä
+        if (filterToggleButton.isSelected()) {
+            filterToggleButton.setText(mainApp.getBundle().getString("filtering"));
+        }else {
+            filterToggleButton.setText(mainApp.getBundle().getString("filterToggle"));
+        }
     }
 
     public void updateListView(List<Restaurant> restaurants) {
         System.out.println("updateListView");
+
         listViewNames.getItems().clear();
         for (Restaurant restaurant : restaurants) {
             items.add(restaurant.getName());
