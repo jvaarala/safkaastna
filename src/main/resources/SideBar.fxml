@@ -58,7 +58,7 @@
                 </Text>
                 <ImageView fx:id="restaurantUrlIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                 </ImageView>
-                <Hyperlink fx:id="bottomParagraph" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="sidebar-link" text="Ravintolan sivusto" visible="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                <Hyperlink fx:id="bottomParagraph" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="sidebar-link" text="" visible="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                     <GridPane.margin>
                         <Insets />
                     </GridPane.margin>

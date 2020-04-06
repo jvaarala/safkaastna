@@ -11,6 +11,8 @@ import javafx.scene.text.Text;
 import main.MainApp;
 import model.Restaurant;
 
+import java.util.ResourceBundle;
+
 
 public class SideBarController {
 
@@ -37,6 +39,11 @@ public class SideBarController {
 
     private MainApp mainApp;
 
+    public Restaurant getLastSelectedRestaurant() {
+        return lastSelectedRestaurant;
+    }
+
+    private Restaurant lastSelectedRestaurant;
     /**
      * Used to give a reference to the mainApp for this controller.
      * Should be done after controller initialisation, before using any of its functions.
@@ -47,7 +54,8 @@ public class SideBarController {
         this.mainApp = mainApp;
     }
 
-    void showRestaurantInfo(Restaurant restaurant) {
+    public void showRestaurantInfo(Restaurant restaurant, ResourceBundle bundle) {
+        lastSelectedRestaurant = restaurant;
         closeIcon.setOnMouseClicked((MouseEvent e) -> {
             mainApp.sidebarOff();
         });
@@ -70,6 +78,7 @@ public class SideBarController {
             bottomParagraph.setVisible(true);
             restaurantUrlIcon.setImage(new Image("icons/png/106-link-1.png"));
             restaurantUrlIcon.setVisible(true);
+            bottomParagraph.setText(bundle.getString("restaurantUrl"));
             this.bottomParagraph.setOnAction(event -> {
                 if (!java.awt.Desktop.isDesktopSupported()) {
                     System.err.println("Desktop is not supported (fatal)");

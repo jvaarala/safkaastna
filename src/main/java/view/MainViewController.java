@@ -22,10 +22,7 @@ import main.MainApp;
 import model.Restaurant;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
@@ -131,6 +128,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
         map.setCenter(new LatLong(60.192059, 24.945831));
         updateView(mainApp.getRestaurants());
+
     }
 
     /**
@@ -143,6 +141,12 @@ public class MainViewController implements Initializable, MapComponentInitialize
         System.out.println("updateView");
         updateListView(restaurants);
         updateMarkers(restaurants);
+
+        /// nämä pois täältä
+        mainApp.sidebarOff();
+        searchButton.setText(mainApp.getBundle().getString("search"));
+
+
     }
 
     public void updateListView(List<Restaurant> restaurants) {
@@ -158,7 +162,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
                 for (Restaurant restaurant : restaurants) {
                     if (restaurant.getName().equals(newValue)) {
                         focusMapOnRestaurant(restaurant);
-                        mainApp.getSidebarControl().showRestaurantInfo(restaurant);
+                        mainApp.getSidebarControl().showRestaurantInfo(restaurant, mainApp.getBundle());
                         break;
                     }
                 }
@@ -193,7 +197,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
             }
             Marker tempMarker = new Marker(markerOptions);
             map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
-                mainApp.getSidebarControl().showRestaurantInfo(restaurant);
+                mainApp.getSidebarControl().showRestaurantInfo(restaurant, mainApp.getBundle());
                 mainApp.sidebarOn();
             });
             restaurantMarkers.add(tempMarker);
@@ -297,12 +301,12 @@ public class MainViewController implements Initializable, MapComponentInitialize
         System.out.println("handleFilterToggle");
         if (filterToggleButton.isSelected()) {
             searchButton.setDisable(true);
-            filterToggleButton.setText("Filtering.");
+            filterToggleButton.setText(mainApp.getBundle().getString("filtering"));
             List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), searchTextBox.getText());
             updateView(foundRestaurants);
         } else {
             searchButton.setDisable(false);
-            filterToggleButton.setText("Toggle filter");
+            filterToggleButton.setText(mainApp.getBundle().getString("filterToggle"));
             updateView(mainApp.getRestaurants());
         }
         searchTextBox.requestFocus();
@@ -313,9 +317,10 @@ public class MainViewController implements Initializable, MapComponentInitialize
         // userLocation = new LatLong(60.240165, 24.042544);
         Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
         System.out.println(nearest);
-        mainApp.getSidebarControl().showRestaurantInfo(nearest);
+        mainApp.getSidebarControl().showRestaurantInfo(nearest, mainApp.getBundle());
         return nearest;
     }
+
 
     public void fitBounds(LatLong userLocation, Restaurant nearest) {
         // zooming with different approach THIS WORKS BETTER!

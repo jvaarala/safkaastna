@@ -3,6 +3,8 @@ package main;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import javafx.application.Application;
@@ -44,6 +46,8 @@ public class MainApp extends Application {
     private LatLong userLocation;
 
     private List<Restaurant> restaurantsFromDb;
+    private String languageSelection;
+    private ResourceBundle bundle;
 
 
     public static void main(String[] args) {
@@ -57,6 +61,8 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("SafkaaSTNA");
+        this.languageSelection = "en-EN";
+        this.bundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(this.languageSelection));
 
         updateRestaurantsFromDb();
 
@@ -180,4 +186,26 @@ public class MainApp extends Application {
         mainScreen.setRight(null);
     }
 
+    public String getLanguageSelection() {
+        return languageSelection;
+    }
+
+    public void setLanguageSelection(String languageSelection) {
+        this.languageSelection = languageSelection;
+    }
+
+    public ResourceBundle getBundle() {
+        return bundle;
+    }
+
+    public void setBundle(ResourceBundle bundle) {
+        this.bundle = bundle;
+    }
+
+    public void updateAllViews() {
+        this.mainViewControl.updateView(restaurantsFromDb);
+        sidebarOff();
+        this.sidebarControl.showRestaurantInfo(this.sidebarControl.getLastSelectedRestaurant(), bundle);
+        //this.optionsControl.update();
+    }
 }
