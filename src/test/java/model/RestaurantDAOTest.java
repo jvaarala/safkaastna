@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-@Disabled
+
 class RestaurantDAOTest {
     static SessionFactory sessionFactory;
     static RestaurantDAO dao;
