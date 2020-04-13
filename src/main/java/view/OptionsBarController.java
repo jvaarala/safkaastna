@@ -92,5 +92,6 @@ public class OptionsBarController {
 
     @FXML
     public void Help() {
+        popupInfo(mainApp.getBundle().getString("help"), mainApp.getBundle().getString("helpTitle"));
     }
 }

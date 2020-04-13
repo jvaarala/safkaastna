@@ -50,7 +50,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
     @FXML
     private GoogleMapView mapView = new GoogleMapView();
     @FXML
-    private Button debugNearestButton;
+    private Button nearestButton;
     private GoogleMap map;
     private SearchLogic search = new SearchLogic();
     private String textInSearchField;
@@ -153,6 +153,9 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }else {
             filterToggleButton.setText(mainApp.getBundle().getString("filterToggle"));
         }
+
+        nearestButton.setText(mainApp.getBundle().getString("nearest"));
+
     }
 
     public void updateListView(List<Restaurant> restaurants) {
