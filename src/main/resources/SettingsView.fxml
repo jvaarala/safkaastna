@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SettingsViewController"
+            fx:id="settingsViewController" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <Circle fill="DODGERBLUE" layoutX="233.0" layoutY="141.0" radius="100.0" stroke="BLACK" strokeType="INSIDE"/>
+    <ComboBox id="loca" layoutX="361.0" layoutY="149.0" onMouseClicked="#mapLocation" prefHeight="39.0"
+              prefWidth="150.0" value="Helsinki">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Helsinki"/>
+                <String fx:value="Oulu"/>
+                <String fx:value="Tampere"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+    <Button layoutX="42.0" layoutY="155.0" mnemonicParsing="false" onAction="#changeENG" text="ENG"/>
+    <Button layoutX="79.0" layoutY="221.0" mnemonicParsing="false" onAction="#changeSWE" text="SV"/>
+
+    <Button layoutX="154.0" layoutY="271.0" mnemonicParsing="false" onAction="#changeFI" text="FI"/>
+
+    <Button fx:id="refreshButton" layoutX="232.0" layoutY="305.0" mnemonicParsing="false" onAction="#Refresh"
+            text=""/>
+</AnchorPane>
+

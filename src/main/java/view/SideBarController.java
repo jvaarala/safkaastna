@@ -17,10 +17,6 @@ import java.util.ResourceBundle;
 public class SideBarController {
 
     @FXML
-    private AnchorPane sidebarContainer;
-    @FXML
-    private GridPane sidebarInfoContainer;
-    @FXML
     public ImageView closeIcon;
     @FXML
     private ImageView headerIcon;
@@ -38,12 +34,12 @@ public class SideBarController {
     private Text userLocationText;
 
     private MainApp mainApp;
+    private Restaurant lastSelectedRestaurant;
 
-    public Restaurant getLastSelectedRestaurant() {
+    private Restaurant getLastSelectedRestaurant() {
         return lastSelectedRestaurant;
     }
 
-    private Restaurant lastSelectedRestaurant;
     /**
      * Used to give a reference to the mainApp for this controller.
      * Should be done after controller initialisation, before using any of its functions.
@@ -54,7 +50,7 @@ public class SideBarController {
         this.mainApp = mainApp;
     }
 
-    public void showRestaurantInfo(Restaurant restaurant, ResourceBundle bundle) {
+    void showRestaurantInfo(Restaurant restaurant) {
         mainApp.sidebarOff();
         lastSelectedRestaurant = restaurant;
         closeIcon.setVisible(true);
@@ -63,7 +59,7 @@ public class SideBarController {
         });
 
         headerIcon.setImage(new Image("icons/png/073-house-3.png"));
-        if(restaurant.getName() != null) {
+        if (restaurant.getName() != null) {
             headerText.setText(restaurant.getName());
         }
         topParagraph.setText(restaurant.getAddress() + ", " + restaurant.getPostal_code() + " " + restaurant.getCity());
@@ -79,7 +75,7 @@ public class SideBarController {
             bottomParagraph.setVisible(false);
             restaurantUrlIcon.setVisible(false);
         } else {
-            bottomParagraph.setText(bundle.getString("restaurantUrl"));
+
             bottomParagraph.setVisible(true);
             restaurantUrlIcon.setImage(new Image("icons/png/106-link-1.png"));
             restaurantUrlIcon.setVisible(true);
@@ -117,8 +113,8 @@ public class SideBarController {
 
     public void setTexts(ResourceBundle bundle) {
         bottomParagraph.setText(bundle.getString("restaurantUrl"));
-        if(this.getLastSelectedRestaurant() != null) {
-            this.showRestaurantInfo(this.getLastSelectedRestaurant(), bundle);
+        if (this.getLastSelectedRestaurant() != null && MainApp.MAIN_SCREEN.getRight() != null) {
+            this.showRestaurantInfo(this.getLastSelectedRestaurant());
         }
     }
 }

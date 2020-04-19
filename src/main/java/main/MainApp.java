@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import model.Restaurant;
 import view.MainViewController;
 import view.OptionsBarController;
+import view.SettingsViewController;
 import view.SideBarController;
 
 
@@ -26,16 +27,20 @@ public class MainApp extends Application {
 
     private ResourceBundle bundle;
     private List<Restaurant> restaurantsFromDb;
+    private LatLong userLocation;
+
     private Stage primaryStage;
+    private AnchorPane sidebar;
 
     private SideBarController sidebarControl;
     private OptionsBarController optionsControl;
     private MainViewController mainViewControl;
+    private SettingsViewController settingsViewController;
 
-    private BorderPane mainScreen;
-    private AnchorPane sidebar;
-    private ToolBar optionsBar;
-    private LatLong userLocation;
+
+    public static BorderPane MAIN_SCREEN;
+    public static AnchorPane VIEW_MAIN;
+    public static AnchorPane VIEW_SETTINGS;
 
 
     public static void main(String[] args) {
@@ -49,8 +54,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("SafkaaSTNA");
-        String languageSelection = "en-EN";
-        this.bundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(languageSelection));
+        this.bundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag("en-EN"));
 
         updateRestaurantsFromDb();
 
@@ -58,18 +62,20 @@ public class MainApp extends Application {
         initSideBar();
         initOptionsBar();
         initMainView();
+        initSettingsView();
 
         this.setBundle(this.bundle);
+        this.loadMainView(VIEW_MAIN);
     }
 
     /**
      * Initiates the root layout of the application.
      */
     public void initRootLayout() {
-        mainScreen = new BorderPane();
+        MAIN_SCREEN = new BorderPane();
         primaryStage.setWidth(1200);
         primaryStage.setHeight(768);
-        Scene scene = new Scene(mainScreen);
+        Scene scene = new Scene(MAIN_SCREEN);
         scene.getStylesheets().add("Styles.css");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -80,13 +86,11 @@ public class MainApp extends Application {
      */
     private void initOptionsBar() {
         FXMLLoader loader = new FXMLLoader();
-        URL connector = getClass().getResource("/OptionsBar.fxml");
-
-        loader.setLocation(connector);
+        loader.setLocation(getClass().getResource("/OptionsBar.fxml"));
 
         try {
-            optionsBar = (ToolBar) loader.load();
-            mainScreen.setBottom(optionsBar);
+            ToolBar optionsBar = loader.load();
+            MAIN_SCREEN.setBottom(optionsBar);
 
             this.optionsControl = loader.getController();
             this.optionsControl.setMainApp(this);
@@ -99,15 +103,15 @@ public class MainApp extends Application {
     /**
      * Initialises the sidebar.
      */
-    public void initSideBar() {
+    private void initSideBar() {
         FXMLLoader loader = new FXMLLoader();
         URL connector = getClass().getResource("/SideBar.fxml");
 
         loader.setLocation(connector);
 
         try {
-            sidebar = (AnchorPane) loader.load();
-            mainScreen.setRight(null);
+            sidebar = loader.load();
+            MAIN_SCREEN.setRight(null);
 
             this.sidebarControl = loader.getController();
             this.sidebarControl.setMainApp(this);
@@ -117,20 +121,40 @@ public class MainApp extends Application {
     }
 
     /**
-     * Initialises the mainView with google maps.
+     * Initializes the mainView with google maps to mainScreen.
      */
     public void initMainView() {
         FXMLLoader loader = new FXMLLoader();
-        URL centerMap = getClass().getResource("/MainView.fxml");
-        loader.setLocation(centerMap);
+        loader.setLocation(getClass().getResource("/MainView.fxml"));
         try {
-            AnchorPane mapPane = (AnchorPane) loader.load();
-            mainScreen.setCenter(mapPane);
+            VIEW_MAIN = loader.load();
             this.mainViewControl = loader.getController();
             this.mainViewControl.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Initializes the settingsView to mainScreen.
+     */
+    public void initSettingsView() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/SettingsView.fxml"));
+        try {
+            VIEW_SETTINGS = loader.load();
+            this.settingsViewController = loader.getController();
+            this.settingsViewController.setMainApp(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Initializes the settingsView to mainScreen.
+     */
+    public void loadMainView(AnchorPane anchorPane) {
+        MAIN_SCREEN.setCenter(anchorPane);
     }
 
     /**
@@ -181,11 +205,11 @@ public class MainApp extends Application {
     }
 
     public void sidebarOn() {
-        mainScreen.setRight(sidebar);
+        MAIN_SCREEN.setRight(sidebar);
     }
 
     public void sidebarOff() {
-        mainScreen.setRight(null);
+        MAIN_SCREEN.setRight(null);
     }
 
     public ResourceBundle getBundle() {
@@ -197,5 +221,6 @@ public class MainApp extends Application {
         this.mainViewControl.setTexts(this.bundle);
         this.sidebarControl.setTexts(this.bundle);
         this.optionsControl.setTexts(this.bundle);
+        this.settingsViewController.setTexts(this.bundle);
     }
 }

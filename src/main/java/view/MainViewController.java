@@ -58,7 +58,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
     private MainApp mainApp;
 
-    public void setGoogleMapStuff(GoogleMapView mapView, GoogleMap map) {
+    void setGoogleMapStuff(GoogleMapView mapView, GoogleMap map) {
         this.mapView = mapView;
         this.map = map;
         System.out.println(map);
@@ -86,8 +86,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
     private String api = dotenv.get("APIKEY");
 
     /**
-     * Initial setup for application.
-     * sets content to observable list,
      * adds map to mapcontainer and sets api key for google api calls
      *
      * @param location
@@ -136,27 +134,13 @@ public class MainViewController implements Initializable, MapComponentInitialize
      * @param restaurants - List of restaurants to be iterated through
      *                    Names are set on ListView and Markers are set on map on restaurants location
      */
-    public void updateMainView(List<Restaurant> restaurants) {
+    void updateMainView(List<Restaurant> restaurants) {
         System.out.println("updateView");
         updateListView(restaurants);
         updateMarkers(restaurants);
     }
 
-    public void setTexts(ResourceBundle bundle) {
-        // asettaa tekstin hakunapille
-        searchButton.setText(mainApp.getBundle().getString("search"));
-
-        // asettaa tekstin filter napille joka voi olla päällä tai pois päältä
-        if (filterToggleButton.isSelected()) {
-            filterToggleButton.setText(mainApp.getBundle().getString("filtering"));
-        }else {
-            filterToggleButton.setText(mainApp.getBundle().getString("filterToggle"));
-        }
-
-        nearestButton.setText(mainApp.getBundle().getString("nearest"));
-    }
-
-    public void updateListView(List<Restaurant> restaurants) {
+    private void updateListView(List<Restaurant> restaurants) {
         System.out.println("updateListView");
 
         listViewNames.getItems().clear();
@@ -170,7 +154,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
                 for (Restaurant restaurant : restaurants) {
                     if (restaurant.getName().equals(newValue)) {
                         focusMapOnRestaurant(restaurant);
-                        mainApp.getSidebarControl().showRestaurantInfo(restaurant, mainApp.getBundle());
+                        mainApp.getSidebarControl().showRestaurantInfo(restaurant);
                         break;
                     }
                 }
@@ -197,7 +181,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
                 markerOptions
                         .position(tempLatLong)
                         .icon("https://users.metropolia.fi/~katriras/OTP1/kela_nearest.gif")
-                        ;
+                ;
                 System.out.println("Nearest marker should be different");
             } else {
                 markerOptions.position(tempLatLong);
@@ -205,7 +189,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
             }
             Marker tempMarker = new Marker(markerOptions);
             map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
-                mainApp.getSidebarControl().showRestaurantInfo(restaurant, mainApp.getBundle());
+                mainApp.getSidebarControl().showRestaurantInfo(restaurant);
             });
             restaurantMarkers.add(tempMarker);
         }
@@ -319,17 +303,17 @@ public class MainViewController implements Initializable, MapComponentInitialize
         searchTextBox.requestFocus();
     }
 
-    public Restaurant findNearest(LatLong userLocation) {
+    private Restaurant findNearest(LatLong userLocation) {
         System.out.println("findNearestAndFitBounds");
         // userLocation = new LatLong(60.240165, 24.042544);
         Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
         System.out.println(nearest);
-        mainApp.getSidebarControl().showRestaurantInfo(nearest, mainApp.getBundle());
+        mainApp.getSidebarControl().showRestaurantInfo(nearest);
         return nearest;
     }
 
 
-    public void fitBounds(LatLong userLocation, Restaurant nearest) {
+    private void fitBounds(LatLong userLocation, Restaurant nearest) {
         // zooming with different approach THIS WORKS BETTER!
         double distance = search.calculateDistanceToNearest(nearest, userLocation);
         Circle circle = new Circle();
@@ -350,14 +334,14 @@ public class MainViewController implements Initializable, MapComponentInitialize
 //        }
     }
 
-    public Marker createUserLocationMarker() {
+    Marker createUserLocationMarker() {
         System.out.println("createUserLocationMarker");
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions
                 .position(mainApp.getUserLocation())
                 .icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png")
                 .animation(Animation.BOUNCE)
-                ;
+        ;
         return new Marker(markerOptions);
     }
 
@@ -366,7 +350,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      *
      * @param ll User location as LatLong object
      */
-    public void createAndFocusOnUserLocationMarker(LatLong ll) {
+    private void createAndFocusOnUserLocationMarker(LatLong ll) {
         System.out.println("createAndFocusOnUserLocationMarker");
         map.clearMarkers();
         updateMarkers(mainApp.getRestaurants());
@@ -388,7 +372,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      *
      * @param ll User location as LatLong object
      */
-    public void focusMapOnLocation(LatLong ll) {
+    void focusMapOnLocation(LatLong ll) {
         System.out.println("focusMapOnLocation");
         mapView.setCenter(ll.getLatitude(), ll.getLongitude());
         mapView.setZoom(15);
@@ -407,7 +391,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
     }
 
-    public static String formatString(String s) {
+    static String formatString(String s) {
         System.out.println("formatString");
         String[] words = s.replaceAll("\\s+", " ").trim().split(" ");
         String newString = "";
@@ -430,5 +414,15 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
         newString = newString.trim();
         return newString;
+    }
+
+    public void setTexts(ResourceBundle bundle) {
+        searchButton.setText(bundle.getString("search"));
+        nearestButton.setText(bundle.getString("nearest"));
+        if (filterToggleButton.isSelected()) {
+            filterToggleButton.setText(bundle.getString("filtering"));
+        } else {
+            filterToggleButton.setText(bundle.getString("filterToggle"));
+        }
     }
 }
