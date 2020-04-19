@@ -2,12 +2,14 @@ package model;
 
 import javax.persistence.*;
 
+import org.bson.Document;
+
 /**
  * Data Transfer Object (DTO) for Restaurants
  */
 @Entity
 @Table(name = "restaurant")
-public class Restaurant {
+public class Restaurant extends BsonDocumentManager {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +54,16 @@ public class Restaurant {
         this.admin_www = admin_www;
         this.lat = lat;
         this.lng = lng;
+    }
+    
+	/**
+	 * Converts single bson document to restaurant object
+	 * 
+	 * @param Document
+	 * @return Restaurant
+	 */
+    public Restaurant (Document doc) {
+    	super.setRestaurantFromDoc(doc, this);
     }
 
     public String getName() {
@@ -133,6 +145,17 @@ public class Restaurant {
     public void setLng(double lng) {
         this.lng = lng;
     }
+    
+	/**
+	 * Converts a single restaurant object to bson document - which can be converted to json
+	 * 
+	 * @param Restaurant object
+	 * @return BSON document version of restaurant
+	 */
+    public Document restaurantToDoc() {
+    	return super.restaurantToDoc(this);
+	}
+	
 
     @Override
     public String toString() {
