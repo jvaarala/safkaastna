@@ -155,6 +155,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
 
         nearestButton.setText(mainApp.getBundle().getString("nearest"));
+        mainApp.getOptionsControl().updateButtons();
 
     }
 
@@ -274,9 +275,9 @@ public class MainViewController implements Initializable, MapComponentInitialize
             dialog.initModality(Modality.APPLICATION_MODAL);
             dialog.initOwner(mainApp.getPrimaryStage());
             VBox dialogVbox = new VBox(20);
-            dialogVbox.getChildren().add(new Text("Where are you? Type your address below"));
-            TextField startAddress = new TextField("Type address");
-            Button searchButton = new Button("Let's go!");
+            dialogVbox.getChildren().add(new Text(mainApp.getBundle().getString("nearestpopuptext")));
+            TextField startAddress = new TextField(mainApp.getBundle().getString("nearestpopuphint"));
+            Button searchButton = new Button(mainApp.getBundle().getString("nearestpopupbutton"));
             dialogVbox.getChildren().addAll(startAddress, searchButton);
             Scene dialogScene = new Scene(dialogVbox, 300, 200);
             dialogScene.getStylesheets().add("Styles.css");

@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import main.MainApp;
 
 import java.util.Locale;
@@ -20,7 +21,10 @@ public class OptionsBarController {
      * RestaurantsDAO is the database service class Connect and Help buttons.
      */
     private MainApp mainApp;
-
+    @FXML
+    private Button refreshButton;
+    @FXML
+    private Button helpButton;
     /**
      *  set the location for map when program starts
      */
@@ -36,7 +40,9 @@ public class OptionsBarController {
      * @param mainApp
      */
     public void setMainApp(MainApp mainApp) {
+
         this.mainApp = mainApp;
+        updateButtons();
     }
 
     /**
@@ -62,7 +68,6 @@ public class OptionsBarController {
     public void Refresh(ActionEvent actionEvent) {
         mainApp.updateRestaurantsFromDb();
         mainApp.getMainViewControl().updateView(mainApp.getRestaurants());
-
     }
 
     /**
@@ -94,4 +99,10 @@ public class OptionsBarController {
     public void Help() {
         popupInfo(mainApp.getBundle().getString("help"), mainApp.getBundle().getString("helpTitle"));
     }
+
+    public void updateButtons() {
+        refreshButton.setText(mainApp.getBundle().getString("refreshbutton"));
+        helpButton.setText(mainApp.getBundle().getString("helpbutton"));
+    }
+
 }
