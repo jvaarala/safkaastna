@@ -7,6 +7,11 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
+
+import controllers.OfflineDatabase;
+import controllers.RestaurantDAO;
+import controllers.RestaurantDatabase;
+import controllers.RestaurantMongoDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,8 +19,6 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Restaurant;
-import model.RestaurantDAO;
-import model.RestaurantMongoDB;
 import view.MainViewController;
 import view.OptionsBarController;
 import view.SideBarController;
@@ -29,18 +32,6 @@ public class MainApp extends Application {
     private OptionsBarController optionsControl;
     private MainViewController mainViewControl;
 
-    public SideBarController getSidebarControl() {
-        return sidebarControl;
-    }
-
-    public OptionsBarController getOptionsControl() {
-        return optionsControl;
-    }
-
-    public MainViewController getMainViewControl() {
-        return mainViewControl;
-    }
-
     private BorderPane mainScreen;
     private AnchorPane sidebar;
     private LatLong userLocation;
@@ -48,7 +39,7 @@ public class MainApp extends Application {
     private List<Restaurant> restaurantsFromDb;
     private String languageSelection;
     private ResourceBundle bundle;
-
+    
 
     public static void main(String[] args) {
         launch(args);
@@ -147,12 +138,24 @@ public class MainApp extends Application {
      * Call this to fetch new restaurants from database.
      */
     public void updateRestaurantsFromDb() {
-    	RestaurantMongoDB mongo = new RestaurantMongoDB();
+    	RestaurantDatabase database = new RestaurantMongoDB();
     	try {
-    		this.restaurantsFromDb = mongo.downloadRestaurants();
+    		this.restaurantsFromDb = database.loadRestaurants();
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
+    }
+    
+    public SideBarController getSidebarControl() {
+        return sidebarControl;
+    }
+
+    public OptionsBarController getOptionsControl() {
+        return optionsControl;
+    }
+
+    public MainViewController getMainViewControl() {
+        return mainViewControl;
     }
 
     /**
