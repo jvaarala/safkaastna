@@ -55,7 +55,9 @@ public class SideBarController {
     }
 
     public void showRestaurantInfo(Restaurant restaurant, ResourceBundle bundle) {
+        mainApp.sidebarOff();
         lastSelectedRestaurant = restaurant;
+        closeIcon.setVisible(true);
         closeIcon.setOnMouseClicked((MouseEvent e) -> {
             mainApp.sidebarOff();
         });
@@ -77,10 +79,11 @@ public class SideBarController {
             bottomParagraph.setVisible(false);
             restaurantUrlIcon.setVisible(false);
         } else {
+            bottomParagraph.setText(bundle.getString("restaurantUrl"));
             bottomParagraph.setVisible(true);
             restaurantUrlIcon.setImage(new Image("icons/png/106-link-1.png"));
             restaurantUrlIcon.setVisible(true);
-            bottomParagraph.setText(bundle.getString("restaurantUrl"));
+
             this.bottomParagraph.setOnAction(event -> {
                 if (!java.awt.Desktop.isDesktopSupported()) {
                     System.err.println("Desktop is not supported (fatal)");
@@ -102,7 +105,6 @@ public class SideBarController {
                 }
             });
         }
-
         mainApp.sidebarOn();
     }
 
@@ -111,6 +113,13 @@ public class SideBarController {
         this.userLocationText.setOnMouseClicked(event -> {
             mainApp.getMainViewControl().focusMapOnLocation(mainApp.getUserLocation());
         });
+    }
+
+    public void setTexts(ResourceBundle bundle) {
+        bottomParagraph.setText(bundle.getString("restaurantUrl"));
+        if(this.getLastSelectedRestaurant() != null) {
+            this.showRestaurantInfo(this.getLastSelectedRestaurant(), bundle);
+        }
     }
 }
 

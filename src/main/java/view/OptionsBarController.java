@@ -42,7 +42,7 @@ public class OptionsBarController {
     public void setMainApp(MainApp mainApp) {
 
         this.mainApp = mainApp;
-        updateButtons();
+        setTexts(mainApp.getBundle());
     }
 
     /**
@@ -67,7 +67,7 @@ public class OptionsBarController {
     @FXML
     public void Refresh(ActionEvent actionEvent) {
         mainApp.updateRestaurantsFromDb();
-        mainApp.getMainViewControl().updateView(mainApp.getRestaurants());
+        mainApp.getMainViewControl().updateMainView(mainApp.getRestaurants());
     }
 
     /**
@@ -76,19 +76,16 @@ public class OptionsBarController {
     @FXML
     public void changeFI() {
         updateBundle("fi-FI");
-        mainApp.updateAllViews();
     }
 
     @FXML
     public void changeENG() {
         updateBundle("en-EN");
-        mainApp.updateAllViews();
     }
 
     @FXML
     public void changeSWE() {
         updateBundle("se-SE");
-        mainApp.updateAllViews();
     }
 
     public void updateBundle(String locale) {
@@ -100,9 +97,8 @@ public class OptionsBarController {
         popupInfo(mainApp.getBundle().getString("help"), mainApp.getBundle().getString("helpTitle"));
     }
 
-    public void updateButtons() {
-        refreshButton.setText(mainApp.getBundle().getString("refreshbutton"));
-        helpButton.setText(mainApp.getBundle().getString("helpbutton"));
+    public void setTexts(ResourceBundle bundle) {
+        refreshButton.setText(bundle.getString("refreshbutton"));
+        helpButton.setText(bundle.getString("helpbutton"));
     }
-
 }

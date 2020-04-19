@@ -127,7 +127,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
         });*/
 
         map.setCenter(new LatLong(60.192059, 24.945831));
-        updateView(mainApp.getRestaurants());
+        updateMainView(mainApp.getRestaurants());
     }
 
     /**
@@ -136,14 +136,13 @@ public class MainViewController implements Initializable, MapComponentInitialize
      * @param restaurants - List of restaurants to be iterated through
      *                    Names are set on ListView and Markers are set on map on restaurants location
      */
-    public void updateView(List<Restaurant> restaurants) {
+    public void updateMainView(List<Restaurant> restaurants) {
         System.out.println("updateView");
         updateListView(restaurants);
         updateMarkers(restaurants);
+    }
 
-        /// nämä pois täältä
-        mainApp.sidebarOff();
-
+    public void setTexts(ResourceBundle bundle) {
         // asettaa tekstin hakunapille
         searchButton.setText(mainApp.getBundle().getString("search"));
 
@@ -155,8 +154,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
 
         nearestButton.setText(mainApp.getBundle().getString("nearest"));
-        mainApp.getOptionsControl().updateButtons();
-
     }
 
     public void updateListView(List<Restaurant> restaurants) {
@@ -209,7 +206,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
             Marker tempMarker = new Marker(markerOptions);
             map.addUIEventHandler(tempMarker, UIEventType.click, (JSObject obj) -> {
                 mainApp.getSidebarControl().showRestaurantInfo(restaurant, mainApp.getBundle());
-                mainApp.sidebarOn();
             });
             restaurantMarkers.add(tempMarker);
         }
@@ -240,7 +236,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
         textInSearchField = searchTextBox.getText();
         if (filterToggleButton.isSelected()) {
             List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), textInSearchField);
-            updateView(foundRestaurants);
+            updateMainView(foundRestaurants);
         }
     }
 
@@ -314,11 +310,11 @@ public class MainViewController implements Initializable, MapComponentInitialize
             searchButton.setDisable(true);
             filterToggleButton.setText(mainApp.getBundle().getString("filtering"));
             List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), searchTextBox.getText());
-            updateView(foundRestaurants);
+            updateMainView(foundRestaurants);
         } else {
             searchButton.setDisable(false);
             filterToggleButton.setText(mainApp.getBundle().getString("filterToggle"));
-            updateView(mainApp.getRestaurants());
+            updateMainView(mainApp.getRestaurants());
         }
         searchTextBox.requestFocus();
     }

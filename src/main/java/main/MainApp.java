@@ -8,8 +8,6 @@ import java.util.ResourceBundle;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
-import controllers.OfflineDatabase;
-import controllers.RestaurantDAO;
 import controllers.RestaurantDatabase;
 import controllers.RestaurantMongoDB;
 import javafx.application.Application;
@@ -26,6 +24,8 @@ import view.SideBarController;
 
 public class MainApp extends Application {
 
+    private ResourceBundle bundle;
+    private List<Restaurant> restaurantsFromDb;
     private Stage primaryStage;
 
     private SideBarController sidebarControl;
@@ -34,12 +34,9 @@ public class MainApp extends Application {
 
     private BorderPane mainScreen;
     private AnchorPane sidebar;
+    private ToolBar optionsBar;
     private LatLong userLocation;
 
-    private List<Restaurant> restaurantsFromDb;
-    private String languageSelection;
-    private ResourceBundle bundle;
-    
 
     public static void main(String[] args) {
         launch(args);
@@ -52,8 +49,8 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("SafkaaSTNA");
-        this.languageSelection = "en-EN";
-        this.bundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(this.languageSelection));
+        String languageSelection = "en-EN";
+        this.bundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(languageSelection));
 
         updateRestaurantsFromDb();
 
@@ -61,6 +58,8 @@ public class MainApp extends Application {
         initSideBar();
         initOptionsBar();
         initMainView();
+
+        this.setBundle(this.bundle);
     }
 
     /**
@@ -86,8 +85,8 @@ public class MainApp extends Application {
         loader.setLocation(connector);
 
         try {
-            ToolBar connectBar = (ToolBar) loader.load();
-            mainScreen.setBottom(connectBar);
+            optionsBar = (ToolBar) loader.load();
+            mainScreen.setBottom(optionsBar);
 
             this.optionsControl = loader.getController();
             this.optionsControl.setMainApp(this);
@@ -138,14 +137,14 @@ public class MainApp extends Application {
      * Call this to fetch new restaurants from database.
      */
     public void updateRestaurantsFromDb() {
-    	RestaurantDatabase database = new RestaurantMongoDB();
-    	try {
-    		this.restaurantsFromDb = database.loadRestaurants();
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+        RestaurantDatabase database = new RestaurantMongoDB();
+        try {
+            this.restaurantsFromDb = database.loadRestaurants();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    
+
     public SideBarController getSidebarControl() {
         return sidebarControl;
     }
@@ -189,28 +188,14 @@ public class MainApp extends Application {
         mainScreen.setRight(null);
     }
 
-    public String getLanguageSelection() {
-        return languageSelection;
-    }
-
-    public void setLanguageSelection(String languageSelection) {
-        this.languageSelection = languageSelection;
-    }
-
     public ResourceBundle getBundle() {
         return bundle;
     }
 
     public void setBundle(ResourceBundle bundle) {
         this.bundle = bundle;
-    }
-
-    public void updateAllViews() {
-        this.mainViewControl.updateView(restaurantsFromDb);
-        sidebarOff();
-        if(this.sidebarControl.getLastSelectedRestaurant() != null) {
-            this.sidebarControl.showRestaurantInfo(this.sidebarControl.getLastSelectedRestaurant(), bundle);
-        }
-        //this.optionsControl.update();
+        this.mainViewControl.setTexts(this.bundle);
+        this.sidebarControl.setTexts(this.bundle);
+        this.optionsControl.setTexts(this.bundle);
     }
 }
