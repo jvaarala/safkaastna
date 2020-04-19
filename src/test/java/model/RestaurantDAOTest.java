@@ -6,6 +6,8 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.junit.jupiter.api.*;
 
+import controllers.RestaurantDAO;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -87,7 +89,7 @@ class RestaurantDAOTest {
 
         when(session.createQuery("from Restaurant"))
                 .thenReturn(queryMock);
-        List<Restaurant> response = dao.readRestaurants();
+        List<Restaurant> response = dao.downloadRestaurants();
 
         verify(session, times(1))
                 .createQuery("from Restaurant");
@@ -113,7 +115,7 @@ class RestaurantDAOTest {
         when(session.createQuery("from Restaurant"))
                 .thenReturn(queryMock);
 
-        List<Restaurant> response = dao.readRestaurants();
+        List<Restaurant> response = dao.downloadRestaurants();
 
         assertEquals(0, response.size(), "Size not correct");
     }
