@@ -9,8 +9,7 @@ import main.MainApp;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -196,6 +195,44 @@ public class SearchLogic {
             ll = new LatLong(location.getDouble("lat"), location.getDouble("lng"));
         }
         return ll;
+    }
+
+    /**
+     * Metod that returns all the known cities from database without duplications.
+     * @param restaurantList
+     * @return
+     */
+    public List<String> getCities(List<Restaurant> restaurantList) {
+        List<String> listOfCities = new ArrayList<>();
+        Set<String> treeSet = new TreeSet<>();
+        for(Restaurant restaurant : restaurantList) {
+            treeSet.add(restaurant.getCity().toUpperCase());
+        }
+        listOfCities.addAll(treeSet);
+        for(String lista: listOfCities) {
+            System.out.println(lista);
+        }
+
+        return listOfCities;
+    }
+
+    /**
+     * Adapter to convert strings to double values if possible
+     * used for location lat and long values.
+     * @param string
+     * @return
+     */
+    public double[] stringToDouble(String string) {
+        double[] values = new double[2];
+       String[] tempString =  string.split(",");
+       for(int i = 0; i < tempString.length; i++) {
+           try {
+              values[i] = Double.parseDouble(tempString[i]);
+           } catch (Exception e) {
+               System.out.println("Strings couldn´t be converted to Double.");
+           }
+       }
+        return values;
     }
 
 }

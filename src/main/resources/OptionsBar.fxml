@@ -13,12 +13,12 @@
         <Button mnemonicParsing="false" onAction="#changeFI" text="FI" />
         <Button mnemonicParsing="false" onAction="#changeSWE" text="SV" />
         <Button mnemonicParsing="false" onAction="#changeENG" text="ENG" />
-        <ComboBox id="loca" onMouseClicked="#mapLocation" prefHeight="39.0" prefWidth="150.0" value="Helsinki">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Helsinki" />
-                    <String fx:value="Oulu" />
-                    <String fx:value="Tampere" />
+        <ComboBox fx:id="locationMenu"  onAction="#mapLocation"  prefHeight="39.0" prefWidth="150.0" value="Helsinki">
+            <items >
+                <FXCollections fx:id="citylist" fx:factory="observableArrayList">
+                    <String fx:id="helsinki" fx:value="Helsinki" />
+                    <String fx:id="oulu" fx:value="Oulu" />
+                    <String fx:id="tampere" fx:value="Tampere" />
                 </FXCollections>
             </items>
         </ComboBox>

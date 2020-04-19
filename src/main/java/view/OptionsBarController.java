@@ -1,12 +1,15 @@
 package view;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import main.MainApp;
 
 import java.util.Locale;
@@ -25,11 +28,26 @@ public class OptionsBarController {
     private Button refreshButton;
     @FXML
     private Button helpButton;
+
+    @FXML
+    private ComboBox<String> locationMenu;
+
+
+
+
+
     /**
      *  set the location for map when program starts
      */
     @FXML
     private void mapLocation() {
+        System.out.println(this.locationMenu.getValue());
+        String city =  this.locationMenu.getValue();
+        String value = mainApp.getCityBundle().getString(city);
+        System.out.println(value);
+
+
+
 
     }
 

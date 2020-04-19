@@ -39,6 +39,7 @@ public class MainApp extends Application {
     private List<Restaurant> restaurantsFromDb;
     private String languageSelection;
     private ResourceBundle bundle;
+    private ResourceBundle bundleCities;
     
 
     public static void main(String[] args) {
@@ -54,6 +55,7 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("SafkaaSTNA");
         this.languageSelection = "en-EN";
         this.bundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(this.languageSelection));
+        this.bundleCities = ResourceBundle.getBundle("Location", Locale.forLanguageTag("cities"));
 
         updateRestaurantsFromDb();
 
@@ -199,6 +201,9 @@ public class MainApp extends Application {
 
     public ResourceBundle getBundle() {
         return bundle;
+    }
+    public ResourceBundle getCityBundle() {
+        return bundleCities;
     }
 
     public void setBundle(ResourceBundle bundle) {
