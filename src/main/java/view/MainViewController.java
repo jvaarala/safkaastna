@@ -57,6 +57,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
     private SearchLogic search = new SearchLogic();
     private String textInSearchField;
     private Restaurant nearest;
+    private List<String> cities;
+    private double[] defaultCity;
 
     private MainApp mainApp;
 
@@ -109,6 +111,9 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @Override
     public void mapInitialized() {
+        // Read from file default lat and long values.
+        String city = mainApp.getDefaultBundle().getString("Default");
+        defaultCity = search.stringToDouble(city);
         System.out.println("mapInitialized");
         // Set the initial properties of the map.
         MapOptions mapOptions = new MapOptions();
@@ -207,7 +212,9 @@ public class MainViewController implements Initializable, MapComponentInitialize
             map.setCenter(mainApp.getUserLocation());
             map.setZoom(12);
         } else {
-            mapView.setCenter(60.192059, 24.945831);
+            // Default cordinats read from file
+            mapView.setCenter(defaultCity[0], defaultCity[1]);
+           // mapView.setCenter(60.192059, 24.945831);
             mapView.setZoom(12);
         }
     }
