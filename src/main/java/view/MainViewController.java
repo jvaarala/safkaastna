@@ -1,5 +1,7 @@
 package view;
 
+import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import com.lynden.gmapsfx.shapes.Circle;
@@ -18,17 +20,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import main.MainApp;
 import model.Restaurant;
-
-import java.net.URL;
-import java.util.*;
-
-import com.lynden.gmapsfx.GoogleMapView;
-import com.lynden.gmapsfx.MapComponentInitializedListener;
-
 import model.SearchLogic;
 import netscape.javascript.JSObject;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * MainViewController Class controls the listView of restaurants and embedded google maps view.
@@ -161,6 +163,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
             }
         });
         // Set ObservableList to ListView
+        listViewNames.setCellFactory(list -> new RestaurantNameCell());
         listViewNames.setItems(items);
     }
 
@@ -423,6 +426,20 @@ public class MainViewController implements Initializable, MapComponentInitialize
             filterToggleButton.setText(bundle.getString("filtering"));
         } else {
             filterToggleButton.setText(bundle.getString("filterToggle"));
+        }
+    }
+
+    public static class RestaurantNameCell extends ListCell<String> {
+        RestaurantNameCell() {
+        }
+
+        @Override
+        protected void updateItem(String item, boolean empty) {
+            int listViewNameLengthMax = 24;
+            super.updateItem(item, empty);
+            if (item != null && item.length() > listViewNameLengthMax) {
+                setText(item.substring(0, listViewNameLengthMax - 3) + "...");
+            } else setText(item);
         }
     }
 }
