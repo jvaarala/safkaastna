@@ -112,7 +112,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
     @Override
     public void mapInitialized() {
         // Read from file default lat and long values.
-        String city = mainApp.getCityBundle().getString("Default");
+        String city = mainApp.getDefaultBundle().getString("Default");
         defaultCity = search.stringToDouble(city);
         System.out.println("mapInitialized");
         // Set the initial properties of the map.
@@ -130,15 +130,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
             LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
 			System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
         });*/
-        // EVERY CITY NAME ON KELAS SITE
-        cities = search.getCities(mainApp.getRestaurants());
-        for(String lista: cities) {
-            System.out.println(lista);
-        }
-        System.out.println(cities.size());
 
-
-        //map.setCenter(new LatLong(values[0], values[1]));
         map.setCenter(new LatLong(60.192059, 24.945831));
         updateView(mainApp.getRestaurants());
     }

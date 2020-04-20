@@ -12,7 +12,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import main.MainApp;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
@@ -41,12 +45,17 @@ public class OptionsBarController {
      */
     @FXML
     private void mapLocation() {
-        System.out.println(this.locationMenu.getValue());
         String city =  this.locationMenu.getValue();
         String value = mainApp.getCityBundle().getString(city);
-        System.out.println(value);
-
-
+        try (OutputStream output = new FileOutputStream("./src/main/resources/Location_default.properties")) {
+            Properties prop = new Properties();
+            // set the properties value
+            prop.setProperty("Default", value);
+            // save properties to project root folder
+            prop.store(output, null);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
 
 
     }
