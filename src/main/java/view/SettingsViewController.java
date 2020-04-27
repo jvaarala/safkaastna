@@ -60,6 +60,16 @@ public class SettingsViewController {
 
     private void updateBundle(String locale) {
         mainApp.setBundle(ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(locale)));
+        try (OutputStream output = new FileOutputStream("./src/main/resources/TextResources_default.properties")) {
+            Properties prop = new Properties();
+            // set the properties value
+            prop.setProperty("Default", locale);
+            // save properties to project root folder
+            prop.store(output, null);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+
     }
 
     /**

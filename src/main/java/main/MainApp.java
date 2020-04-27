@@ -42,10 +42,10 @@ public class MainApp extends Application {
     public static AnchorPane VIEW_MAIN;
     public static AnchorPane VIEW_SETTINGS;
 
-    private String languageSelection;
+    // private String languageSelection;
     private ResourceBundle bundleCities;
-    private ResourceBundle bundleDefault;
-
+    private ResourceBundle defaultCity;
+    private ResourceBundle defaultLanguage;
 
     public static void main(String[] args) {
         launch(args);
@@ -59,10 +59,12 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("SafkaaSTNA");
 
-        this.languageSelection = "en-EN";
-        this.bundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(this.languageSelection));
+        // this.languageSelection = "en-EN";
+
+        this.defaultLanguage = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag("default"));
+        this.bundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(this.defaultLanguage.getString("Default")));
         this.bundleCities = ResourceBundle.getBundle("Location", Locale.forLanguageTag("cities"));
-        this.bundleDefault = ResourceBundle.getBundle("Location", Locale.forLanguageTag("default"));
+        this.defaultCity = ResourceBundle.getBundle("Location", Locale.forLanguageTag("default"));
 
         updateRestaurantsFromDb();
 
@@ -229,7 +231,7 @@ public class MainApp extends Application {
     }
 
     public ResourceBundle getDefaultBundle() {
-        return bundleDefault;
+        return defaultCity;
     }
 
     public void setBundle(ResourceBundle bundle) {
