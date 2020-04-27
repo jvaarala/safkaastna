@@ -2,18 +2,22 @@
 
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SettingsViewController"
-            fx:id="settingsViewController" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-    <Circle fill="DODGERBLUE" layoutX="233.0" layoutY="141.0" radius="100.0" stroke="BLACK" strokeType="INSIDE"/>
-    <ComboBox fx:id="locationMenu"  onAction="#mapLocation"  prefHeight="39.0" prefWidth="150.0" value="Helsinki">
-        <items >
+<AnchorPane fx:id="settingsViewController" prefHeight="509.0" prefWidth="431.0" stylesheets="@Styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SettingsViewController">
+   <Text fx:id="selectLangText" layoutX="41.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Language:" />
+    <Button fx:id="localeEN" layoutX="41.0" layoutY="101.0" mnemonicParsing="false" onAction="#changeENG" prefWidth="100.0" text="ENG" />
+    <Button fx:id="localeSV" layoutX="148.0" layoutY="101.0" mnemonicParsing="false" onAction="#changeSWE" prefWidth="100.0" text="SV" />
+    <Button fx:id="localeFI" layoutX="259.0" layoutY="101.0" mnemonicParsing="false" onAction="#changeFI" prefWidth="100.0" text="FI" />
+   <Text fx:id="selectDefLocText" layoutX="41.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose default map location when program starts" />
+    <ComboBox fx:id="locationMenu" layoutX="41.0" layoutY="239.0" prefHeight="39.0" prefWidth="199.0" value="Helsinki">
+        <items>
             <FXCollections fx:id="citylist" fx:factory="observableArrayList">
                 <String fx:id="helsinki" fx:value="Helsinki" />
                 <String fx:id="oulu" fx:value="Oulu" />
@@ -21,9 +25,16 @@
             </FXCollections>
         </items>
     </ComboBox>
-    <Button layoutX="42.0" layoutY="155.0" mnemonicParsing="false" onAction="#changeENG" text="ENG"/>
-    <Button layoutX="79.0" layoutY="221.0" mnemonicParsing="false" onAction="#changeSWE" text="SV"/>
-    <Button layoutX="154.0" layoutY="271.0" mnemonicParsing="false" onAction="#changeFI" text="FI"/>
-    <Button fx:id="refreshButton" layoutX="232.0" layoutY="305.0" mnemonicParsing="false" onAction="#Refresh"/>
-</AnchorPane>
+   <Text fx:id="refreshRestText" layoutX="41.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Refresh restaurants from database" />
+    <Button fx:id="refreshButton" layoutX="42.0" layoutY="344.0" mnemonicParsing="false" onAction="#Refresh" text="Update restaurants" />
+   <Button fx:id="saveSettingsButton" layoutX="284.0" layoutY="443.0" mnemonicParsing="false" onAction="#SaveSettings" text="Save" />
 
+    <ImageView fx:id="closeIcon" fitHeight="32.0" fitWidth="32.0" focusTraversable="true" onMouseClicked="#CloseSettings" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+        <image>
+            <Image url="@icons/png/237-cancel.png" />
+        </image>
+        <cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
+    </ImageView>
+</AnchorPane>

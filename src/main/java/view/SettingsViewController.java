@@ -4,8 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import main.MainApp;
 
 import javax.swing.*;
@@ -21,6 +23,10 @@ public class SettingsViewController {
     @FXML
     public Button refreshButton;
     public ComboBox<String> locationMenu;
+    public Button saveSettingsButton;
+    public Text selectLangText;
+    public Text selectDefLocText;
+    public Text refreshRestText;
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -28,6 +34,11 @@ public class SettingsViewController {
 
     private MainApp mainApp;
     public AnchorPane settingsViewController;
+
+    private String locale;
+
+    @FXML
+    public ImageView closeIcon;
 
     /**
      * List refresh
@@ -45,20 +56,28 @@ public class SettingsViewController {
      */
     @FXML
     public void changeFI() {
-        updateBundle("fi-FI");
+        this.locale = "fi-FI";
     }
 
     @FXML
     public void changeENG() {
-        updateBundle("en-EN");
+        this.locale = "en-EN";
     }
 
     @FXML
     public void changeSWE() {
-        updateBundle("se-SE");
+        this.locale = "se-SE";
     }
 
-    private void updateBundle(String locale) {
+    public void setTexts(ResourceBundle bundle) {
+        refreshButton.setText(bundle.getString("refreshbutton"));
+        saveSettingsButton.setText(bundle.getString("saveandapplysettings"));
+        selectLangText.setText(bundle.getString("selectLangText"));
+        selectDefLocText.setText(bundle.getString("selectDefLocText"));
+        refreshRestText.setText(bundle.getString("refreshRestText"));
+    }
+
+    public void SaveSettings(ActionEvent actionEvent) {
         mainApp.setBundle(ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(locale)));
         try (OutputStream output = new FileOutputStream("./src/main/resources/TextResources_default.properties")) {
             Properties prop = new Properties();
@@ -70,13 +89,6 @@ public class SettingsViewController {
             io.printStackTrace();
         }
 
-    }
-
-    /**
-     *  set the location for map when program starts
-     */
-    @FXML
-    private void mapLocation() {
         String city = this.locationMenu.getValue();
         String value = mainApp.getCityBundle().getString(city);
         try (OutputStream output = new FileOutputStream("./src/main/resources/Location_default.properties")) {
@@ -88,9 +100,11 @@ public class SettingsViewController {
         } catch (IOException io) {
             io.printStackTrace();
         }
+
+
     }
 
-    public void setTexts(ResourceBundle bundle) {
-        refreshButton.setText(bundle.getString("refreshbutton"));
+    public void CloseSettings(MouseEvent mouseEvent) {
+        mainApp.loadMainView(MainApp.VIEW_MAIN);
     }
 }
