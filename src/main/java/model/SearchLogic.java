@@ -215,9 +215,9 @@ public class SearchLogic {
             treeSet.add(restaurant.getCity().toUpperCase());
         }
         listOfCities.addAll(treeSet);
-        for(String lista: listOfCities) {
-            System.out.println(lista);
-        }
+//        for(String lista: listOfCities) {
+//            System.out.println(lista);
+//        }
 
         return listOfCities;
     }

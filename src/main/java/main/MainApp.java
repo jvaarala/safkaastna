@@ -238,6 +238,10 @@ public class MainApp extends Application {
         return defaultCity;
     }
 
+    public String getDefaultCityName() {
+        return defaultCity.getString("cityName");
+    }
+
     public void setBundle(ResourceBundle bundle) {
         this.bundle = bundle;
         this.mainViewControl.setTexts(this.bundle);

@@ -1,6 +1,5 @@
 package view;
 
-import com.lynden.gmapsfx.javascript.object.LatLong;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,9 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import main.MainApp;
-import model.SearchLogic;
-
-import javax.swing.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -49,10 +45,10 @@ public class SettingsViewController {
 
         ObservableList<String> cities = FXCollections.observableArrayList();
         for (String city : cityNames) {
-            System.out.println(city);
             cities.add(city);
         }
         locationMenu.setItems(cities);
+        locationMenu.getSelectionModel().select(mainApp.getDefaultCityName());
     }
 
     /**
@@ -92,7 +88,7 @@ public class SettingsViewController {
         refreshRestText.setText(bundle.getString("refreshRestText"));
     }
 
-    public void SaveSettings(ActionEvent actionEvent) {
+    public void saveSettings(ActionEvent actionEvent) {
         mainApp.setBundle(ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(locale)));
         try (OutputStream output = new FileOutputStream("./src/main/resources/TextResources_default.properties")) {
             Properties prop = new Properties();
@@ -111,6 +107,7 @@ public class SettingsViewController {
             Properties prop = new Properties();
             // set the properties value
             prop.setProperty("Default", value);
+            prop.setProperty("cityName", city);
             // save properties to project root folder
             prop.store(output, null);
         } catch (IOException io) {
