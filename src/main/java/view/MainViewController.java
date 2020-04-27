@@ -62,6 +62,12 @@ public class MainViewController implements Initializable, MapComponentInitialize
 
     private MainApp mainApp;
 
+    /**
+     * Used to give reference to GoogleMapView and GoogleMap (as mocks)
+     * Used only in tests
+     * @param mapView
+     * @param map
+     */
     void setGoogleMapStuff(GoogleMapView mapView, GoogleMap map) {
         this.mapView = mapView;
         this.map = map;
@@ -138,9 +144,15 @@ public class MainViewController implements Initializable, MapComponentInitialize
         updateMarkers(restaurants);
     }
 
-    private void updateListView(List<Restaurant> restaurants) {
-        System.out.println("updateListView");
 
+    /**
+     * Update Main Screen ListView according to a list of restaurants
+     * Used to update list when filter value is used to filter restaurants
+     * Always called together with {@link #updateMarkers(List)}
+     *
+     * @param restaurants List of restaurants (may filtered with filter value)
+     */
+    private void updateListView(List<Restaurant> restaurants) {
         listViewNames.getItems().clear();
         for (Restaurant restaurant : restaurants) {
             items.add(restaurant.getName());
@@ -163,25 +175,29 @@ public class MainViewController implements Initializable, MapComponentInitialize
         listViewNames.setItems(items);
     }
 
+    /**
+     * Used to update Markers on map according to a list of restaurants
+     * Used to update list when filter value is used to filter restaurants markers on map
+     * Always called together with {@link #updateListView(List)}
+     *
+     * @param restaurants
+     */
     private void updateMarkers(List<Restaurant> restaurants) {
-        System.out.println("updateMarkers");
         List<Marker> restaurantMarkers = new ArrayList<>();
         map.clearMarkers();
         if (mainApp.getUserLocation() != null) {
-
             restaurantMarkers.add(createUserLocationMarker());
         }
 
         for (Restaurant restaurant : restaurants) {
             LatLong tempLatLong = new LatLong(restaurant.getLat(), restaurant.getLng());
             MarkerOptions markerOptions = new MarkerOptions();
-            // if nearest restaurant is known, highlight it somehow
+            // if nearest restaurant is known, use different marker icon
             if (nearest != null && tempLatLong.getLatitude() == nearest.getLat() && tempLatLong.getLongitude() == nearest.getLng()) {
                 markerOptions
                         .position(tempLatLong)
                         .icon("https://users.metropolia.fi/~katriras/OTP1/kela_nearest.gif")
                 ;
-                System.out.println("Nearest marker should be different");
             } else {
                 markerOptions.position(tempLatLong);
                 markerOptions.icon("https://www.kela.fi/documents/10180/24327790/Logo_Tunnus_rgb.gif/7a417c63-36b0-4ef0-ad4c-3e29fb5196e9?t=1553685514309");
@@ -203,9 +219,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
             map.setCenter(mainApp.getUserLocation());
             map.setZoom(12);
         } else {
-            // Default cordinats read from file
+            // Default cordinates read from file
             mapView.setCenter(defaultCity[0], defaultCity[1]);
-           // mapView.setCenter(60.192059, 24.945831);
             mapView.setZoom(12);
         }
     }
@@ -230,27 +245,31 @@ public class MainViewController implements Initializable, MapComponentInitialize
      * If toggle button for restaurant filtering is not selected, will continue to fetchCoordinates() &
      * focusMapOnCoordinate()
      *
-     * @param event
+     * @param event Button click
      */
     @FXML
     protected void handleSearchButton(ActionEvent event) {
-        System.out.println("handleSearchButton");
         if (!filterToggleButton.isSelected()) {
             map.clearMarkers();
             updateMarkers(mainApp.getRestaurants());
             mainApp.setUserLocation(search.fetchGoogleCoordinates(textInSearchField));
-            createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
+            focusMapOnLocation(mainApp.getUserLocation());
+//            createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
             mainApp.getSidebarControl().setUserLocationText(formatString(textInSearchField));
-        } else {
         }
     }
 
-    /*
-    TODO MOVE THIS TO YOUR NEW BUTTON, WHEN EXECUTED
+    /**
+     * Event handler for searching the nearest restaurant
+     * If userLocation is not set, modal pop up window is created to ask for user location
+     * When user location is known, calls to {@link #findNearest(LatLong)}
+     * and {@link #updateMarkers(List)} to change the marker icon of nearest restaurant
+     *
+     * @param event Button click
      */
     @FXML
     protected void handleLocateNearestButton(ActionEvent event) {
-        System.out.println("handleLocateNearestButton");
+        // if user location is not set, but find nearest button is pressed, ask for user location
         if (mainApp.getUserLocation() == null) {
             final Stage dialog = new Stage();
             dialog.initModality(Modality.APPLICATION_MODAL);
@@ -269,14 +288,13 @@ public class MainViewController implements Initializable, MapComponentInitialize
                         String address = startAddress.getText();
                         mainApp.setUserLocation(search.fetchGoogleCoordinates(address));
                         dialog.close();
-                        //		userLocation = new LatLong(60.240165, 24.042544);
-                        createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
+//                        createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
                         nearest = findNearest(mainApp.getUserLocation());
+                        updateMarkers(mainApp.getRestaurants());
                     });
         } else {
             nearest = this.findNearest(mainApp.getUserLocation());
         }
-        System.out.println("nearest " + nearest + " updateMarkers next line");
         updateMarkers(mainApp.getRestaurants());
     }
 
@@ -290,7 +308,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @FXML
     protected void handleFilterToggle(ActionEvent event) {
-        System.out.println("handleFilterToggle");
         if (filterToggleButton.isSelected()) {
             searchButton.setDisable(true);
             filterToggleButton.setText(mainApp.getBundle().getString("filtering"));
@@ -304,39 +321,43 @@ public class MainViewController implements Initializable, MapComponentInitialize
         searchTextBox.requestFocus();
     }
 
+    /**
+     * Used to find nearest restaurant to user location
+     *
+     * @param userLocation user location
+     * @return Restaurant that is nearest to user location
+     */
     private Restaurant findNearest(LatLong userLocation) {
-        System.out.println("findNearestAndFitBounds");
-        // userLocation = new LatLong(60.240165, 24.042544);
         Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
         System.out.println(nearest);
         mainApp.getSidebarControl().showRestaurantInfo(nearest);
         return nearest;
     }
 
+    /**
+     * Used to zoom map according user location and nearest restaurant
+     *
+     * @param userLocation LatLong object indicating user location
+     * @param nearest Restaurant object that is nearest to userLocation
+     */
 
     private void fitBounds(LatLong userLocation, Restaurant nearest) {
-        // zooming with different approach THIS WORKS BETTER!
         double distance = search.calculateDistanceToNearest(nearest, userLocation);
         Circle circle = new Circle();
         circle.setRadius(distance);
         circle.setCenter(new LatLong(nearest.getLat(), nearest.getLng()));
         map.fitBounds(circle.getBounds());
         System.out.println("zoom level " + map.getZoom());
-
-//        map.fitBounds(new LatLongBounds(userLocation, new LatLong(nearest.getLat(), nearest.getLng())));
-//        // zoom out by 1 so that markers are not hidden behind ListView
-//        System.out.println(map.getZoom());
-//        int zoomValue = map.getZoom();
-//        if (zoomValue < 10) {
-//            map.setCenter(new LatLong(nearest.getLat(), nearest.getLng()));
-//            map.setZoom(15);
-//        } else {
-//            map.setZoom(zoomValue - 1);
-//        }
     }
 
-    Marker createUserLocationMarker() {
-        System.out.println("createUserLocationMarker");
+    /**
+     * Used to create marker for user location with custom icon.
+     * Called from {@link #updateMarkers(List)}
+     *
+     * @return new marker to be added to marker list
+     */
+
+    public Marker createUserLocationMarker() {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions
                 .position(mainApp.getUserLocation())
@@ -347,36 +368,24 @@ public class MainViewController implements Initializable, MapComponentInitialize
     }
 
     /**
-     * Creates a new marker for user location and focuses mapview to given marker
-     *
-     * @param ll User location as LatLong object
-     */
-    private void createAndFocusOnUserLocationMarker(LatLong ll) {
-        System.out.println("createAndFocusOnUserLocationMarker");
-        map.clearMarkers();
-        updateMarkers(mainApp.getRestaurants());
-        try {
-            // add new marker to map on correct location & zoom in
-            map.addMarkers(Collections.singletonList(createUserLocationMarker()));
-            focusMapOnLocation(ll);
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ADDRESS NOT FOUND");
-            alert.setHeaderText("No search results");
-            alert.setContentText("Try again! Preferred format on address is 'Streetname 1 City'");
-            alert.show();
-        }
-    }
-
-    /**
-     * Focuses mapview to given location
+     * Focuses Map View to given location
+     * if latLong is null, alert is given
      *
      * @param ll User location as LatLong object
      */
     void focusMapOnLocation(LatLong ll) {
-        System.out.println("focusMapOnLocation");
-        mapView.setCenter(ll.getLatitude(), ll.getLongitude());
-        mapView.setZoom(15);
+        if (ll != null) {
+            updateMarkers(mainApp.getRestaurants());
+            System.out.println("focusMapOnLocation");
+            mapView.setCenter(ll.getLatitude(), ll.getLongitude());
+            mapView.setZoom(15);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("PLACE NOT FOUND");
+            alert.setHeaderText("No search results");
+            alert.setContentText("Try again! Preferred format on address is 'Streetname 1 City'");
+            alert.show();
+        }
     }
 
     /**
@@ -392,6 +401,12 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
     }
 
+    /**
+     * Used to auto capitalize user input address (for example "streEt name 1 ciTY")
+     *
+     * @param s user input (address or place name)
+     * @return modified string for example "Street name 1 City"
+     */
     static String formatString(String s) {
         System.out.println("formatString");
         String[] words = s.replaceAll("\\s+", " ").trim().split(" ");
