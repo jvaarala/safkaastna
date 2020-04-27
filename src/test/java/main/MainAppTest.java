@@ -49,6 +49,10 @@ class MainAppTest {
     SideBarController mSidebarCtrl = mock(SideBarController.class);
     OptionsBarController mOptionbarCtrl = mock(OptionsBarController.class);
 
+    /**
+     * Called before each test
+     * @param stage Java framework Stage passed as a parameter
+     */
     @Start
     private void start(Stage stage) {
         mainApp = mock(MainApp.class);
@@ -99,6 +103,9 @@ class MainAppTest {
 
     }
 
+    /**
+     * Test to check if AnchorPane housing MapView is set to center of main screen (BorderPane)
+     */
     /*
     Disabled because:
     java.lang.RuntimeException: netscape.javascript.JSException: ReferenceError: Can't find variable: loadMapLibrary
@@ -106,12 +113,15 @@ class MainAppTest {
      */
     @Disabled
     @Test
-    void mapPane_at_bottom() {
+    void mapPane_at_center() {
         BorderPane main = (BorderPane)scene.lookup(".root");
         AnchorPane map = (AnchorPane)scene.lookup("#main");
         assertEquals(main.getCenter(), map);
     }
 
+    /**
+     * Test to check if AnchorPane housing sidebar is set to right of main screen (BorderPane)
+     */
     @Test
     void sideBar_at_right() {
         BorderPane main = (BorderPane)scene.lookup(".root");
@@ -119,6 +129,9 @@ class MainAppTest {
         assertEquals(main.getRight(), side);
     }
 
+    /**
+     * Test to check if AnchorPane housing option bar is set to bottom of main screen (BorderPane)
+     */
     /*
     Disabled because:
     java.lang.RuntimeException: netscape.javascript.JSException: ReferenceError: Can't find variable: loadMapLibrary

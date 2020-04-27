@@ -16,9 +16,6 @@ class OptionsBarControllerTest {
 	static OptionsBarController controller;
 	static MainViewController pseudoMapControl;
 
-
-	
-
 /*	@BeforeEach
 	void BeforeEach() {
 		OptionsBarController controllerTemp = new OptionsBarController();

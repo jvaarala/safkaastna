@@ -17,18 +17,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Restaurant;
 
-
-
 class MainAppOldTest {
 	static MainApp mainApp;
 	private List<Restaurant> tempList;
 
 	private BorderPane mainScreen;
 	static Thread fx;
-
-
-
-
 
 	@BeforeEach
 	void beforeEach() {
@@ -48,11 +42,12 @@ class MainAppOldTest {
 		mainApp = new MainApp();
 	}
 
+	/**
+	 * Test MainApp restaurants getter and setter.
+	 */
 	@Test
 	void getRestaurants() {
 		mainApp.setRestaurants(tempList);
 		assertEquals(1, mainApp.getRestaurants().size(), "getRestaurants not working for mainapp");
 	}
-
-
 }

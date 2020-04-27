@@ -2,7 +2,7 @@
 /target/
 safkaastna.iml
 .env
-
+.DS_Store
 
 # Oliver lisäykset
 /bin/
