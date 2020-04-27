@@ -39,11 +39,13 @@ import static org.mockito.Mockito.*;
 @Disabled
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(ApplicationExtension.class)
+/**
+ * Test class for MainViewController - Does not work with GMapsFX
+ */
 class MainViewControllerTest {
     private BorderPane mainScreen;
     private Stage primaryStage;
     private Scene scene;
-
     private MainApp mainAppMock = mock(MainApp.class);
 
     private MainViewController mainViewControl;
@@ -55,6 +57,9 @@ class MainViewControllerTest {
     private AnchorPane mapPane, sidebar;
     private int i = 0;
 
+    /**
+     * Initialize JavaFX-screen
+     */
     @BeforeAll
     private void init() {
         mainScreen = new BorderPane();
@@ -63,6 +68,10 @@ class MainViewControllerTest {
         scene.getStylesheets().add("Styles.css");
     }
 
+    /**
+     * Called before each test
+     * @param ps Java framework Stage passed as a parameter
+     */
     // This works like beforeEach
     @Start
     private void start(Stage ps) {
@@ -103,6 +112,9 @@ class MainViewControllerTest {
 
     }
 
+    /**
+     * Test to check if AnchorPane containing Google Maps MapView fills the whole main screen
+     */
     @DisplayName("map_fills_whole_window")
     @Test
     void map_fills_whole_window() {
@@ -121,6 +133,10 @@ class MainViewControllerTest {
 
     }
 
+    /**
+     * Test to check if scene contains find button
+     * @param robot
+     */
     @DisplayName("should_contain_find_button")
     @Test
     void should_contain_find_button(FxRobot robot) {
@@ -129,6 +145,9 @@ class MainViewControllerTest {
         System.out.println("should_contain_find_button done");
     }
 
+    /**
+     * Test to check if scene contains button finding the nearest restaurant
+     */
     @Disabled
     @DisplayName("should_contain_nearest_button")
     @Test
@@ -143,6 +162,10 @@ class MainViewControllerTest {
         System.err.println("should_contain_nearest_button done");
     }
 
+    /**
+     * Test to check if scene contains input field for search value
+     * @param robot
+     */
     @Disabled
     @DisplayName("should_contain_search_box")
     @Test
@@ -151,6 +174,9 @@ class MainViewControllerTest {
         System.out.println("should_contain_search_box done");
     }
 
+    /**
+     * Test to check if input field (search) can be filled
+     */
     @Disabled
     @DisplayName("search_box_can_be_filled")
     @Test
@@ -161,6 +187,9 @@ class MainViewControllerTest {
         System.out.println("search_box_can_be_filled done");
     }
 
+    /**
+     * Test to check if scene contains filter button
+     */
     @Disabled
     @DisplayName("should_contain_filter_button")
     @Test
@@ -169,6 +198,9 @@ class MainViewControllerTest {
         System.out.println("should_contain_filter_button done");
     }
 
+    /**
+     * Test to check if scene contains ListView for restaurant names
+     */
     @DisplayName("should_contain_listView")
     @Test
     void should_contain_listView() {
@@ -176,22 +208,10 @@ class MainViewControllerTest {
         System.out.println("should_contain_listView done");
     }
 
-    @Disabled
-    @Test
-    void fill_observableList() {
-        List<Restaurant> mockRestaurants;
-        Restaurant rMock = mock(Restaurant.class);
-        Restaurant r1 = new Restaurant(666, "name", "address", "zip", "city", "www", "admin", "adminwww", 66.66, 66.66 );
-        Restaurant r2 = new Restaurant(667, "name2", "address2", "zip2", "city2", "www2", "admin2", "adminwww2", 22.22, 47.77 );
-        mockRestaurants = Arrays.asList(r1, r2);
-        // never goes here
-        when(mainAppMock.getRestaurants())
-                .thenReturn(mockRestaurants);
-
-        ListView lv = (ListView) scene.lookup("#listViewNames");
-        assertEquals(lv.getItems().size(), mockRestaurants.size(), "Restaurant list size does not match");
-        System.out.println("fill_observableList done");
-    }
+    /**
+     * Test to check if userLocation is set after filling input field and pressing search button
+     * @param robot FxRobot to mock user interactions
+     */
     @Disabled
     @Test
     void should_set_userLocation(FxRobot robot) {
@@ -209,33 +229,9 @@ class MainViewControllerTest {
         System.out.println("should_set_userLocation");
     }
 
-    @DisplayName("string_format_all_lower_case")
-    @Test
-    void string_format_all_lower_case() {
-        MainViewController mvc = new MainViewController();
-        String s = mvc.formatString("testitie 5 helsinki");
-        assertEquals("Testitie 5 Helsinki", s, "String formatting works wrong");
-        System.out.println("string_format_all_lower_case done");
-    }
-
-    @DisplayName("string_format_all_upper_case")
-    @Test
-    void string_format_all_upper_case() {
-        MainViewController mvc = new MainViewController();
-        String s = mvc.formatString("TESTITIE 5 HELSINKI");
-        assertEquals("Testitie 5 Helsinki", s, "String formatting works wrong");
-        System.out.println("string_format_all_upper_case done");
-    }
-
-    @DisplayName("string_format_all_messed_up")
-    @Test
-    void string_format_all_messed_up() {
-        MainViewController mvc = new MainViewController();
-        String s = mvc.formatString("tesTItie 5 helsINKI");
-        assertEquals("Testitie 5 Helsinki", s, "String formatting works wrong");
-        System.out.println("string_format_all_messed_up done");
-    }
-
+    /**
+     * Test to check if added marker is the same as mocked marker
+     */
     // Does not work, since GMapsFX problems
     // netscape.javascript.JSException: ReferenceError: Can't find variable: loadMapLibrary
     @Disabled
