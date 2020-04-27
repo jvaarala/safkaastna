@@ -90,10 +90,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
     private String api = dotenv.get("APIKEY");
 
     /**
-     * adds map to mapcontainer and sets api key for google api calls
-     *
-     * @param location
-     * @param resources
+     * Adds map to mapcontainer and sets api key for google api calls.
+     * This is overridden method from FXMLLoader.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -108,16 +106,15 @@ public class MainViewController implements Initializable, MapComponentInitialize
      * mapInitializer for GmapsFX library
      * Sets desired map options and creates GoogleMap object
      * Focuses map on a predestined location (Helsinki)
+     *
+     * Calls @see #updateMainView(List<Restaurant> restaurants) at end
      */
     @Override
     public void mapInitialized() {
-        // Read from file default lat and long values.
         String city = mainApp.getDefaultBundle().getString("Default");
         defaultCity = search.stringToDouble(city);
-        System.out.println("mapInitialized");
-        // Set the initial properties of the map.
-        MapOptions mapOptions = new MapOptions();
 
+        MapOptions mapOptions = new MapOptions();
         mapOptions.overviewMapControl(false).panControl(false).rotateControl(false).scaleControl(false)
                 .streetViewControl(false).zoomControl(false).zoom(12).mapTypeControl(false);
         AnchorPane.setTopAnchor(mapView, 0.0);
@@ -125,13 +122,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
         AnchorPane.setBottomAnchor(mapView, 0.0);
         AnchorPane.setLeftAnchor(mapView, 0.0);
         map = mapView.createMap(mapOptions);
-
-/*        map.addUIEventHandler(UIEventType.click, (JSObject obj) -> {
-            LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
-			System.out.println("lat: " + ll.getLatitude() + " lon: " + ll.getLongitude());
-        });*/
-
         map.setCenter(new LatLong(60.192059, 24.945831));
+
         updateMainView(mainApp.getRestaurants());
     }
 
@@ -142,7 +134,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
      *                    Names are set on ListView and Markers are set on map on restaurants location
      */
     void updateMainView(List<Restaurant> restaurants) {
-        System.out.println("updateView");
         updateListView(restaurants);
         updateMarkers(restaurants);
     }
@@ -167,7 +158,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
                 }
             }
         });
-        // Set ObservableList to ListView
+
         listViewNames.setCellFactory(list -> new RestaurantNameCell());
         listViewNames.setItems(items);
     }

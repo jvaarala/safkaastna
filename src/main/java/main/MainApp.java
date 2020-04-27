@@ -53,6 +53,7 @@ public class MainApp extends Application {
 
     /**
      * Controls the javafx components initialisation order.
+     * Calls @see #loadMainView(AnchorPane anchorPane)
      */
     @Override
     public void start(Stage primaryStage) {
@@ -77,7 +78,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Initiates the root layout of the application.
+     * Initializes the root layout of the application.
      */
     public void initRootLayout() {
         MAIN_SCREEN = new BorderPane();
@@ -109,7 +110,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Initialises the sidebar.
+     * Initializes the sidebar.
      */
     private void initSideBar() {
         FXMLLoader loader = new FXMLLoader();
