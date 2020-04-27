@@ -184,15 +184,21 @@ public class SearchLogic {
             }
         }
 
-        // Modify api response String to a LatLong Object
+        System.out.println(result);
         LatLong ll = null;
-        JSONObject resultJSON = new JSONObject(result.toString());
-        JSONArray resultArray = resultJSON.getJSONArray("results");
-        for (int i = 0; i < resultArray.length(); i++) {
-            JSONObject results = resultArray.getJSONObject(i);
-            JSONObject geometry = results.getJSONObject("geometry");
-            JSONObject location = geometry.getJSONObject("location");
-            ll = new LatLong(location.getDouble("lat"), location.getDouble("lng"));
+        try {
+            // Modify api response String to a LatLong Object
+            JSONObject resultJSON = new JSONObject(result.toString());
+            JSONArray resultArray = resultJSON.getJSONArray("results");
+            for (int i = 0; i < resultArray.length(); i++) {
+                JSONObject results = resultArray.getJSONObject(i);
+                JSONObject geometry = results.getJSONObject("geometry");
+                JSONObject location = geometry.getJSONObject("location");
+                System.out.println(location.getDouble("lat") + " " + location.getDouble("lng"));
+                ll = new LatLong(location.getDouble("lat"), location.getDouble("lng"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return ll;
     }
@@ -202,7 +208,7 @@ public class SearchLogic {
      * @param restaurantList
      * @return
      */
-    public List<String> getCities(List<Restaurant> restaurantList) {
+    public static List<String> getCities(List<Restaurant> restaurantList) {
         List<String> listOfCities = new ArrayList<>();
         Set<String> treeSet = new TreeSet<>();
         for(Restaurant restaurant : restaurantList) {

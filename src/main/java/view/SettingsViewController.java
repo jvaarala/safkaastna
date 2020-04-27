@@ -1,5 +1,8 @@
 package view;
 
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,11 +10,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import main.MainApp;
+import model.SearchLogic;
 
 import javax.swing.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -28,6 +33,16 @@ public class SettingsViewController {
 
     private MainApp mainApp;
     public AnchorPane settingsViewController;
+
+    public void setLocationMenuItems(List<String> cityNames) {
+
+        ObservableList<String> cities = FXCollections.observableArrayList();
+        for (String city : cityNames) {
+            System.out.println(city);
+            cities.add(city);
+        }
+        locationMenu.setItems(cities);
+    }
 
     /**
      * List refresh
@@ -78,6 +93,7 @@ public class SettingsViewController {
     @FXML
     private void mapLocation() {
         String city = this.locationMenu.getValue();
+        System.out.println("city = " + city);
         String value = mainApp.getCityBundle().getString(city);
         try (OutputStream output = new FileOutputStream("./src/main/resources/Location_default.properties")) {
             Properties prop = new Properties();

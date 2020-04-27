@@ -17,6 +17,7 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Restaurant;
+import model.SearchLogic;
 import view.MainViewController;
 import view.OptionsBarController;
 import view.SettingsViewController;
@@ -191,6 +192,8 @@ public class MainApp extends Application {
     public MainViewController getMainViewControl() {
         return mainViewControl;
     }
+
+    public SettingsViewController getSettingsViewController() { return settingsViewController; }
 
     /**
      * Returns restaurants currently stored in memory

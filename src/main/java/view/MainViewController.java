@@ -131,6 +131,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
         map.setCenter(new LatLong(60.192059, 24.945831));
 
         updateMainView(mainApp.getRestaurants());
+        mainApp.getSettingsViewController()
+                .setLocationMenuItems(SearchLogic.getCities(mainApp.getRestaurants()));
     }
 
     /**
