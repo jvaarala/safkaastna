@@ -244,9 +244,11 @@ public class MainApp extends Application {
 
     public void setBundle(ResourceBundle bundle) {
         this.bundle = bundle;
+        System.out.println("bundle set");
         this.mainViewControl.setTexts(this.bundle);
         this.sidebarControl.setTexts(this.bundle);
         this.optionsControl.setTexts(this.bundle);
         this.settingsViewController.setTexts(this.bundle);
+        System.out.println("all texts set with new bundle");
     }
 }

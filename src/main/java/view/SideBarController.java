@@ -105,10 +105,16 @@ public class SideBarController {
             });
         }
         setDistanceToRestaurantText(restaurant);
+        setUserLocationText(mainApp.getMainViewControl().getTextInSearchField());
         mainApp.sidebarOn();
     }
 
+    /**
+     * Used to set user location text to sidebar
+     * @param userLocationText - user input filled to search bar & used to search places from google maps api
+     */
     void setUserLocationText(String userLocationText) {
+
         this.userLocationText.setText(mainApp.getBundle().getString("location") + userLocationText);
         setDistanceToRestaurantText(lastSelectedRestaurant);
         this.userLocationText.setOnMouseClicked(event -> {
@@ -116,9 +122,15 @@ public class SideBarController {
         });
     }
 
+    /**
+     * Used to set text to show distance from user location to chosen restaurant
+     *
+     * @param restaurant - chosen restaurant
+     */
     private void setDistanceToRestaurantText(Restaurant restaurant) {
-        if (mainApp.getUserLocation() != null && lastSelectedRestaurant != null) {
-
+        System.out.println("userLocation=" + mainApp.getUserLocation());
+        System.out.println("restaurant=" + restaurant.getName());
+        if (mainApp.getUserLocation() != null && restaurant != null) {
             double dist = SearchLogic.calculateDistanceToNearest(restaurant, mainApp.getUserLocation()) / 1000;
             dist = Math.round(dist * 100.0) / 100.0;
             if (dist == 0) {
@@ -129,12 +141,17 @@ public class SideBarController {
         }
     }
 
+    /**
+     * Used to handle language bundle texts
+     *
+     * @param bundle
+     */
     public void setTexts(ResourceBundle bundle) {
         bottomParagraph.setText(bundle.getString("restaurantUrl"));
+        System.out.println(getLastSelectedRestaurant());
+        System.out.println();
         if (this.getLastSelectedRestaurant() != null && MainApp.MAIN_SCREEN.getRight() != null) {
             this.showRestaurantInfo(this.getLastSelectedRestaurant());
-            this.userLocationText.setText(bundle.getString("location") + userLocationText);
-            setDistanceToRestaurantText(lastSelectedRestaurant);
         }
     }
 }

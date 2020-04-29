@@ -114,7 +114,6 @@ public class SettingsViewController {
             io.printStackTrace();
         }
 
-
     }
 
     public void CloseSettings(MouseEvent mouseEvent) {
