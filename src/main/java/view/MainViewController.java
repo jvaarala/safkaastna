@@ -101,7 +101,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("initialize");
         mapView.setKey(api);
         mapContainer.getChildren().add(mapView);
         mapView.addMapInializedListener(this);
@@ -234,7 +233,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @FXML
     protected void handleSearchBar(KeyEvent keyEvent) {
-        System.out.println("handleSearchBar");
         textInSearchField = searchTextBox.getText();
         if (filterToggleButton.isSelected()) {
             List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), textInSearchField);
@@ -252,11 +250,12 @@ public class MainViewController implements Initializable, MapComponentInitialize
     @FXML
     protected void handleSearchButton(ActionEvent event) {
         if (!filterToggleButton.isSelected()) {
+            mainApp.sidebarOff();
+            nearest = null;
             map.clearMarkers();
             updateMarkers(mainApp.getRestaurants());
             mainApp.setUserLocation(search.fetchGoogleCoordinates(textInSearchField));
             focusMapOnLocation(mainApp.getUserLocation());
-//            createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
             mainApp.getSidebarControl().setUserLocationText(formatString(textInSearchField));
         }
     }
@@ -287,8 +286,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
             dialog.show();
             searchButton.setOnAction(
                     event1 -> {
-                        String address = startAddress.getText();
-                        mainApp.setUserLocation(search.fetchGoogleCoordinates(address));
+                        textInSearchField = startAddress.getText();
+                        mainApp.setUserLocation(search.fetchGoogleCoordinates(textInSearchField));
                         dialog.close();
 //                        createAndFocusOnUserLocationMarker(mainApp.getUserLocation());
                         nearest = findNearest(mainApp.getUserLocation());
@@ -296,6 +295,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
                     });
         } else {
             nearest = this.findNearest(mainApp.getUserLocation());
+            mainApp.getSidebarControl().setUserLocationText(formatString(textInSearchField));
         }
         updateMarkers(mainApp.getRestaurants());
     }
@@ -331,8 +331,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     private Restaurant findNearest(LatLong userLocation) {
         Restaurant nearest = search.findNearestRestaurant(mainApp.getRestaurants(), userLocation);
-        System.out.println(nearest);
         mainApp.getSidebarControl().showRestaurantInfo(nearest);
+        mainApp.getSidebarControl().setUserLocationText(formatString(textInSearchField));
         return nearest;
     }
 
@@ -344,12 +344,11 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
 
     private void fitBounds(LatLong userLocation, Restaurant nearest) {
-        double distance = search.calculateDistanceToNearest(nearest, userLocation);
+        double distance = SearchLogic.calculateDistanceToNearest(nearest, userLocation);
         Circle circle = new Circle();
         circle.setRadius(distance);
         circle.setCenter(new LatLong(nearest.getLat(), nearest.getLng()));
         map.fitBounds(circle.getBounds());
-        System.out.println("zoom level " + map.getZoom());
     }
 
     /**
@@ -378,7 +377,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
     void focusMapOnLocation(LatLong ll) {
         if (ll != null) {
             updateMarkers(mainApp.getRestaurants());
-            System.out.println("focusMapOnLocation");
             mapView.setCenter(ll.getLatitude(), ll.getLongitude());
             mapView.setZoom(15);
         } else {
@@ -396,7 +394,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
      * @param restaurant - Restaurant on which to focus the map on
      */
     public void focusMapOnRestaurant(Restaurant restaurant) {
-        System.out.println("focusMapOnRestaurant");
         if (restaurant != null) {
             mapView.setCenter(restaurant.getLat(), restaurant.getLng());
             mapView.setZoom(15);
@@ -410,7 +407,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
      * @return modified string for example "Street name 1 City"
      */
     static String formatString(String s) {
-        System.out.println("formatString");
         String[] words = s.replaceAll("\\s+", " ").trim().split(" ");
         String newString = "";
         for (String word : words) {
@@ -432,6 +428,10 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
         newString = newString.trim();
         return newString;
+    }
+
+    public String getTextInSearchField() {
+        return textInSearchField != null ? formatString(textInSearchField) : "";
     }
 
     public void setTexts(ResourceBundle bundle) {

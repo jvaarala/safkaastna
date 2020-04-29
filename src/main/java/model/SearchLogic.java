@@ -118,7 +118,7 @@ public class SearchLogic {
         return nearest;
     }
 
-    public double calculateDistanceToNearest(Restaurant restaurant, LatLong userLocation) {
+    public static double calculateDistanceToNearest(Restaurant restaurant, LatLong userLocation) {
 
         final int R = 6371; // Radius of the earth
         double latDistance = Math.toRadians(restaurant.getLat() - userLocation.getLatitude());
@@ -184,7 +184,6 @@ public class SearchLogic {
             }
         }
 
-        System.out.println(result);
         LatLong ll = null;
         try {
             // Modify api response String to a LatLong Object
@@ -194,7 +193,6 @@ public class SearchLogic {
                 JSONObject results = resultArray.getJSONObject(i);
                 JSONObject geometry = results.getJSONObject("geometry");
                 JSONObject location = geometry.getJSONObject("location");
-                System.out.println(location.getDouble("lat") + " " + location.getDouble("lng"));
                 ll = new LatLong(location.getDouble("lat"), location.getDouble("lng"));
             }
         } catch (Exception e) {

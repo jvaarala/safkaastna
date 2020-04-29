@@ -50,6 +50,7 @@ public class OptionsBarController {
     }
 
     public void Settings(ActionEvent actionEvent) {
+        mainApp.sidebarOff();
         if (MainApp.MAIN_SCREEN.getCenter() == MainApp.VIEW_MAIN) {
             mainApp.loadMainView(MainApp.VIEW_SETTINGS);
         } else mainApp.loadMainView(MainApp.VIEW_MAIN);

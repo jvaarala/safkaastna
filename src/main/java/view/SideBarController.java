@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import main.MainApp;
 import model.Restaurant;
+import model.SearchLogic;
 
 import java.util.ResourceBundle;
 
@@ -32,6 +33,8 @@ public class SideBarController {
     private Hyperlink bottomParagraph;
     @FXML
     private Text userLocationText;
+    @FXML
+    private Text distanceToRestaurantText;
 
     private MainApp mainApp;
     private Restaurant lastSelectedRestaurant;
@@ -101,20 +104,37 @@ public class SideBarController {
                 }
             });
         }
+        setDistanceToRestaurantText(restaurant);
         mainApp.sidebarOn();
     }
 
     void setUserLocationText(String userLocationText) {
-        this.userLocationText.setText(userLocationText);
+        this.userLocationText.setText(mainApp.getBundle().getString("location") + userLocationText);
+        setDistanceToRestaurantText(lastSelectedRestaurant);
         this.userLocationText.setOnMouseClicked(event -> {
             mainApp.getMainViewControl().focusMapOnLocation(mainApp.getUserLocation());
         });
+    }
+
+    private void setDistanceToRestaurantText(Restaurant restaurant) {
+        if (mainApp.getUserLocation() != null && lastSelectedRestaurant != null) {
+
+            double dist = SearchLogic.calculateDistanceToNearest(restaurant, mainApp.getUserLocation()) / 1000;
+            dist = Math.round(dist * 100.0) / 100.0;
+            if (dist == 0) {
+                distanceToRestaurantText.setText("");
+            } else {
+                distanceToRestaurantText.setText(mainApp.getBundle().getString("distance") + dist + "km");
+            }
+        }
     }
 
     public void setTexts(ResourceBundle bundle) {
         bottomParagraph.setText(bundle.getString("restaurantUrl"));
         if (this.getLastSelectedRestaurant() != null && MainApp.MAIN_SCREEN.getRight() != null) {
             this.showRestaurantInfo(this.getLastSelectedRestaurant());
+            this.userLocationText.setText(bundle.getString("location") + userLocationText);
+            setDistanceToRestaurantText(lastSelectedRestaurant);
         }
     }
 }
