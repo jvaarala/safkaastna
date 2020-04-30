@@ -1,21 +1,12 @@
 package view;
 
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.event.ActionEvent;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import main.MainApp;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Locale;
-import java.util.Properties;
 
 import java.util.ResourceBundle;
 
@@ -31,11 +22,6 @@ public class OptionsBarController {
 
     @FXML
     private Button helpButton;
-
-
-    @FXML
-    private ComboBox<String> locationMenu;
-
     @FXML
     private Button settingsButton;
 
@@ -49,7 +35,7 @@ public class OptionsBarController {
         this.mainApp = mainApp;
     }
 
-    public void Settings(ActionEvent actionEvent) {
+    public void handleSettingsButton(ActionEvent actionEvent) {
         mainApp.sidebarOff();
         if (MainApp.MAIN_SCREEN.getCenter() == MainApp.VIEW_MAIN) {
             mainApp.loadMainView(MainApp.VIEW_SETTINGS);
@@ -57,7 +43,7 @@ public class OptionsBarController {
     }
 
     @FXML
-    public void Help() {
+    public void handleHelpButton() {
         popupInfo(mainApp.getBundle().getString("help"), mainApp.getBundle().getString("helpTitle"));
     }
 

@@ -20,7 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import main.MainApp;
 import model.Restaurant;
 import model.SearchLogic;
@@ -28,7 +27,6 @@ import netscape.javascript.JSObject;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -57,7 +55,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
     private SearchLogic search = new SearchLogic();
     private String textInSearchField;
     private Restaurant nearest;
-    private List<String> cities;
     private double[] defaultCity;
 
     private MainApp mainApp;
@@ -130,7 +127,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
         map.setCenter(new LatLong(60.192059, 24.945831));
 
         updateMainView(mainApp.getRestaurants());
-        mainApp.getSettingsViewController()
+        mainApp.getSettingsViewControl()
                 .setLocationMenuItems(SearchLogic.getCities(mainApp.getRestaurants()));
     }
 
@@ -393,7 +390,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
      *
      * @param restaurant - Restaurant on which to focus the map on
      */
-    public void focusMapOnRestaurant(Restaurant restaurant) {
+    private void focusMapOnRestaurant(Restaurant restaurant) {
         if (restaurant != null) {
             mapView.setCenter(restaurant.getLat(), restaurant.getLng());
             mapView.setZoom(15);
@@ -430,10 +427,18 @@ public class MainViewController implements Initializable, MapComponentInitialize
         return newString;
     }
 
+    /**
+     * Used to get user input (address or place) string
+     * @return user input value or empty string if null
+     */
     public String getTextInSearchField() {
         return textInSearchField != null ? formatString(textInSearchField) : "";
     }
 
+    /**
+     * Used to update strings if language is changed
+     * @param bundle
+     */
     public void setTexts(ResourceBundle bundle) {
         searchButton.setText(bundle.getString("search"));
         nearestButton.setText(bundle.getString("nearest"));
@@ -444,6 +449,10 @@ public class MainViewController implements Initializable, MapComponentInitialize
         }
     }
 
+
+    /**
+     * Class used to modify & display strings on observable list
+     */
     public static class RestaurantNameCell extends ListCell<String> {
         RestaurantNameCell() {
         }

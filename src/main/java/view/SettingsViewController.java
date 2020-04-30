@@ -28,18 +28,17 @@ public class SettingsViewController {
     public Text selectLangText;
     public Text selectDefLocText;
     public Text refreshRestText;
+    @FXML
+    public ImageView closeIcon;
+
+    private MainApp mainApp;
+    public AnchorPane settingsView;
+
+    private String locale;
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
-
-    private MainApp mainApp;
-    public AnchorPane settingsViewController;
-
-    private String locale;
-
-    @FXML
-    public ImageView closeIcon;
 
     public void setLocationMenuItems(List<String> cityNames) {
 
@@ -116,7 +115,7 @@ public class SettingsViewController {
 
     }
 
-    public void CloseSettings(MouseEvent mouseEvent) {
+    public void closeSettings(MouseEvent mouseEvent) {
         mainApp.loadMainView(MainApp.VIEW_MAIN);
     }
 }

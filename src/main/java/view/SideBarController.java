@@ -39,10 +39,6 @@ public class SideBarController {
     private MainApp mainApp;
     private Restaurant lastSelectedRestaurant;
 
-    private Restaurant getLastSelectedRestaurant() {
-        return lastSelectedRestaurant;
-    }
-
     /**
      * Used to give a reference to the mainApp for this controller.
      * Should be done after controller initialisation, before using any of its functions.
@@ -128,8 +124,6 @@ public class SideBarController {
      * @param restaurant - chosen restaurant
      */
     private void setDistanceToRestaurantText(Restaurant restaurant) {
-        System.out.println("userLocation=" + mainApp.getUserLocation());
-        System.out.println("restaurant=" + restaurant.getName());
         if (mainApp.getUserLocation() != null && restaurant != null) {
             double dist = SearchLogic.calculateDistanceToNearest(restaurant, mainApp.getUserLocation()) / 1000;
             dist = Math.round(dist * 100.0) / 100.0;
@@ -148,10 +142,10 @@ public class SideBarController {
      */
     public void setTexts(ResourceBundle bundle) {
         bottomParagraph.setText(bundle.getString("restaurantUrl"));
-        System.out.println(getLastSelectedRestaurant());
+        System.out.println(lastSelectedRestaurant);
         System.out.println();
-        if (this.getLastSelectedRestaurant() != null && MainApp.MAIN_SCREEN.getRight() != null) {
-            this.showRestaurantInfo(this.getLastSelectedRestaurant());
+        if (this.lastSelectedRestaurant != null && MainApp.MAIN_SCREEN.getRight() != null) {
+            this.showRestaurantInfo(lastSelectedRestaurant);
         }
     }
 }

@@ -17,7 +17,6 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Restaurant;
-import model.SearchLogic;
 import view.MainViewController;
 import view.OptionsBarController;
 import view.SettingsViewController;
@@ -36,8 +35,7 @@ public class MainApp extends Application {
     private SideBarController sidebarControl;
     private OptionsBarController optionsControl;
     private MainViewController mainViewControl;
-    private SettingsViewController settingsViewController;
-
+    private SettingsViewController settingsViewControl;
 
     public static BorderPane MAIN_SCREEN;
     public static AnchorPane VIEW_MAIN;
@@ -155,8 +153,8 @@ public class MainApp extends Application {
         loader.setLocation(getClass().getResource("/SettingsView.fxml"));
         try {
             VIEW_SETTINGS = loader.load();
-            this.settingsViewController = loader.getController();
-            this.settingsViewController.setMainApp(this);
+            this.settingsViewControl = loader.getController();
+            this.settingsViewControl.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -193,7 +191,7 @@ public class MainApp extends Application {
         return mainViewControl;
     }
 
-    public SettingsViewController getSettingsViewController() { return settingsViewController; }
+    public SettingsViewController getSettingsViewControl() { return settingsViewControl; }
 
     /**
      * Returns restaurants currently stored in memory
@@ -244,11 +242,9 @@ public class MainApp extends Application {
 
     public void setBundle(ResourceBundle bundle) {
         this.bundle = bundle;
-        System.out.println("bundle set");
         this.mainViewControl.setTexts(this.bundle);
         this.sidebarControl.setTexts(this.bundle);
         this.optionsControl.setTexts(this.bundle);
-        this.settingsViewController.setTexts(this.bundle);
-        System.out.println("all texts set with new bundle");
+        this.settingsViewControl.setTexts(this.bundle);
     }
 }
