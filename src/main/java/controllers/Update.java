@@ -8,8 +8,17 @@ import org.json.JSONObject;
 
 import java.io.File;
 
+/**
+ * Used to update restaurant data on database manually
+ */
+
 public class Update {
 
+    /**
+     * Used to read JSON file including restaurant data
+     * Adds restaurant to database
+     * @throws Exception
+     */
     private static void readJSON() throws Exception {
 
         // HOX HIBERNATE UPDATE VS. CREATE & AUTH
@@ -46,10 +55,12 @@ public class Update {
 
     }
 
+    /**
+     * Used to update restaurant data on database manually
+     * @return true if update was successful
+     */
     public static boolean updateRestaurantData() {
         boolean success = false;
-        //      "lat": 65.007202,
-        //      "lng": 25.518100
 
         RestaurantDAO dao = new RestaurantDAO();
         Restaurant restaurant = new Restaurant(142, 65.007202, 25.518100);
@@ -61,8 +72,10 @@ public class Update {
         return success;
     }
 
+    /**
+     * Program to execute manual modifications to database
+     */
     public static void main(String args[]) throws Exception {
-
         System.out.println(updateRestaurantData());
 //        readJSON();
     }
