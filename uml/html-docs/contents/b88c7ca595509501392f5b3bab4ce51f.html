@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>BsonDocumentManager</title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic|Source+Code+Pro:300,400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../assets/css/bootstrap.css">
+<link rel="stylesheet" href="../assets/css/jquery.bonsai.css">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/icon-font/icons.css">
+<script type="text/javascript" src="../assets/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="../assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.bonsai.js"></script>
+
+  </head>
+  <body>
+    <div>
+
+      <!-- Name Title -->
+
+      <h1>BsonDocumentManager</h1>
+
+      <!-- Type and Stereotype -->
+
+      <section style="margin-top: .5em;">
+        <span class="alert alert-info">
+          <span class="node-icon staruml-icon icon-UMLClass"></span>
+          UMLClass
+        </span>
+        
+      </section>
+
+      <!-- Path -->
+
+      <section style="margin-top: 10px">
+        
+        
+        
+          
+          <span class="label label-info"><a href='cf9c8b720f3815adeccaf3ef6e48c6c4.html'><span class='node-icon staruml-icon icon-Project'></span>safkaaSTNA</a></span>
+        
+          <span>::</span>
+          <span class="label label-info"><a href='75e5f154ff5eacafb063da34fcb45cbe.html'><span class='node-icon staruml-icon icon-UMLModel'></span>Model</a></span>
+        
+          <span>::</span>
+          <span class="label label-info"><a href='7ab8d097d5f739624a3600f7b5c86649.html'><span class='node-icon staruml-icon icon-UMLPackage'></span>model</a></span>
+        
+          <span>::</span>
+          <span class="label label-info"><a href='b88c7ca595509501392f5b3bab4ce51f.html'><span class='node-icon staruml-icon icon-UMLClass'></span>BsonDocumentManager</a></span>
+        
+      </section>
+
+      <!-- Diagram -->
+
+      
+
+      <!-- Description -->
+
+      
+      <section>
+        <h3>Description</h3>
+        <div>
+          
+            <span class="label label-info">none</span>
+          
+        </div>
+      </section>
+      
+
+      <!-- Specification -->
+
+      
+
+      <!-- Directed Relationship -->
+
+      
+
+      <!-- Undirected Relationship -->
+
+      
+
+      <!-- Classifier -->
+
+      
+        
+        
+
+
+        
+        
+<section class="element-list">
+    <h3>Specialized Elements</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='3c12c39955dbb8b1e77bc6f21d05b93d.html'><span class='node-icon staruml-icon icon-UMLClass'></span>OfflineDatabase</a></li>
+        
+        <li><a href='b7a5f60a92275718eb0c1b4a19602018.html'><span class='node-icon staruml-icon icon-UMLClass'></span>Restaurant</a></li>
+        
+    </ul>
+</section>
+
+
+
+        
+        
+
+
+        
+        
+
+
+        
+        
+
+      
+
+      <!-- Interface -->
+
+      
+
+      <!-- Component -->
+
+      
+
+      <!-- Node -->
+
+      
+
+      <!-- Actor -->
+
+      
+
+      <!-- Use Case -->
+
+      
+
+      <!-- Template Parameters -->
+
+      
+
+      <!-- Literals -->
+
+      
+
+      <!-- Attributes -->
+
+      
+
+      <!-- Operations -->
+
+      
+      <section>
+        <h3>Operations</h3>
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th>Visibility</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+          
+          <tr>
+            <td>protected</td>
+            <td><a href="f9a9af77cc80846f1a5b5210d8a0fc55.html">restaurantToDoc(res: Restaurant): Document</a></td>
+            <td><p>Converts a single restaurant object to mongodb document
+@param Restaurant object
+@return mongoDB document version of restaurant</p></td>
+          </tr>
+          
+          <tr>
+            <td>protected</td>
+            <td><a href="be39ea6b2651a8338d0d93799f1413e9.html">docToRestaurant(doc: Document): Restaurant</a></td>
+            <td><p>Converts single mongodb document to restaurant object
+@param Document
+@return Restaurant</p></td>
+          </tr>
+          
+          <tr>
+            <td>protected</td>
+            <td><a href="a1d5acf7a9004d9fd5af5aacc1df65e4.html">setRestaurantFromDoc(doc: Document, res: Restaurant): void</a></td>
+            <td><p>Converts single mongodb document to restaurant object
+@param Document
+@return Restaurant</p></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="974b13403afcebeb06ba20802a849fe2.html">createRestaurantsList(restaurantJsonStrings: String): null</a></td>
+            <td><p>Uses BSON document class to parse its toJson output into documents
+Then returns the documents as restaurant objects
+@param List&lt;String&gt; BSON document toJson output strings list
+@return List&lt;Restaurant&gt; normal restaurant array</p></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="5439e01f2fc28c7a1e87f35f69cb6537.html">createRestaurantsJson(restaurants): String</a></td>
+            <td><p>Uses BSON document classes toJson ability to create json strings
+@param List&lt;Restaurant&gt;
+@return List&lt;String&gt; restaurants in json string</p></td>
+          </tr>
+          
+        </table>
+      </section>
+      
+
+      <!-- Receptions -->
+
+      
+
+      <!-- Extension Points -->
+
+      
+
+      <!-- Parameters -->
+
+      
+
+      <!-- Diagrams -->
+
+      
+      
+
+      <!-- Behavior -->
+
+      
+
+      <!-- Action -->
+
+      
+
+      <!-- Interaction -->
+
+      
+
+      <!-- CombinedFragment -->
+
+      
+
+      <!-- Activity -->
+
+      
+
+      <!-- State Machine -->
+
+      
+
+      <!-- State Machine -->
+
+      
+
+      <!-- State -->
+
+      
+
+      <!-- Vertex -->
+
+      
+
+      <!-- Transition -->
+
+      
+
+      <!-- Data Model (ERD) -->
+
+      
+
+      <!-- Columns (ERD) -->
+
+      
+
+      <!-- Related Entities (ERD) -->
+
+      
+
+      <!-- Data Flows (DFD) -->
+
+      
+
+      <!-- Flows (Flowchart) -->
+
+      
+
+      <!-- Properties -->
+
+      <section>
+        <h3>Properties</h3>
+        
+        <table class="table table-striped table-bordered">
+    <tr>
+        <th width="50%">Name</th>
+        <th width="50%">Value</th>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>name</td>
+        <td>BsonDocumentManager</td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>stereotype</td>
+        <td><span class='label label-info'>null</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>visibility</td>
+        <td>public</td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>isAbstract</td>
+        <td><span class='label label-info'>true</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isFinalSpecialization</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isLeaf</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isActive</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+</table>                
+
+      </section>
+
+      <!-- Tags -->
+
+      
+
+      <!-- Constraints, Dependencies, Dependants -->
+
+      
+        
+        
+
+
+        
+        
+
+
+        
+        
+
+      
+
+      <!-- Relationships -->
+
+      
+      
+<section class="element-list">
+    <h3>Relationships</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='2b99cf0acb62ea123b6212ed29307e73.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(BsonDocumentManager—Restaurant)</a></li>
+        
+        <li><a href='742fa584e5a5308255f2cfc5c1592a36.html'><span class='node-icon staruml-icon icon-UMLGeneralization'></span>(OfflineDatabase→BsonDocumentManager)</a></li>
+        
+        <li><a href='53eef9c4f42bd830c3afe001782f0e2f.html'><span class='node-icon staruml-icon icon-UMLGeneralization'></span>(Restaurant→BsonDocumentManager)</a></li>
+        
+        <li><a href='bf4798ac622f7a4d2740a3423dffffce.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Document—BsonDocumentManager)</a></li>
+        
+    </ul>
+</section>
+
+
+
+      <!-- Owned Elements -->
+
+      
+      
+<section class="element-list">
+    <h3>Owned Elements</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='2b99cf0acb62ea123b6212ed29307e73.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(BsonDocumentManager—Restaurant)</a></li>
+        
+    </ul>
+</section>
+
+
+
+    </div>
+  </body>
+</html>

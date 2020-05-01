@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>RestaurantDAO</title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic|Source+Code+Pro:300,400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../assets/css/bootstrap.css">
+<link rel="stylesheet" href="../assets/css/jquery.bonsai.css">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/icon-font/icons.css">
+<script type="text/javascript" src="../assets/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="../assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.bonsai.js"></script>
+
+  </head>
+  <body>
+    <div>
+
+      <!-- Name Title -->
+
+      <h1>RestaurantDAO</h1>
+
+      <!-- Type and Stereotype -->
+
+      <section style="margin-top: .5em;">
+        <span class="alert alert-info">
+          <span class="node-icon staruml-icon icon-UMLClass"></span>
+          UMLClass
+        </span>
+        
+      </section>
+
+      <!-- Path -->
+
+      <section style="margin-top: 10px">
+        
+        
+        
+          
+          <span class="label label-info"><a href='cf9c8b720f3815adeccaf3ef6e48c6c4.html'><span class='node-icon staruml-icon icon-Project'></span>safkaaSTNA</a></span>
+        
+          <span>::</span>
+          <span class="label label-info"><a href='75e5f154ff5eacafb063da34fcb45cbe.html'><span class='node-icon staruml-icon icon-UMLModel'></span>Model</a></span>
+        
+          <span>::</span>
+          <span class="label label-info"><a href='7ab8d097d5f739624a3600f7b5c86649.html'><span class='node-icon staruml-icon icon-UMLPackage'></span>model</a></span>
+        
+          <span>::</span>
+          <span class="label label-info"><a href='b7457fbb434fe277ff63e2d5d8635874.html'><span class='node-icon staruml-icon icon-UMLClass'></span>RestaurantDAO</a></span>
+        
+      </section>
+
+      <!-- Diagram -->
+
+      
+
+      <!-- Description -->
+
+      
+      <section>
+        <h3>Description</h3>
+        <div>
+          
+            <p>Data Access Object class for Restaurants Handles CRUD
+(Create-Read-Update-Delete) operations for Restaurant Objects</p>
+          
+        </div>
+      </section>
+      
+
+      <!-- Specification -->
+
+      
+
+      <!-- Directed Relationship -->
+
+      
+
+      <!-- Undirected Relationship -->
+
+      
+
+      <!-- Classifier -->
+
+      
+        
+        
+<section class="element-list">
+    <h3>Generalized Elements</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='800d1b50a0958bc8c668776074da5b62.html'><span class='node-icon staruml-icon icon-UMLClass'></span>OnlineDatabase</a></li>
+        
+    </ul>
+</section>
+
+
+
+        
+        
+
+
+        
+        
+
+
+        
+        
+
+
+        
+        
+
+      
+
+      <!-- Interface -->
+
+      
+
+      <!-- Component -->
+
+      
+
+      <!-- Node -->
+
+      
+
+      <!-- Actor -->
+
+      
+
+      <!-- Use Case -->
+
+      
+
+      <!-- Template Parameters -->
+
+      
+
+      <!-- Literals -->
+
+      
+
+      <!-- Attributes -->
+
+      
+      <section>
+        <h3>Attributes</h3>
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th>Visibility</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          
+          <tr>
+            <td>package</td>
+            <td><a href="43fcb7c69c3d00db20b29a9798c4f9e1.html">sessionFactory</a></td>
+            <td><a href='c6f527accb5352ee7249aad01e40786c.html'>SessionFactory</a></td>
+            <td></td>
+          </tr>
+          
+        </table>
+      </section>
+      
+
+      <!-- Operations -->
+
+      
+      <section>
+        <h3>Operations</h3>
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th>Visibility</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="0d3704114f4b74b597c8f0ff25737958.html">RestaurantDAO()</a></td>
+            <td><p>Constructor for class Initializes database connection</p></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="5b65797f520e038f4b4daaeb76da1c1e.html">RestaurantDAO(sessionFactory: SessionFactory)</a></td>
+            <td><p>Needed only in unit testing where mock objects are used
+@param sessionFactory - takes a sessionFactory as an argument so that
+database connection is NOT created</p></td>
+          </tr>
+          
+          <tr>
+            <td>protected</td>
+            <td><a href="0b0a6daf3e72a7748586aabc19aaa2ef.html">finalize(): void</a></td>
+            <td><p>Finalize method takes care of closing the sessionFactory after program is
+closed</p></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="54b2b6424d71ca3487da5084e4f74be2.html">createRestaurant(restaurant: Restaurant): boolean</a></td>
+            <td><p>Creates a new restaurant to database
+@param restaurant - Restaurant to be added to database
+@return true if operation was successful</p></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="23250688f66125077d0d3969a8e48b66.html">updateRestaurant(restaurant: Restaurant): boolean</a></td>
+            <td><p>Updates a certain restaurants location (latitude and longitude) information
+on database
+@param restaurant - Restaurant to be modified on database
+@return true if operation was successful</p></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="c643b499a13ba5825915f09cb538db1d.html">deleteRestaurant(id: int): boolean</a></td>
+            <td><p>Deletes restaurant from database permanently
+@param id - Restaurant is searched from database with id number
+@return true if operation was successful</p></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="1b6947de9720d3aee587cea6ca81a8e9.html">downloadRestaurants(): null</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="a2d058a8005a9f616a005d2fd56c9cbe.html">uploadRestaurants(restaurantsFromDb): boolean</a></td>
+            <td></td>
+          </tr>
+          
+        </table>
+      </section>
+      
+
+      <!-- Receptions -->
+
+      
+
+      <!-- Extension Points -->
+
+      
+
+      <!-- Parameters -->
+
+      
+
+      <!-- Diagrams -->
+
+      
+      
+
+      <!-- Behavior -->
+
+      
+
+      <!-- Action -->
+
+      
+
+      <!-- Interaction -->
+
+      
+
+      <!-- CombinedFragment -->
+
+      
+
+      <!-- Activity -->
+
+      
+
+      <!-- State Machine -->
+
+      
+
+      <!-- State Machine -->
+
+      
+
+      <!-- State -->
+
+      
+
+      <!-- Vertex -->
+
+      
+
+      <!-- Transition -->
+
+      
+
+      <!-- Data Model (ERD) -->
+
+      
+
+      <!-- Columns (ERD) -->
+
+      
+
+      <!-- Related Entities (ERD) -->
+
+      
+
+      <!-- Data Flows (DFD) -->
+
+      
+
+      <!-- Flows (Flowchart) -->
+
+      
+
+      <!-- Properties -->
+
+      <section>
+        <h3>Properties</h3>
+        
+        <table class="table table-striped table-bordered">
+    <tr>
+        <th width="50%">Name</th>
+        <th width="50%">Value</th>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>name</td>
+        <td>RestaurantDAO</td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>stereotype</td>
+        <td><span class='label label-info'>null</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>visibility</td>
+        <td>public</td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>isAbstract</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isFinalSpecialization</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isLeaf</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isActive</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+</table>                
+
+      </section>
+
+      <!-- Tags -->
+
+      
+
+      <!-- Constraints, Dependencies, Dependants -->
+
+      
+        
+        
+
+
+        
+        
+
+
+        
+        
+
+      
+
+      <!-- Relationships -->
+
+      
+      
+<section class="element-list">
+    <h3>Relationships</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='509b4d337d5cad17eefe4fcf8a4d2fc8.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Update—RestaurantDAO)</a></li>
+        
+        <li><a href='8a52bf1b67692c3d79aa1e93efe225bb.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Update—RestaurantDAO)</a></li>
+        
+        <li><a href='9b1a75f4e7bd6a1448c3606858d0f31f.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Restaurant—RestaurantDAO)</a></li>
+        
+        <li><a href='3d526b308d504667818678fe74d95cf4.html'><span class='node-icon staruml-icon icon-UMLGeneralization'></span>(RestaurantDAO→OnlineDatabase)</a></li>
+        
+        <li><a href='894b0f135a6f2c785f73083cf7ed2420.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(RestaurantDAO—Restaurant)</a></li>
+        
+        <li><a href='3a139c7abe18a468b71bb4c5e6796f1d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(SessionFactory—RestaurantDAO)</a></li>
+        
+    </ul>
+</section>
+
+
+
+      <!-- Owned Elements -->
+
+      
+      
+<section class="element-list">
+    <h3>Owned Elements</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='3d526b308d504667818678fe74d95cf4.html'><span class='node-icon staruml-icon icon-UMLGeneralization'></span>(RestaurantDAO→OnlineDatabase)</a></li>
+        
+        <li><a href='894b0f135a6f2c785f73083cf7ed2420.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(RestaurantDAO—Restaurant)</a></li>
+        
+    </ul>
+</section>
+
+
+
+    </div>
+  </body>
+</html>

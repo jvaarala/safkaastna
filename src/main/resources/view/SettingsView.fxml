@@ -23,7 +23,7 @@
         </items>
     </ComboBox>
    <Text fx:id="refreshRestText" layoutX="41.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Refresh restaurants from database" />
-    <Button fx:id="refreshButton" layoutX="42.0" layoutY="344.0" mnemonicParsing="false" onAction="#Refresh" text="Update restaurants" />
+    <Button fx:id="refreshButton" layoutX="42.0" layoutY="344.0" mnemonicParsing="false" onAction="#handleRefreshButton" text="Update restaurants" />
    <Button fx:id="saveSettingsButton" layoutX="284.0" layoutY="443.0" mnemonicParsing="false" onAction="#saveSettings" text="Save" />
 
     <ImageView fx:id="closeIcon" fitHeight="32.0" fitWidth="32.0" focusTraversable="true" onMouseClicked="#closeSettings" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">

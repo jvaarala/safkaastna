@@ -63,7 +63,7 @@ public class SettingsViewController {
      * @param actionEvent
      */
     @FXML
-    public void Refresh(ActionEvent actionEvent) {
+    protected void handleRefreshButton(ActionEvent actionEvent) {
         mainApp.updateRestaurantsFromDb();
         mainApp.getMainViewControl().updateMainView(mainApp.getRestaurants());
     }
@@ -72,17 +72,17 @@ public class SettingsViewController {
      * Change Buttons for  language selection
      */
     @FXML
-    public void changeFI() {
+    protected void changeFI() {
         this.locale = "fi-FI";
     }
 
     @FXML
-    public void changeENG() {
+    protected void changeENG() {
         this.locale = "en-EN";
     }
 
     @FXML
-    public void changeSWE() {
+    protected void changeSWE() {
         this.locale = "se-SE";
     }
 

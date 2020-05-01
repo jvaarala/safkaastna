@@ -59,6 +59,15 @@ public class MainViewController implements Initializable, MapComponentInitialize
     private String textInSearchField;
     private Restaurant nearest;
     private double[] defaultCity;
+    /**
+     * Google maps api key is written on a separate, local file
+     * Dotenv handles retrieving apikey and it is stored on a variable
+     */
+    private Dotenv dotenv = Dotenv
+            .configure()
+            .ignoreIfMissing()
+            .load();
+    private String api = dotenv.get("APIKEY");
 
     /**
      * Used to give a reference to the mainApp for this controller.
@@ -69,16 +78,6 @@ public class MainViewController implements Initializable, MapComponentInitialize
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
-
-    /**
-     * Google maps api key is written on a separate, local file
-     * Dotenv handles retrieving apikey and it is stored on a variable
-     */
-    private Dotenv dotenv = Dotenv
-            .configure()
-            .ignoreIfMissing()
-            .load();
-    private String api = dotenv.get("APIKEY");
 
     /**
      * Adds map to mapcontainer and sets api key for google api calls.

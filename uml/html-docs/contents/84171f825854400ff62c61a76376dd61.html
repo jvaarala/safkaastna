@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>RestaurantMongoDB</title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic|Source+Code+Pro:300,400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../assets/css/bootstrap.css">
+<link rel="stylesheet" href="../assets/css/jquery.bonsai.css">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/icon-font/icons.css">
+<script type="text/javascript" src="../assets/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="../assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.bonsai.js"></script>
+
+  </head>
+  <body>
+    <div>
+
+      <!-- Name Title -->
+
+      <h1>RestaurantMongoDB</h1>
+
+      <!-- Type and Stereotype -->
+
+      <section style="margin-top: .5em;">
+        <span class="alert alert-info">
+          <span class="node-icon staruml-icon icon-UMLClass"></span>
+          UMLClass
+        </span>
+        
+      </section>
+
+      <!-- Path -->
+
+      <section style="margin-top: 10px">
+        
+        
+        
+          
+          <span class="label label-info"><a href='cf9c8b720f3815adeccaf3ef6e48c6c4.html'><span class='node-icon staruml-icon icon-Project'></span>safkaaSTNA</a></span>
+        
+          <span>::</span>
+          <span class="label label-info"><a href='75e5f154ff5eacafb063da34fcb45cbe.html'><span class='node-icon staruml-icon icon-UMLModel'></span>Model</a></span>
+        
+          <span>::</span>
+          <span class="label label-info"><a href='7ab8d097d5f739624a3600f7b5c86649.html'><span class='node-icon staruml-icon icon-UMLPackage'></span>model</a></span>
+        
+          <span>::</span>
+          <span class="label label-info"><a href='84171f825854400ff62c61a76376dd61.html'><span class='node-icon staruml-icon icon-UMLClass'></span>RestaurantMongoDB</a></span>
+        
+      </section>
+
+      <!-- Diagram -->
+
+      
+
+      <!-- Description -->
+
+      
+      <section>
+        <h3>Description</h3>
+        <div>
+          
+            <span class="label label-info">none</span>
+          
+        </div>
+      </section>
+      
+
+      <!-- Specification -->
+
+      
+
+      <!-- Directed Relationship -->
+
+      
+
+      <!-- Undirected Relationship -->
+
+      
+
+      <!-- Classifier -->
+
+      
+        
+        
+<section class="element-list">
+    <h3>Generalized Elements</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='800d1b50a0958bc8c668776074da5b62.html'><span class='node-icon staruml-icon icon-UMLClass'></span>OnlineDatabase</a></li>
+        
+    </ul>
+</section>
+
+
+
+        
+        
+
+
+        
+        
+
+
+        
+        
+
+
+        
+        
+
+      
+
+      <!-- Interface -->
+
+      
+
+      <!-- Component -->
+
+      
+
+      <!-- Node -->
+
+      
+
+      <!-- Actor -->
+
+      
+
+      <!-- Use Case -->
+
+      
+
+      <!-- Template Parameters -->
+
+      
+
+      <!-- Literals -->
+
+      
+
+      <!-- Attributes -->
+
+      
+      <section>
+        <h3>Attributes</h3>
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th>Visibility</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          
+          <tr>
+            <td>private</td>
+            <td><a href="ed4d63d943aefe7284d1b82d3477da8e.html">MongoURI</a></td>
+            <td>String</td>
+            <td><p>Java Driver 3.4 or later connection string from MongoDB Atlas. Newer one
+didnt work for some reason. ALWAYS start new connection and close connection
+on proccess completion, We have limited number of simultaneous connections.</p></td>
+          </tr>
+          
+          <tr>
+            <td>private</td>
+            <td><a href="bbbddff5fd206edde8e5e95f08c8f21b.html">dbName</a></td>
+            <td>String</td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>private</td>
+            <td><a href="d005e2de44a3f3adf5efe4218568489a.html">collectionName</a></td>
+            <td>String</td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>private</td>
+            <td><a href="cc52f00fd677862d4928faf9b3495891.html">isAdmin</a></td>
+            <td>boolean</td>
+            <td></td>
+          </tr>
+          
+        </table>
+      </section>
+      
+
+      <!-- Operations -->
+
+      
+      <section>
+        <h3>Operations</h3>
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th>Visibility</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="b641b3b09e4e8ea21ce8b37b03367fac.html">RestaurantMongoDB()</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="812b8c33a9a181d5f2556c60b28e1108.html">RestaurantMongoDB(userType: String)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>private</td>
+            <td><a href="b8c03c241d51039d49cf58982479eb7d.html">createMongoURI(user: String, pass: String): String</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="64a7b341e66a0770538f7e5d21b76ce7.html">uploadRestaurants(restaurantsFromDb): boolean</a></td>
+            <td><p>Used to upload restaurant array to MongoDB
+@param restaurantsFromDb
+@return boolean - true if successful upload, false if partial or complete
+failure</p></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="d3f1cc648e648d67e494bc0d4f1712fd.html">downloadRestaurants(): null</a></td>
+            <td><p>Downloads all Restaurants in MongoDB Probably throws exception when no
+Internet or when data is in invalid format
+@return ArrayList&lt;Restaurant&gt;</p></td>
+          </tr>
+          
+        </table>
+      </section>
+      
+
+      <!-- Receptions -->
+
+      
+
+      <!-- Extension Points -->
+
+      
+
+      <!-- Parameters -->
+
+      
+
+      <!-- Diagrams -->
+
+      
+      
+
+      <!-- Behavior -->
+
+      
+
+      <!-- Action -->
+
+      
+
+      <!-- Interaction -->
+
+      
+
+      <!-- CombinedFragment -->
+
+      
+
+      <!-- Activity -->
+
+      
+
+      <!-- State Machine -->
+
+      
+
+      <!-- State Machine -->
+
+      
+
+      <!-- State -->
+
+      
+
+      <!-- Vertex -->
+
+      
+
+      <!-- Transition -->
+
+      
+
+      <!-- Data Model (ERD) -->
+
+      
+
+      <!-- Columns (ERD) -->
+
+      
+
+      <!-- Related Entities (ERD) -->
+
+      
+
+      <!-- Data Flows (DFD) -->
+
+      
+
+      <!-- Flows (Flowchart) -->
+
+      
+
+      <!-- Properties -->
+
+      <section>
+        <h3>Properties</h3>
+        
+        <table class="table table-striped table-bordered">
+    <tr>
+        <th width="50%">Name</th>
+        <th width="50%">Value</th>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>name</td>
+        <td>RestaurantMongoDB</td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>stereotype</td>
+        <td><span class='label label-info'>null</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>visibility</td>
+        <td>public</td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>isAbstract</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isFinalSpecialization</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isLeaf</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isActive</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+</table>                
+
+      </section>
+
+      <!-- Tags -->
+
+      
+
+      <!-- Constraints, Dependencies, Dependants -->
+
+      
+        
+        
+
+
+        
+        
+
+
+        
+        
+
+      
+
+      <!-- Relationships -->
+
+      
+      
+<section class="element-list">
+    <h3>Relationships</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='359d12a2764dbad40e61d45ebc3ca134.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(MainApp—RestaurantMongoDB)</a></li>
+        
+        <li><a href='cc824c97a2f94c8b0f57dc2668bb9a84.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Restaurant—RestaurantMongoDB)</a></li>
+        
+        <li><a href='9430528886fd0ee0af9e6dce61fc0a9a.html'><span class='node-icon staruml-icon icon-UMLGeneralization'></span>(RestaurantMongoDB→OnlineDatabase)</a></li>
+        
+        <li><a href='811fe5226b39a6194660e298b3818f45.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(RestaurantMongoDB—MainApp)</a></li>
+        
+        <li><a href='1aff1da03c7f2ef7c2c66e9fc00babd9.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(RestaurantMongoDB—Restaurant)</a></li>
+        
+        <li><a href='8e5395d4792a04ae033467bd9bb60afd.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(RestaurantMongoDB—Document)</a></li>
+        
+        <li><a href='2b7188e6612e2334b7ed3726d10bacde.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Dotenv—RestaurantMongoDB)</a></li>
+        
+    </ul>
+</section>
+
+
+
+      <!-- Owned Elements -->
+
+      
+      
+<section class="element-list">
+    <h3>Owned Elements</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='9430528886fd0ee0af9e6dce61fc0a9a.html'><span class='node-icon staruml-icon icon-UMLGeneralization'></span>(RestaurantMongoDB→OnlineDatabase)</a></li>
+        
+        <li><a href='811fe5226b39a6194660e298b3818f45.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(RestaurantMongoDB—MainApp)</a></li>
+        
+        <li><a href='1aff1da03c7f2ef7c2c66e9fc00babd9.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(RestaurantMongoDB—Restaurant)</a></li>
+        
+        <li><a href='8e5395d4792a04ae033467bd9bb60afd.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(RestaurantMongoDB—Document)</a></li>
+        
+    </ul>
+</section>
+
+
+
+    </div>
+  </body>
+</html>

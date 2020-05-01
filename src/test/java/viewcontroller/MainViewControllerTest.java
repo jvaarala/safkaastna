@@ -20,6 +20,7 @@ import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.framework.junit5.Start;
 import org.testfx.matcher.base.ParentMatchers;
 import org.testfx.matcher.control.LabeledMatchers;
@@ -38,7 +39,7 @@ import static org.mockito.Mockito.when;
 /**
  * Test class for MainViewController - Does not work with GMapsFX
  */
-class MainViewControllerTest {
+class MainViewControllerTest extends ApplicationTest {
     private BorderPane mainScreen;
     private Stage primaryStage;
     private Scene scene;
@@ -57,11 +58,8 @@ class MainViewControllerTest {
      * Initialize JavaFX-screen
      */
     @BeforeAll
-    private void init() {
-        mainScreen = new BorderPane();
-        mainScreen = new BorderPane();
-        scene = new Scene(mainScreen);
-        scene.getStylesheets().add("Styles.css");
+    public void init() {
+
     }
 
     /**
@@ -70,7 +68,9 @@ class MainViewControllerTest {
      */
     // This works like beforeEach
     @Start
-    private void start(Stage ps) {
+    public void start(Stage ps) {
+        mainScreen = new BorderPane();
+
         System.out.println("start " + i);
         i++;
         primaryStage = ps;
@@ -101,6 +101,8 @@ class MainViewControllerTest {
 
         mainScreen.setCenter(mapPane);
         mainScreen.setRight(sidebar);
+        scene = new Scene(mainScreen);
+        scene.getStylesheets().add("Styles.css");
 
         primaryStage.show();
         primaryStage.toFront();
@@ -144,7 +146,6 @@ class MainViewControllerTest {
     /**
      * Test to check if scene contains button finding the nearest restaurant
      */
-    @Disabled
     @DisplayName("should_contain_nearest_button")
     @Test
     void should_contain_nearest_button() {
@@ -162,7 +163,6 @@ class MainViewControllerTest {
      * Test to check if scene contains input field for search value
      * @param robot
      */
-    @Disabled
     @DisplayName("should_contain_search_box")
     @Test
     void should_contain_search_box(FxRobot robot) {
@@ -173,7 +173,6 @@ class MainViewControllerTest {
     /**
      * Test to check if input field (search) can be filled
      */
-    @Disabled
     @DisplayName("search_box_can_be_filled")
     @Test
     void search_box_can_be_filled() {
@@ -186,7 +185,6 @@ class MainViewControllerTest {
     /**
      * Test to check if scene contains filter button
      */
-    @Disabled
     @DisplayName("should_contain_filter_button")
     @Test
     void should_contain_filter_button() {
@@ -208,7 +206,6 @@ class MainViewControllerTest {
      * Test to check if userLocation is set after filling input field and pressing search button
      * @param robot FxRobot to mock user interactions
      */
-    @Disabled
     @Test
     void should_set_userLocation(FxRobot robot) {
         TextField textField = (TextField) scene.lookup("#searchField");
@@ -230,7 +227,6 @@ class MainViewControllerTest {
      */
     // Does not work, since GMapsFX problems
     // netscape.javascript.JSException: ReferenceError: Can't find variable: loadMapLibrary
-    @Disabled
     @Test
     void marker_test() {
         MainViewController mvc = new MainViewController();
