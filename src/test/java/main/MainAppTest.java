@@ -13,9 +13,9 @@ import org.testfx.framework.junit5.Start;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import view.MainViewController;
-import view.OptionsBarViewController;
-import view.SideBarViewController;
+import viewcontroller.MainViewController;
+import viewcontroller.OptionsBarViewController;
+import viewcontroller.SideBarViewController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -55,7 +55,7 @@ class MainAppTest {
 
         // SIDEBAR
         FXMLLoader loader1 = new FXMLLoader();
-        URL connector = getClass().getResource("/SideBarView.fxml");
+        URL connector = getClass().getResource("/view/SideBarView.fxml");
         loader1.setLocation(connector);
         try {
             sidebar = (AnchorPane) loader1.load();
@@ -68,7 +68,7 @@ class MainAppTest {
 
         // MAIN VIEW
         FXMLLoader loader2 = new FXMLLoader();
-        URL centerMap = getClass().getResource("/MainView.fxml");
+        URL centerMap = getClass().getResource("/view/MainView.fxml");
         loader2.setLocation(centerMap);
         try {
             AnchorPane mapPane = (AnchorPane) loader2.load();
@@ -80,7 +80,7 @@ class MainAppTest {
         }
         // OPTIONBAR
         FXMLLoader loader3 = new FXMLLoader();
-        URL toolbarBottom = getClass().getResource("/OptionsBarView.fxml");
+        URL toolbarBottom = getClass().getResource("/view/OptionsBarView.fxml");
         loader3.setLocation(toolbarBottom);
         try {
             optionBar = (ToolBar) loader3.load();

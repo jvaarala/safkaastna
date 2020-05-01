@@ -1,8 +1,6 @@
-package controllers;
+package model;
 
 import java.util.List;
-
-import model.Restaurant;
 
 public abstract class OnlineDatabase implements RestaurantDatabase {
 

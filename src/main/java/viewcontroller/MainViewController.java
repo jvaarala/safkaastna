@@ -1,4 +1,4 @@
-package view;
+package viewcontroller;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;

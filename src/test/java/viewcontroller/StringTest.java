@@ -1,10 +1,9 @@
-package view;
+package viewcontroller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
 
 /**
  * Test MainViewController formatString method for addresses

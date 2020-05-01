@@ -8,8 +8,8 @@ import java.util.ResourceBundle;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
-import controllers.RestaurantDatabase;
-import controllers.RestaurantMongoDB;
+import model.RestaurantDatabase;
+import model.RestaurantMongoDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,10 +17,10 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Restaurant;
-import view.MainViewController;
-import view.OptionsBarViewController;
-import view.SettingsViewController;
-import view.SideBarViewController;
+import viewcontroller.MainViewController;
+import viewcontroller.OptionsBarViewController;
+import viewcontroller.SettingsViewController;
+import viewcontroller.SideBarViewController;
 
 
 public class MainApp extends Application {
@@ -93,7 +93,7 @@ public class MainApp extends Application {
      */
     private void initOptionsBar() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/OptionsBarView.fxml"));
+        loader.setLocation(getClass().getResource("/view/OptionsBarView.fxml"));
 
         try {
             ToolBar optionsBar = loader.load();
@@ -112,7 +112,7 @@ public class MainApp extends Application {
      */
     private void initSideBar() {
         FXMLLoader loader = new FXMLLoader();
-        URL connector = getClass().getResource("/SideBarView.fxml");
+        URL connector = getClass().getResource("/view/SideBarView.fxml");
 
         loader.setLocation(connector);
 
@@ -132,7 +132,7 @@ public class MainApp extends Application {
      */
     public void initMainView() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/MainView.fxml"));
+        loader.setLocation(getClass().getResource("/view/MainView.fxml"));
         try {
             view_main = loader.load();
             this.mainViewControl = loader.getController();
@@ -147,7 +147,7 @@ public class MainApp extends Application {
      */
     public void initSettingsView() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/SettingsView.fxml"));
+        loader.setLocation(getClass().getResource("/view/SettingsView.fxml"));
         try {
             view_settings = loader.load();
             this.settingsViewControl = loader.getController();

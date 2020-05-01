@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="settingsView" prefHeight="509.0" prefWidth="431.0" stylesheets="@Styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SettingsViewController">
+<AnchorPane fx:id="settingsView" prefHeight="509.0" prefWidth="431.0" stylesheets="@../Styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="viewcontroller.SettingsViewController">
    <Text fx:id="selectLangText" layoutX="41.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Language:" />
     <Button fx:id="localeEN" layoutX="41.0" layoutY="101.0" mnemonicParsing="false" onAction="#changeENG" prefWidth="100.0" text="ENG" />
     <Button fx:id="localeSV" layoutX="148.0" layoutY="101.0" mnemonicParsing="false" onAction="#changeSWE" prefWidth="100.0" text="SV" />
@@ -28,7 +28,7 @@
 
     <ImageView fx:id="closeIcon" fitHeight="32.0" fitWidth="32.0" focusTraversable="true" onMouseClicked="#closeSettings" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
         <image>
-            <Image url="@icons/png/237-cancel.png" />
+            <Image url="@../icons/png/237-cancel.png" />
         </image>
         <cursor>
             <Cursor fx:constant="HAND" />

@@ -6,8 +6,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.junit.jupiter.api.*;
 
-import controllers.RestaurantDAO;
-
 import java.util.Arrays;
 import java.util.List;
 

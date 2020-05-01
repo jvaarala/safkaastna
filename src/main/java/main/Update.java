@@ -1,7 +1,8 @@
-package controllers;
+package main;
 
 import model.Restaurant;
 
+import model.RestaurantDAO;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package controllers;
+package model;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
-
-import model.BsonDocumentManager;
-import model.Restaurant;
 
 public class OfflineDatabase extends BsonDocumentManager implements RestaurantDatabase {
 

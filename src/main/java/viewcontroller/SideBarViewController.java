@@ -1,4 +1,4 @@
-package view;
+package viewcontroller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
@@ -18,7 +18,7 @@ public class SideBarViewController {
     private MainApp mainApp;
 
     @FXML
-    public ImageView closeIcon;
+    private ImageView closeIcon;
     @FXML
     private ImageView headerIcon;
     @FXML

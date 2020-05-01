@@ -1,4 +1,4 @@
-package controllers;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import model.Restaurant;
 
 public class RestaurantMongoDB extends OnlineDatabase {
 

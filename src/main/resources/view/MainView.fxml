@@ -14,7 +14,7 @@
 
 <AnchorPane id="main" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="view.MainViewController">
+            fx:controller="viewcontroller.MainViewController">
     <AnchorPane fx:id="mapContainer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS"/>
     <GridPane prefWidth="240.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="6.0"

@@ -1,4 +1,4 @@
-package view;
+package viewcontroller;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import main.*;
+import main.MainApp;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
@@ -28,9 +28,9 @@ import org.testfx.util.WaitForAsyncUtils;
 import java.io.IOException;
 import java.net.URL;
 
-import static javafx.application.Application.launch;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @Disabled
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -79,7 +79,7 @@ class MainViewControllerTest {
         primaryStage.setScene(scene);
 
         FXMLLoader loader1 = new FXMLLoader();
-        URL centerMap = getClass().getResource("/MainView.fxml");
+        URL centerMap = getClass().getResource("/view/MainView.fxml");
         loader1.setLocation(centerMap);
         System.out.println(loader1.getLocation());
         try {
@@ -90,7 +90,7 @@ class MainViewControllerTest {
             e.printStackTrace();
         }
         FXMLLoader loader2 = new FXMLLoader();
-        URL connector = getClass().getResource("/SideBarView.fxml");
+        URL connector = getClass().getResource("/view/SideBarView.fxml");
         loader2.setLocation(connector);
         try {
             AnchorPane sidebar = (AnchorPane) loader2.load();
