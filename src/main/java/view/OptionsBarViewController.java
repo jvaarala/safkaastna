@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import main.MainApp;
 
 import java.util.ResourceBundle;
@@ -13,11 +12,8 @@ import java.util.ResourceBundle;
 /**
  * OptionsBarController controls connection and help functions, which are used by connection button and help button.
  */
-public class OptionsBarController {
+public class OptionsBarViewController {
 
-    /**
-     * RestaurantsDAO is the database service class Connect and Help buttons.
-     */
     private MainApp mainApp;
 
     @FXML
@@ -37,14 +33,14 @@ public class OptionsBarController {
 
     public void handleSettingsButton(ActionEvent actionEvent) {
         mainApp.sidebarOff();
-        if (MainApp.MAIN_SCREEN.getCenter() == MainApp.VIEW_MAIN) {
-            mainApp.loadMainView(MainApp.VIEW_SETTINGS);
-        } else mainApp.loadMainView(MainApp.VIEW_MAIN);
+        if (MainApp.main_screen.getCenter() == MainApp.view_main) {
+            mainApp.loadMainView(MainApp.view_settings);
+        } else mainApp.loadMainView(MainApp.view_main);
     }
 
     @FXML
     public void handleHelpButton() {
-        popupInfo(mainApp.getBundle().getString("help"), mainApp.getBundle().getString("helpTitle"));
+        popupInfo(mainApp.getTextResourcesBundle().getString("help"), mainApp.getTextResourcesBundle().getString("helpTitle"));
     }
 
     /**

@@ -1,19 +1,8 @@
 package view;
 
-import static org.mockito.Mockito.*;
 
-
-import org.junit.jupiter.api.BeforeEach;
-
-import org.junit.jupiter.api.Test;
-
-import controllers.RestaurantDAO;
-
-
-
-
-class OptionsBarControllerTest {
-	static OptionsBarController controller;
+class OptionsBarViewControllerTest {
+	static OptionsBarViewController controller;
 	static MainViewController pseudoMapControl;
 
 /*	@BeforeEach

@@ -18,33 +18,31 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Restaurant;
 import view.MainViewController;
-import view.OptionsBarController;
+import view.OptionsBarViewController;
 import view.SettingsViewController;
-import view.SideBarController;
+import view.SideBarViewController;
 
 
 public class MainApp extends Application {
 
-    private ResourceBundle bundle;
     private List<Restaurant> restaurantsFromDb;
     private LatLong userLocation;
 
     private Stage primaryStage;
     private AnchorPane sidebar;
 
-    private SideBarController sidebarControl;
-    private OptionsBarController optionsControl;
+    private SideBarViewController sidebarControl;
+    private OptionsBarViewController optionsControl;
     private MainViewController mainViewControl;
     private SettingsViewController settingsViewControl;
 
-    public static BorderPane MAIN_SCREEN;
-    public static AnchorPane VIEW_MAIN;
-    public static AnchorPane VIEW_SETTINGS;
+    public static BorderPane main_screen;
+    public static AnchorPane view_main;
+    public static AnchorPane view_settings;
 
-    // private String languageSelection;
-    private ResourceBundle bundleCities;
-    private ResourceBundle defaultCity;
-    private ResourceBundle defaultLanguage;
+    private ResourceBundle textResourcesBundle;
+    private ResourceBundle cityCoordsBundle;
+    private ResourceBundle defaultCityBundle;
 
     public static void main(String[] args) {
         launch(args);
@@ -59,12 +57,11 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("SafkaaSTNA");
 
-        // this.languageSelection = "en-EN";
-
-        this.defaultLanguage = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag("default"));
-        this.bundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(this.defaultLanguage.getString("Default")));
-        this.bundleCities = ResourceBundle.getBundle("Location", Locale.forLanguageTag("cities"));
-        this.defaultCity = ResourceBundle.getBundle("Location", Locale.forLanguageTag("default"));
+        this.textResourcesBundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(
+                ResourceBundle.getBundle("DefaultLanguage").getString("Default"))
+        );
+        this.cityCoordsBundle = ResourceBundle.getBundle("CityCoords");
+        this.defaultCityBundle = ResourceBundle.getBundle("DefaultCity");
 
         updateRestaurantsFromDb();
 
@@ -74,18 +71,18 @@ public class MainApp extends Application {
         initMainView();
         initSettingsView();
 
-        this.setBundle(this.bundle);
-        this.loadMainView(VIEW_MAIN);
+        this.applyLanguageBundle(this.textResourcesBundle);
+        this.loadMainView(view_main);
     }
 
     /**
      * Initializes the root layout of the application.
      */
     public void initRootLayout() {
-        MAIN_SCREEN = new BorderPane();
+        main_screen = new BorderPane();
         primaryStage.setWidth(1200);
         primaryStage.setHeight(768);
-        Scene scene = new Scene(MAIN_SCREEN);
+        Scene scene = new Scene(main_screen);
         scene.getStylesheets().add("Styles.css");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -96,11 +93,11 @@ public class MainApp extends Application {
      */
     private void initOptionsBar() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/OptionsBar.fxml"));
+        loader.setLocation(getClass().getResource("/OptionsBarView.fxml"));
 
         try {
             ToolBar optionsBar = loader.load();
-            MAIN_SCREEN.setBottom(optionsBar);
+            main_screen.setBottom(optionsBar);
 
             this.optionsControl = loader.getController();
             this.optionsControl.setMainApp(this);
@@ -115,13 +112,13 @@ public class MainApp extends Application {
      */
     private void initSideBar() {
         FXMLLoader loader = new FXMLLoader();
-        URL connector = getClass().getResource("/SideBar.fxml");
+        URL connector = getClass().getResource("/SideBarView.fxml");
 
         loader.setLocation(connector);
 
         try {
             sidebar = loader.load();
-            MAIN_SCREEN.setRight(null);
+            main_screen.setRight(null);
 
             this.sidebarControl = loader.getController();
             this.sidebarControl.setMainApp(this);
@@ -137,7 +134,7 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/MainView.fxml"));
         try {
-            VIEW_MAIN = loader.load();
+            view_main = loader.load();
             this.mainViewControl = loader.getController();
             this.mainViewControl.setMainApp(this);
         } catch (IOException e) {
@@ -152,7 +149,7 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/SettingsView.fxml"));
         try {
-            VIEW_SETTINGS = loader.load();
+            view_settings = loader.load();
             this.settingsViewControl = loader.getController();
             this.settingsViewControl.setMainApp(this);
         } catch (IOException e) {
@@ -164,7 +161,7 @@ public class MainApp extends Application {
      * Initializes the settingsView to mainScreen.
      */
     public void loadMainView(AnchorPane anchorPane) {
-        MAIN_SCREEN.setCenter(anchorPane);
+        main_screen.setCenter(anchorPane);
     }
 
     /**
@@ -179,11 +176,11 @@ public class MainApp extends Application {
         }
     }
 
-    public SideBarController getSidebarControl() {
+    public SideBarViewController getSidebarControl() {
         return sidebarControl;
     }
 
-    public OptionsBarController getOptionsControl() {
+    public OptionsBarViewController getOptionsControl() {
         return optionsControl;
     }
 
@@ -217,34 +214,34 @@ public class MainApp extends Application {
     }
 
     public void sidebarOn() {
-        MAIN_SCREEN.setRight(sidebar);
+        main_screen.setRight(sidebar);
     }
 
     public void sidebarOff() {
-        MAIN_SCREEN.setRight(null);
+        main_screen.setRight(null);
     }
 
-    public ResourceBundle getBundle() {
-        return bundle;
+    public ResourceBundle getTextResourcesBundle() {
+        return textResourcesBundle;
     }
 
     public ResourceBundle getCityBundle() {
-        return bundleCities;
+        return cityCoordsBundle;
     }
 
     public ResourceBundle getDefaultBundle() {
-        return defaultCity;
+        return defaultCityBundle;
     }
 
     public String getDefaultCityName() {
-        return defaultCity.getString("cityName");
+        return defaultCityBundle.getString("cityName");
     }
 
-    public void setBundle(ResourceBundle bundle) {
-        this.bundle = bundle;
-        this.mainViewControl.setTexts(this.bundle);
-        this.sidebarControl.setTexts(this.bundle);
-        this.optionsControl.setTexts(this.bundle);
-        this.settingsViewControl.setTexts(this.bundle);
+    public void applyLanguageBundle(ResourceBundle bundle) {
+        this.textResourcesBundle = bundle;
+        this.mainViewControl.setTexts(this.textResourcesBundle);
+        this.sidebarControl.setTexts(this.textResourcesBundle);
+        this.optionsControl.setTexts(this.textResourcesBundle);
+        this.settingsViewControl.setTexts(this.textResourcesBundle);
     }
 }

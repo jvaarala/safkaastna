@@ -9,13 +9,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import main.*;
-import model.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
@@ -29,8 +27,6 @@ import org.testfx.util.WaitForAsyncUtils;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 
 import static javafx.application.Application.launch;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,7 +45,7 @@ class MainViewControllerTest {
     private MainApp mainAppMock = mock(MainApp.class);
 
     private MainViewController mainViewControl;
-    private SideBarController sideBarController;
+    private SideBarViewController sideBarController;
 
 //    private MainViewController mvMock;
 //    private SideBarController sbMock;
@@ -94,7 +90,7 @@ class MainViewControllerTest {
             e.printStackTrace();
         }
         FXMLLoader loader2 = new FXMLLoader();
-        URL connector = getClass().getResource("/SideBar.fxml");
+        URL connector = getClass().getResource("/SideBarView.fxml");
         loader2.setLocation(connector);
         try {
             AnchorPane sidebar = (AnchorPane) loader2.load();

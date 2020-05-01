@@ -35,6 +35,8 @@ import java.util.ResourceBundle;
  */
 public class MainViewController implements Initializable, MapComponentInitializedListener {
 
+    private MainApp mainApp;
+
     @FXML
     private ListView<String> listViewNames;
     @FXML
@@ -51,26 +53,12 @@ public class MainViewController implements Initializable, MapComponentInitialize
     private GoogleMapView mapView = new GoogleMapView();
     @FXML
     private Button nearestButton;
+
     private GoogleMap map;
     private SearchLogic search = new SearchLogic();
     private String textInSearchField;
     private Restaurant nearest;
     private double[] defaultCity;
-
-    private MainApp mainApp;
-
-    /**
-     * Used to give reference to GoogleMapView and GoogleMap (as mocks)
-     * Used only in tests
-     * @param mapView
-     * @param map
-     */
-    void setGoogleMapStuff(GoogleMapView mapView, GoogleMap map) {
-        this.mapView = mapView;
-        this.map = map;
-        System.out.println(map);
-        System.out.println(mapView);
-    }
 
     /**
      * Used to give a reference to the mainApp for this controller.
@@ -273,9 +261,9 @@ public class MainViewController implements Initializable, MapComponentInitialize
             dialog.initModality(Modality.APPLICATION_MODAL);
             dialog.initOwner(mainApp.getPrimaryStage());
             VBox dialogVbox = new VBox(20);
-            dialogVbox.getChildren().add(new Text(mainApp.getBundle().getString("nearestpopuptext")));
-            TextField startAddress = new TextField(mainApp.getBundle().getString("nearestpopuphint"));
-            Button searchButton = new Button(mainApp.getBundle().getString("nearestpopupbutton"));
+            dialogVbox.getChildren().add(new Text(mainApp.getTextResourcesBundle().getString("nearestpopuptext")));
+            TextField startAddress = new TextField(mainApp.getTextResourcesBundle().getString("nearestpopuphint"));
+            Button searchButton = new Button(mainApp.getTextResourcesBundle().getString("nearestpopupbutton"));
             dialogVbox.getChildren().addAll(startAddress, searchButton);
             Scene dialogScene = new Scene(dialogVbox, 300, 200);
             dialogScene.getStylesheets().add("Styles.css");
@@ -309,12 +297,12 @@ public class MainViewController implements Initializable, MapComponentInitialize
     protected void handleFilterToggle(ActionEvent event) {
         if (filterToggleButton.isSelected()) {
             searchButton.setDisable(true);
-            filterToggleButton.setText(mainApp.getBundle().getString("filtering"));
+            filterToggleButton.setText(mainApp.getTextResourcesBundle().getString("filtering"));
             List<Restaurant> foundRestaurants = search.filter(mainApp.getRestaurants(), searchTextBox.getText());
             updateMainView(foundRestaurants);
         } else {
             searchButton.setDisable(false);
-            filterToggleButton.setText(mainApp.getBundle().getString("filterToggle"));
+            filterToggleButton.setText(mainApp.getTextResourcesBundle().getString("filterToggle"));
             updateMainView(mainApp.getRestaurants());
         }
         searchTextBox.requestFocus();
@@ -447,6 +435,19 @@ public class MainViewController implements Initializable, MapComponentInitialize
         } else {
             filterToggleButton.setText(bundle.getString("filterToggle"));
         }
+    }
+
+    /**
+     * Used to give reference to GoogleMapView and GoogleMap (as mocks)
+     * Used only in tests
+     * @param mapView
+     * @param map
+     */
+    void setGoogleMapStuff(GoogleMapView mapView, GoogleMap map) {
+        this.mapView = mapView;
+        this.map = map;
+        System.out.println(map);
+        System.out.println(mapView);
     }
 
 

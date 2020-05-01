@@ -3,34 +3,27 @@ package main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import org.jetbrains.annotations.TestOnly;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.testfx.api.FxRobot;
-import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.testfx.util.WaitForAsyncUtils;
 import view.MainViewController;
-import view.OptionsBarController;
-import view.SideBarController;
+import view.OptionsBarViewController;
+import view.SideBarViewController;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+
 @Disabled
 @ExtendWith(ApplicationExtension.class)
 class MainAppTest {
@@ -46,8 +39,8 @@ class MainAppTest {
     ToolBar optionBar;
 
     MainViewController mMainViewCtrl = mock(MainViewController.class);
-    SideBarController mSidebarCtrl = mock(SideBarController.class);
-    OptionsBarController mOptionbarCtrl = mock(OptionsBarController.class);
+    SideBarViewController mSidebarCtrl = mock(SideBarViewController.class);
+    OptionsBarViewController mOptionbarCtrl = mock(OptionsBarViewController.class);
 
     /**
      * Called before each test
@@ -62,7 +55,7 @@ class MainAppTest {
 
         // SIDEBAR
         FXMLLoader loader1 = new FXMLLoader();
-        URL connector = getClass().getResource("/SideBar.fxml");
+        URL connector = getClass().getResource("/SideBarView.fxml");
         loader1.setLocation(connector);
         try {
             sidebar = (AnchorPane) loader1.load();
@@ -87,7 +80,7 @@ class MainAppTest {
         }
         // OPTIONBAR
         FXMLLoader loader3 = new FXMLLoader();
-        URL toolbarBottom = getClass().getResource("/OptionsBar.fxml");
+        URL toolbarBottom = getClass().getResource("/OptionsBarView.fxml");
         loader3.setLocation(toolbarBottom);
         try {
             optionBar = (ToolBar) loader3.load();

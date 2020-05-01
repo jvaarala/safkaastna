@@ -26,7 +26,6 @@ public class RestaurantDAO extends OnlineDatabase {
 	 */
 	public RestaurantDAO() {
 		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-		System.out.println("fff..");
 		try {
 			sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
 		} catch (Exception e) {

@@ -19,20 +19,27 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+
 public class SettingsViewController {
 
-    @FXML
-    public Button refreshButton;
-    public ComboBox<String> locationMenu;
-    public Button saveSettingsButton;
-    public Text selectLangText;
-    public Text selectDefLocText;
-    public Text refreshRestText;
-    @FXML
-    public ImageView closeIcon;
-
     private MainApp mainApp;
-    public AnchorPane settingsView;
+
+    @FXML
+    private Button refreshButton;
+    @FXML
+    private ComboBox<String> locationMenu;
+    @FXML
+    private Button saveSettingsButton;
+    @FXML
+    private Text selectLangText;
+    @FXML
+    private Text selectDefLocText;
+    @FXML
+    private Text refreshRestText;
+    @FXML
+    private ImageView closeIcon;
+    @FXML
+    private AnchorPane settingsView;
 
     private String locale;
 
@@ -88,8 +95,8 @@ public class SettingsViewController {
     }
 
     public void saveSettings(ActionEvent actionEvent) {
-        mainApp.setBundle(ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(locale)));
-        try (OutputStream output = new FileOutputStream("./src/main/resources/TextResources_default.properties")) {
+        mainApp.applyLanguageBundle(ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(locale)));
+        try (OutputStream output = new FileOutputStream("./src/main/resources/DefaultLanguage.properties")) {
             Properties prop = new Properties();
             // set the properties value
             prop.setProperty("Default", locale);
@@ -100,14 +107,11 @@ public class SettingsViewController {
         }
 
         String city = this.locationMenu.getValue();
-        System.out.println("city = " + city);
         String value = mainApp.getCityBundle().getString(city);
-        try (OutputStream output = new FileOutputStream("./src/main/resources/Location_default.properties")) {
+        try (OutputStream output = new FileOutputStream("./src/main/resources/DefaultCity.properties")) {
             Properties prop = new Properties();
-            // set the properties value
             prop.setProperty("Default", value);
             prop.setProperty("cityName", city);
-            // save properties to project root folder
             prop.store(output, null);
         } catch (IOException io) {
             io.printStackTrace();
@@ -116,6 +120,6 @@ public class SettingsViewController {
     }
 
     public void closeSettings(MouseEvent mouseEvent) {
-        mainApp.loadMainView(MainApp.VIEW_MAIN);
+        mainApp.loadMainView(MainApp.view_main);
     }
 }

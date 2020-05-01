@@ -5,8 +5,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import main.MainApp;
 import model.Restaurant;
@@ -15,7 +13,9 @@ import model.SearchLogic;
 import java.util.ResourceBundle;
 
 
-public class SideBarController {
+public class SideBarViewController {
+
+    private MainApp mainApp;
 
     @FXML
     public ImageView closeIcon;
@@ -36,7 +36,6 @@ public class SideBarController {
     @FXML
     private Text distanceToRestaurantText;
 
-    private MainApp mainApp;
     private Restaurant lastSelectedRestaurant;
 
     /**
@@ -111,7 +110,7 @@ public class SideBarController {
      */
     void setUserLocationText(String userLocationText) {
 
-        this.userLocationText.setText(mainApp.getBundle().getString("location") + userLocationText);
+        this.userLocationText.setText(mainApp.getTextResourcesBundle().getString("location") + userLocationText);
         setDistanceToRestaurantText(lastSelectedRestaurant);
         this.userLocationText.setOnMouseClicked(event -> {
             mainApp.getMainViewControl().focusMapOnLocation(mainApp.getUserLocation());
@@ -130,7 +129,7 @@ public class SideBarController {
             if (dist == 0) {
                 distanceToRestaurantText.setText("");
             } else {
-                distanceToRestaurantText.setText(mainApp.getBundle().getString("distance") + dist + "km");
+                distanceToRestaurantText.setText(mainApp.getTextResourcesBundle().getString("distance") + dist + "km");
             }
         }
     }
@@ -142,9 +141,7 @@ public class SideBarController {
      */
     public void setTexts(ResourceBundle bundle) {
         bottomParagraph.setText(bundle.getString("restaurantUrl"));
-        System.out.println(lastSelectedRestaurant);
-        System.out.println();
-        if (this.lastSelectedRestaurant != null && MainApp.MAIN_SCREEN.getRight() != null) {
+        if (this.lastSelectedRestaurant != null && MainApp.main_screen.getRight() != null) {
             this.showRestaurantInfo(lastSelectedRestaurant);
         }
     }

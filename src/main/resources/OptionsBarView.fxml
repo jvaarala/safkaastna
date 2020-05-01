@@ -4,7 +4,7 @@
 <?import javafx.scene.control.ToolBar?>
 
 <ToolBar fx:id="optionsbarContainer" styleClass="optionsbarContainer" xmlns="http://javafx.com/javafx/8.0.171"
-         xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.OptionsBarController">
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.OptionsBarViewController">
     <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#handleSettingsButton" text="Settings"/>
     <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButton"/>
 </ToolBar>
