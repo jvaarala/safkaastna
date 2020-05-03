@@ -11,9 +11,20 @@ import java.util.List;
 
 import org.bson.Document;
 
-public class OfflineDatabase extends BsonDocumentManager implements RestaurantDatabase {
+public class OfflineDatabase implements RestaurantDatabase {
 
 	private String restaurantsFile = "RestaurantsJsonStrings.txt";
+	
+	public OfflineDatabase() {
+	}
+	
+	
+	public OfflineDatabase(String env) {
+		if(env.equals("test")) {
+			restaurantsFile = "RestaurantsJsonStrings_test.txt";
+		}
+	}
+	
 	
 	/**
 	 * Store restaurant array into a file
