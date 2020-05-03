@@ -6,6 +6,10 @@ public abstract class OnlineDatabase implements RestaurantDatabase {
 
 	private OfflineDatabase local = new OfflineDatabase();
 	
+	public void setLocal(OfflineDatabase newLocal) {
+		this.local = newLocal;
+	}
+	
 	@Override
 	public boolean storeRestaurants(List<Restaurant> restaurants) throws Exception {
 		// TODO Auto-generated method stub
@@ -18,7 +22,7 @@ public abstract class OnlineDatabase implements RestaurantDatabase {
 		try {
 			List<Restaurant> restaurants = downloadRestaurants();
 			local.storeRestaurants(restaurants);
-			return downloadRestaurants();
+			return restaurants;
 		} catch (Exception e) {
 			System.out.println("Online load failed, trying local storage");
 			return local.loadRestaurants();

@@ -1,13 +1,6 @@
 package model;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-
-import org.bson.Document;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,21 +8,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RestaurantMongoDBTest {
-    Restaurant rMock;
     Restaurant r1;
     Restaurant r2;
     List<Restaurant> restaurantList;
-    RestaurantMongoDB dao;
 
 
     @BeforeAll
     void init() {
-        rMock = mock(Restaurant.class);
         r1  = new Restaurant(1, "Name1", "Address1", "00100", "City1", "www", "admin", "adminwww", 62, 24 );
         r2  = new Restaurant(2, "Name2", "Address2", "00100", "City2", "www2", "admin2", "adminwww2", 64, 20 );
         restaurantList = (Arrays.asList(r1, r1));
@@ -38,10 +25,10 @@ class RestaurantMongoDBTest {
 
     @Test
     void uploadRestaurantsAdmin() {
-    	RestaurantMongoDB db = new RestaurantMongoDB("admin_test");
+    	OnlineDatabase db = new RestaurantMongoDB("admin_test");
     	    	
         try {
-            boolean result = db.uploadRestaurants(restaurantList);
+            boolean result = db.storeRestaurants(restaurantList);
             assertTrue(result, "Connection failed");
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +40,7 @@ class RestaurantMongoDBTest {
     	db = new RestaurantMongoDB("user_test");
         try {
             boolean result = db.uploadRestaurants(restaurantList);
-            assertFalse(result, "Returned true even as user");
+            assertFalse(result, "Returned true even as non_admin");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,10 +48,11 @@ class RestaurantMongoDBTest {
 
     @Test
     void downloadRestaurants() {
-    	RestaurantMongoDB db = new RestaurantMongoDB();
-    	db = new RestaurantMongoDB("user_test");
+    	OnlineDatabase db = new RestaurantMongoDB();
+    	db = new RestaurantMongoDB("admin_test");
+    	db.setLocal(new OfflineDatabase("test"));
         try {
-        	List<Restaurant> res = db.downloadRestaurants();
+        	List<Restaurant> res = db.loadRestaurants();
         	
         	boolean result = res.get(0).getName().equals(r1.getName()); 
         	
