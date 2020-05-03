@@ -10,13 +10,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-@Disabled // KESKEN
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RestaurantMongoDBTest {
     Restaurant rMock;
@@ -32,21 +33,24 @@ class RestaurantMongoDBTest {
         r1  = new Restaurant(1, "Name1", "Address1", "00100", "City1", "www", "admin", "adminwww", 62, 24 );
         r2  = new Restaurant(2, "Name2", "Address2", "00100", "City2", "www2", "admin2", "adminwww2", 64, 20 );
         restaurantList = (Arrays.asList(r1, r1));
-        dao = new RestaurantMongoDB("admin");
+        //dao = new RestaurantMongoDB("admin_test");
     }
 
 
     @Test
     void uploadRestaurants() {
-        MongoClient mongoClient = mock(MongoClient.class);
+        /*MongoClient mongoClient = mock(MongoClient.class);
         when(MongoClients.create()).thenReturn(mongoClient);
         MongoDatabase database = mock(MongoDatabase.class);
         when(mongoClient.getDatabase("SafkaaSTNA")).thenReturn(database);
         MongoCollection<Document> mockCollection = mock(MongoCollection.class);
-        when(database.getCollection("Restaurants")).thenReturn(mockCollection);
-
+        when(database.getCollection("Restaurants")).thenReturn(mockCollection);*/
+    	RestaurantMongoDB db = new RestaurantMongoDB("admin_test");
+    	
+    	
         try {
-            dao.uploadRestaurants(restaurantList);
+            boolean result = db.uploadRestaurants(restaurantList);
+            assertTrue(result, "Connection failed");
         } catch (Exception e) {
             e.printStackTrace();
         }

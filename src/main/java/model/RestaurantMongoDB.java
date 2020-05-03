@@ -35,6 +35,11 @@ public class RestaurantMongoDB extends OnlineDatabase {
 		if (userType.contains("admin")) {
 			userENV = "MONGO_ADMIN";
 			this.isAdmin = true;
+			
+			if(userType.equals("admin_test")) {
+				dbName += "_test";
+			}
+			
 		} else {
 			userENV = "MONGO_USER";
 			this.isAdmin = false;
