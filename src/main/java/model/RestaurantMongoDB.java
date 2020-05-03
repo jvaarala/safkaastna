@@ -36,13 +36,12 @@ public class RestaurantMongoDB extends OnlineDatabase {
 			userENV = "MONGO_ADMIN";
 			this.isAdmin = true;
 			
-			if(userType.equals("admin_test")) {
-				dbName += "_test";
-			}
-			
 		} else {
 			userENV = "MONGO_USER";
 			this.isAdmin = false;
+		}
+		if(userType.contains("_test")) {
+			dbName += "_test";
 		}
 		String passENV = userENV + "_PASS";
 

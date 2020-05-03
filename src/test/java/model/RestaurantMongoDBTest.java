@@ -33,47 +33,44 @@ class RestaurantMongoDBTest {
         r1  = new Restaurant(1, "Name1", "Address1", "00100", "City1", "www", "admin", "adminwww", 62, 24 );
         r2  = new Restaurant(2, "Name2", "Address2", "00100", "City2", "www2", "admin2", "adminwww2", 64, 20 );
         restaurantList = (Arrays.asList(r1, r1));
-        //dao = new RestaurantMongoDB("admin_test");
     }
 
 
     @Test
-    void uploadRestaurants() {
-        /*MongoClient mongoClient = mock(MongoClient.class);
-        when(MongoClients.create()).thenReturn(mongoClient);
-        MongoDatabase database = mock(MongoDatabase.class);
-        when(mongoClient.getDatabase("SafkaaSTNA")).thenReturn(database);
-        MongoCollection<Document> mockCollection = mock(MongoCollection.class);
-        when(database.getCollection("Restaurants")).thenReturn(mockCollection);*/
+    void uploadRestaurantsAdmin() {
     	RestaurantMongoDB db = new RestaurantMongoDB("admin_test");
-    	
-    	
+    	    	
         try {
             boolean result = db.uploadRestaurants(restaurantList);
             assertTrue(result, "Connection failed");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+    }
+    @Test
+    void uploadRestaurantsUser() {
+    	RestaurantMongoDB db = new RestaurantMongoDB();
+    	db = new RestaurantMongoDB("user_test");
+        try {
+            boolean result = db.uploadRestaurants(restaurantList);
+            assertFalse(result, "Returned true even as user");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     void downloadRestaurants() {
-    }
-
-    @Test
-    void createRestaurantsJson() {
-    }
-
-    @Test
-    void createRestaurantsList() {
-    }
-
-    @Test
-    void storeRestaurantsToFile() {
-    }
-
-    @Test
-    void readRestaurantsFromFile() {
+    	RestaurantMongoDB db = new RestaurantMongoDB();
+    	db = new RestaurantMongoDB("user_test");
+        try {
+        	List<Restaurant> res = db.downloadRestaurants();
+        	
+        	boolean result = res.get(0).getName().equals(r1.getName()); 
+        	
+        	assertTrue(result, "Incorrect data in test database");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
