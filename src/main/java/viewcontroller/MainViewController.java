@@ -346,7 +346,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions
                 .position(mainApp.getUserLocation())
-                .icon("https://users.metropolia.fi/~katriras/OTP1/map-marker.png")
+                .icon("https://users.metropolia.fi/~katriras/OTP-safkaaSTNA/map-marker.png")
                 .animation(Animation.BOUNCE)
         ;
         return new Marker(markerOptions);
