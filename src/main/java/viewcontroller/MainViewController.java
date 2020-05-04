@@ -181,7 +181,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
             if (nearest != null && tempLatLong.getLatitude() == nearest.getLat() && tempLatLong.getLongitude() == nearest.getLng()) {
                 markerOptions
                         .position(tempLatLong)
-                        .icon("https://users.metropolia.fi/~katriras/OTP1/kela_nearest.gif")
+                        .icon("https://users.metropolia.fi/~katriras/OTP-safkaaSTNA/kela_nearest.gif")
                 ;
             } else {
                 markerOptions.position(tempLatLong);
@@ -346,7 +346,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions
                 .position(mainApp.getUserLocation())
-                .icon("https://users.metropolia.fi/~katriras/OTP-safkaaSTNA/map-marker.png")
+                .icon("http://users.metropolia.fi/~katriras/OTP-safkaaSTNA/map-marker.png")
                 .animation(Animation.BOUNCE)
         ;
         return new Marker(markerOptions);
