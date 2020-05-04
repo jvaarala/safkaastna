@@ -401,9 +401,6 @@
 										}
 									],
 									"visibility": "private",
-									"type": {
-										"$ref": "AAAAAAFx0BlRrcu+1qo="
-									},
 									"multiplicity": "*"
 								},
 								{
@@ -461,10 +458,7 @@
 										"$ref": "AAAAAAFx0BlRLcpiZIw="
 									},
 									"name": "optionsControl",
-									"visibility": "private",
-									"type": {
-										"$ref": "AAAAAAFx0BlRrcu6Oko="
-									}
+									"visibility": "private"
 								},
 								{
 									"_type": "UMLAttribute",
@@ -485,10 +479,7 @@
 										"$ref": "AAAAAAFx0BlRLcpiZIw="
 									},
 									"name": "settingsViewControl",
-									"visibility": "private",
-									"type": {
-										"$ref": "AAAAAAFx0BlRrcu80+M="
-									}
+									"visibility": "private"
 								},
 								{
 									"_type": "UMLAttribute",
@@ -813,9 +804,6 @@
 											"_parent": {
 												"$ref": "AAAAAAFx0BlRL8p69Uc="
 											},
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu6Oko="
-											},
 											"direction": "return"
 										}
 									]
@@ -855,9 +843,6 @@
 											"_parent": {
 												"$ref": "AAAAAAFx0BlRL8p+pnw="
 											},
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu80+M="
-											},
 											"direction": "return"
 										}
 									]
@@ -889,9 +874,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*",
 											"direction": "return"
 										}
@@ -924,9 +906,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -1382,7 +1361,7 @@
 													"top": 50,
 													"width": 405.716796875,
 													"height": 13,
-													"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): Restaurant[*]",
+													"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): null[*]",
 													"horizontalAlignment": 0
 												},
 												{
@@ -1399,7 +1378,7 @@
 													"top": 65,
 													"width": 405.716796875,
 													"height": 13,
-													"text": "+createRestaurantsJson(restaurants: Restaurant[*]): String[*]",
+													"text": "+createRestaurantsJson(restaurants[*]): String[*]",
 													"horizontalAlignment": 0
 												}
 											],
@@ -1603,7 +1582,7 @@
 													"top": 5,
 													"width": 405.716796875,
 													"height": 13,
-													"text": "+storeRestaurants(restaurants: Restaurant[*]): boolean",
+													"text": "+storeRestaurants(restaurants[*]): boolean",
 													"horizontalAlignment": 0
 												},
 												{
@@ -1620,7 +1599,7 @@
 													"top": 20,
 													"width": 405.716796875,
 													"height": 13,
-													"text": "+loadRestaurants(): Restaurant[*]",
+													"text": "+loadRestaurants(): null[*]",
 													"horizontalAlignment": 0
 												},
 												{
@@ -1637,7 +1616,7 @@
 													"top": 35,
 													"width": 405.716796875,
 													"height": 13,
-													"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): Restaurant[*]",
+													"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): null[*]",
 													"horizontalAlignment": 0
 												},
 												{
@@ -1654,7 +1633,7 @@
 													"top": 50,
 													"width": 405.716796875,
 													"height": 13,
-													"text": "+createRestaurantsJson(restaurants: Restaurant[*]): String[*]",
+													"text": "+createRestaurantsJson(restaurants[*]): String[*]",
 													"horizontalAlignment": 0
 												}
 											],
@@ -1839,7 +1818,7 @@
 													"top": 5,
 													"width": 326.6376953125,
 													"height": 13,
-													"text": "+storeRestaurants(restaurants: Restaurant[*]): boolean",
+													"text": "+storeRestaurants(restaurants[*]): boolean",
 													"horizontalAlignment": 0
 												},
 												{
@@ -1856,7 +1835,7 @@
 													"top": 20,
 													"width": 326.6376953125,
 													"height": 13,
-													"text": "+loadRestaurants(): Restaurant[*]",
+													"text": "+loadRestaurants(): null[*]",
 													"horizontalAlignment": 0
 												},
 												{
@@ -1873,7 +1852,7 @@
 													"top": 35,
 													"width": 326.6376953125,
 													"height": 13,
-													"text": "#downloadRestaurants(): Restaurant[*]",
+													"text": "#downloadRestaurants(): null[*]",
 													"horizontalAlignment": 0
 												},
 												{
@@ -1890,7 +1869,7 @@
 													"top": 50,
 													"width": 326.6376953125,
 													"height": 13,
-													"text": "#uploadRestaurants(restaurants: Restaurant[*]): boolean",
+													"text": "#uploadRestaurants(restaurants[*]): boolean",
 													"horizontalAlignment": 0
 												}
 											],
@@ -2978,7 +2957,7 @@
 													"top": 95,
 													"width": 373.94677734375,
 													"height": 13,
-													"text": "+downloadRestaurants(): Restaurant[*]",
+													"text": "+downloadRestaurants(): null[*]",
 													"horizontalAlignment": 0
 												},
 												{
@@ -2995,7 +2974,7 @@
 													"top": 110,
 													"width": 373.94677734375,
 													"height": 13,
-													"text": "+uploadRestaurants(restaurantsFromDb: Restaurant[*]): boolean",
+													"text": "+uploadRestaurants(restaurantsFromDb[*]): boolean",
 													"horizontalAlignment": 0
 												}
 											],
@@ -3182,7 +3161,7 @@
 													"top": 5,
 													"width": 363.8095703125,
 													"height": 13,
-													"text": "+storeRestaurants(restaurantsFromDb: Restaurant[*]): boolean",
+													"text": "+storeRestaurants(restaurantsFromDb[*]): boolean",
 													"horizontalAlignment": 0
 												},
 												{
@@ -3199,7 +3178,7 @@
 													"top": 20,
 													"width": 363.8095703125,
 													"height": 13,
-													"text": "+loadRestaurants(): Restaurant[*]",
+													"text": "+loadRestaurants(): null[*]",
 													"horizontalAlignment": 0
 												}
 											],
@@ -3506,7 +3485,7 @@
 													"top": 50,
 													"width": 373.94677734375,
 													"height": 13,
-													"text": "+uploadRestaurants(restaurantsFromDb: Restaurant[*]): boolean",
+													"text": "+uploadRestaurants(restaurantsFromDb[*]): boolean",
 													"horizontalAlignment": 0
 												},
 												{
@@ -3523,7 +3502,7 @@
 													"top": 65,
 													"width": 373.94677734375,
 													"height": 13,
-													"text": "+downloadRestaurants(): Restaurant[*]",
+													"text": "+downloadRestaurants(): null[*]",
 													"horizontalAlignment": 0
 												}
 											],
@@ -3761,7 +3740,7 @@
 													"top": 20,
 													"width": 501.14111328125,
 													"height": 13,
-													"text": "+filter(restaurantList: Restaurant[*], searchWord: String): Restaurant[*]",
+													"text": "+filter(restaurantList[*], searchWord: String): null[*]",
 													"horizontalAlignment": 0
 												},
 												{
@@ -3778,7 +3757,7 @@
 													"top": 35,
 													"width": 501.14111328125,
 													"height": 13,
-													"text": "+findNearestRestaurant(restaurants: Restaurant[*], userLocation: LatLong): Restaurant",
+													"text": "+findNearestRestaurant(restaurants[*], userLocation: LatLong): Restaurant",
 													"horizontalAlignment": 0
 												},
 												{
@@ -3831,7 +3810,7 @@
 													"width": 501.14111328125,
 													"height": 13,
 													"underline": true,
-													"text": "+getCities(restaurantList: Restaurant[*]): String[*]",
+													"text": "+getCities(restaurantList[*]): String[*]",
 													"horizontalAlignment": 0
 												},
 												{
@@ -4943,9 +4922,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*",
 											"direction": "return"
 										}
@@ -4979,9 +4955,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -5115,9 +5088,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -5158,9 +5128,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*",
 											"direction": "return"
 										}
@@ -5220,9 +5187,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*",
 											"direction": "return"
 										}
@@ -5256,9 +5220,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -5395,9 +5356,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -5442,9 +5400,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*",
 											"direction": "return"
 										}
@@ -5482,9 +5437,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*",
 											"direction": "return"
 										}
@@ -5524,9 +5476,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -6839,9 +6788,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*",
 											"direction": "return"
 										}
@@ -6874,9 +6820,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -7141,9 +7084,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -7189,9 +7129,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*",
 											"direction": "return"
 										}
@@ -7412,9 +7349,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -7444,9 +7378,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*",
 											"direction": "return"
 										}
@@ -7480,9 +7411,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -7611,9 +7539,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -7738,9 +7663,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*"
 										},
 										{
@@ -7786,9 +7708,6 @@
 													"value": "List"
 												}
 											],
-											"type": {
-												"$ref": "AAAAAAFx0BlRrcu+1qo="
-											},
 											"multiplicity": "*",
 											"direction": "return"
 										}
@@ -8558,10 +8477,7 @@
 										"$ref": "AAAAAAFx0BlRkMtUMHQ="
 									},
 									"name": "mainApp",
-									"visibility": "private",
-									"type": {
-										"$ref": "AAAAAAFx0BlRtMvdGiQ="
-									}
+									"visibility": "private"
 								},
 								{
 									"_type": "UMLAttribute",
@@ -8604,10 +8520,7 @@
 											"_parent": {
 												"$ref": "AAAAAAFx0BlRkMtVRJQ="
 											},
-											"name": "mainApp",
-											"type": {
-												"$ref": "AAAAAAFx0BlRtMvdGiQ="
-											}
+											"name": "mainApp"
 										},
 										{
 											"_type": "UMLParameter",
@@ -9033,10 +8946,7 @@
 										"$ref": "AAAAAAFx0BlRn8tkO6w="
 									},
 									"name": "mainApp",
-									"visibility": "private",
-									"type": {
-										"$ref": "AAAAAAFx0BlRtMvdGiQ="
-									}
+									"visibility": "private"
 								},
 								{
 									"_type": "UMLAttribute",
@@ -9160,10 +9070,7 @@
 											"_parent": {
 												"$ref": "AAAAAAFx0BlRn8tlh2s="
 											},
-											"name": "mainApp",
-											"type": {
-												"$ref": "AAAAAAFx0BlRtMvdGiQ="
-											}
+											"name": "mainApp"
 										},
 										{
 											"_type": "UMLParameter",
@@ -10412,7 +10319,7 @@
 											"top": 158,
 											"width": 302.9482421875,
 											"height": 13,
-											"text": "-restaurantsFromDb: Restaurant[*] {collection=\"List\"}",
+											"text": "-restaurantsFromDb[*] {collection=\"List\"}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10497,7 +10404,7 @@
 											"top": 233,
 											"width": 302.9482421875,
 											"height": 13,
-											"text": "-optionsControl: OptionsBarViewController",
+											"text": "-optionsControl",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10531,7 +10438,7 @@
 											"top": 263,
 											"width": 302.9482421875,
 											"height": 13,
-											"text": "-settingsViewControl: SettingsViewController",
+											"text": "-settingsViewControl",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10842,7 +10749,7 @@
 											"top": 308,
 											"width": 319.0966796875,
 											"height": 13,
-											"text": "+getOptionsControl(): OptionsBarViewController",
+											"text": "+getOptionsControl(): null",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10876,7 +10783,7 @@
 											"top": 338,
 											"width": 319.0966796875,
 											"height": 13,
-											"text": "+getSettingsViewControl(): SettingsViewController",
+											"text": "+getSettingsViewControl(): null",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10893,7 +10800,7 @@
 											"top": 353,
 											"width": 319.0966796875,
 											"height": 13,
-											"text": "+getRestaurants(): Restaurant[*]",
+											"text": "+getRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10910,7 +10817,7 @@
 											"top": 368,
 											"width": 319.0966796875,
 											"height": 13,
-											"text": "+setRestaurants(restaurantsDB: Restaurant[*]): void",
+											"text": "+setRestaurants(restaurantsDB[*]): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -11566,7 +11473,7 @@
 											"top": 130,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): Restaurant[*]",
+											"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -11583,7 +11490,7 @@
 											"top": 145,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+createRestaurantsJson(restaurants: Restaurant[*]): String[*]",
+											"text": "+createRestaurantsJson(restaurants[*]): String[*]",
 											"horizontalAlignment": 0
 										}
 									],
@@ -11801,7 +11708,7 @@
 											"top": 85,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+storeRestaurants(restaurants: Restaurant[*]): boolean",
+											"text": "+storeRestaurants(restaurants[*]): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -11818,7 +11725,7 @@
 											"top": 100,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+loadRestaurants(): Restaurant[*]",
+											"text": "+loadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -11835,7 +11742,7 @@
 											"top": 115,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): Restaurant[*]",
+											"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -11852,7 +11759,7 @@
 											"top": 130,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+createRestaurantsJson(restaurants: Restaurant[*]): String[*]",
+											"text": "+createRestaurantsJson(restaurants[*]): String[*]",
 											"horizontalAlignment": 0
 										}
 									],
@@ -12051,7 +11958,7 @@
 											"top": 38,
 											"width": 326.6376953125,
 											"height": 13,
-											"text": "+storeRestaurants(restaurants: Restaurant[*]): boolean",
+											"text": "+storeRestaurants(restaurants[*]): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -12068,7 +11975,7 @@
 											"top": 53,
 											"width": 326.6376953125,
 											"height": 13,
-											"text": "+loadRestaurants(): Restaurant[*]",
+											"text": "+loadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -12085,7 +11992,7 @@
 											"top": 68,
 											"width": 326.6376953125,
 											"height": 13,
-											"text": "#downloadRestaurants(): Restaurant[*]",
+											"text": "#downloadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -12102,7 +12009,7 @@
 											"top": 83,
 											"width": 326.6376953125,
 											"height": 13,
-											"text": "#uploadRestaurants(restaurants: Restaurant[*]): boolean",
+											"text": "#uploadRestaurants(restaurants[*]): boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -13218,7 +13125,7 @@
 											"top": 113.5,
 											"width": 373.94677734375,
 											"height": 13,
-											"text": "+downloadRestaurants(): Restaurant[*]",
+											"text": "+downloadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -13235,7 +13142,7 @@
 											"top": 128.5,
 											"width": 373.94677734375,
 											"height": 13,
-											"text": "+uploadRestaurants(restaurantsFromDb: Restaurant[*]): boolean",
+											"text": "+uploadRestaurants(restaurantsFromDb[*]): boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -13436,7 +13343,7 @@
 											"top": -9,
 											"width": 363.8095703125,
 											"height": 13,
-											"text": "+storeRestaurants(restaurantsFromDb: Restaurant[*]): boolean",
+											"text": "+storeRestaurants(restaurantsFromDb[*]): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -13453,7 +13360,7 @@
 											"top": 6,
 											"width": 363.8095703125,
 											"height": 13,
-											"text": "+loadRestaurants(): Restaurant[*]",
+											"text": "+loadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										}
 									],
@@ -13774,7 +13681,7 @@
 											"top": 89.5,
 											"width": 373.94677734375,
 											"height": 13,
-											"text": "+uploadRestaurants(restaurantsFromDb: Restaurant[*]): boolean",
+											"text": "+uploadRestaurants(restaurantsFromDb[*]): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -13791,7 +13698,7 @@
 											"top": 104.5,
 											"width": 373.94677734375,
 											"height": 13,
-											"text": "+downloadRestaurants(): Restaurant[*]",
+											"text": "+downloadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										}
 									],
@@ -14043,7 +13950,7 @@
 											"top": 271,
 											"width": 501.14111328125,
 											"height": 13,
-											"text": "+filter(restaurantList: Restaurant[*], searchWord: String): Restaurant[*]",
+											"text": "+filter(restaurantList[*], searchWord: String): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14060,7 +13967,7 @@
 											"top": 286,
 											"width": 501.14111328125,
 											"height": 13,
-											"text": "+findNearestRestaurant(restaurants: Restaurant[*], userLocation: LatLong): Restaurant",
+											"text": "+findNearestRestaurant(restaurants[*], userLocation: LatLong): Restaurant",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14113,7 +14020,7 @@
 											"width": 501.14111328125,
 											"height": 13,
 											"underline": true,
-											"text": "+getCities(restaurantList: Restaurant[*]): String[*]",
+											"text": "+getCities(restaurantList[*]): String[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14313,7 +14220,7 @@
 											"top": 37,
 											"width": 131.5234375,
 											"height": 13,
-											"text": "-mainApp: MainApp",
+											"text": "-mainApp",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14382,7 +14289,7 @@
 											"top": 37,
 											"width": 315.44677734375,
 											"height": 13,
-											"text": "+setMainApp(mainApp: MainApp): void",
+											"text": "+setMainApp(mainApp): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14633,7 +14540,7 @@
 											"top": 58,
 											"width": 161.154296875,
 											"height": 13,
-											"text": "-mainApp: MainApp",
+											"text": "-mainApp",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14821,7 +14728,7 @@
 											"top": 58,
 											"width": 292.2587890625,
 											"height": 13,
-											"text": "+setMainApp(mainApp: MainApp): void",
+											"text": "+setMainApp(mainApp): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -31348,7 +31255,7 @@
 											"top": 429,
 											"width": 363.8095703125,
 											"height": 13,
-											"text": "+storeRestaurants(restaurantsFromDb: Restaurant[*]): boolean",
+											"text": "+storeRestaurants(restaurantsFromDb[*]): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -31365,7 +31272,7 @@
 											"top": 444,
 											"width": 363.8095703125,
 											"height": 13,
-											"text": "+loadRestaurants(): Restaurant[*]",
+											"text": "+loadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										}
 									],
@@ -31670,7 +31577,7 @@
 											"top": 157,
 											"width": 315.44677734375,
 											"height": 13,
-											"text": "-mainApp: MainApp",
+											"text": "-mainApp",
 											"horizontalAlignment": 0
 										},
 										{
@@ -31738,7 +31645,7 @@
 											"top": 210,
 											"width": 315.44677734375,
 											"height": 13,
-											"text": "+setMainApp(mainApp: MainApp): void",
+											"text": "+setMainApp(mainApp): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -33487,7 +33394,7 @@
 											"top": 1564,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): Restaurant[*]",
+											"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -33504,7 +33411,7 @@
 											"top": 1579,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+createRestaurantsJson(restaurants: Restaurant[*]): String[*]",
+											"text": "+createRestaurantsJson(restaurants[*]): String[*]",
 											"horizontalAlignment": 0
 										}
 									],
@@ -33687,7 +33594,7 @@
 											"top": 133,
 											"width": 319.0966796875,
 											"height": 13,
-											"text": "-restaurantsFromDb: Restaurant[*] {collection=\"List\"}",
+											"text": "-restaurantsFromDb[*] {collection=\"List\"}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -33772,7 +33679,7 @@
 											"top": 208,
 											"width": 319.0966796875,
 											"height": 13,
-											"text": "-optionsControl: OptionsBarViewController",
+											"text": "-optionsControl",
 											"horizontalAlignment": 0
 										},
 										{
@@ -33806,7 +33713,7 @@
 											"top": 238,
 											"width": 319.0966796875,
 											"height": 13,
-											"text": "-settingsViewControl: SettingsViewController",
+											"text": "-settingsViewControl",
 											"horizontalAlignment": 0
 										},
 										{
@@ -34116,7 +34023,7 @@
 											"top": 501,
 											"width": 319.0966796875,
 											"height": 13,
-											"text": "+getOptionsControl(): OptionsBarViewController",
+											"text": "+getOptionsControl(): null",
 											"horizontalAlignment": 0
 										},
 										{
@@ -34150,7 +34057,7 @@
 											"top": 531,
 											"width": 319.0966796875,
 											"height": 13,
-											"text": "+getSettingsViewControl(): SettingsViewController",
+											"text": "+getSettingsViewControl(): null",
 											"horizontalAlignment": 0
 										},
 										{
@@ -34167,7 +34074,7 @@
 											"top": 546,
 											"width": 319.0966796875,
 											"height": 13,
-											"text": "+getRestaurants(): Restaurant[*]",
+											"text": "+getRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -34184,7 +34091,7 @@
 											"top": 561,
 											"width": 319.0966796875,
 											"height": 13,
-											"text": "+setRestaurants(restaurantsDB: Restaurant[*]): void",
+											"text": "+setRestaurants(restaurantsDB[*]): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -34552,7 +34459,7 @@
 											"top": 1143,
 											"width": 326.6376953125,
 											"height": 13,
-											"text": "+storeRestaurants(restaurants: Restaurant[*]): boolean",
+											"text": "+storeRestaurants(restaurants[*]): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -34569,7 +34476,7 @@
 											"top": 1158,
 											"width": 326.6376953125,
 											"height": 13,
-											"text": "+loadRestaurants(): Restaurant[*]",
+											"text": "+loadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -34586,7 +34493,7 @@
 											"top": 1173,
 											"width": 326.6376953125,
 											"height": 13,
-											"text": "#downloadRestaurants(): Restaurant[*]",
+											"text": "#downloadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -34603,7 +34510,7 @@
 											"top": 1188,
 											"width": 326.6376953125,
 											"height": 13,
-											"text": "#uploadRestaurants(restaurants: Restaurant[*]): boolean",
+											"text": "#uploadRestaurants(restaurants[*]): boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -34820,7 +34727,7 @@
 											"top": 1348,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+storeRestaurants(restaurants: Restaurant[*]): boolean",
+											"text": "+storeRestaurants(restaurants[*]): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -34837,7 +34744,7 @@
 											"top": 1363,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+loadRestaurants(): Restaurant[*]",
+											"text": "+loadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -34854,7 +34761,7 @@
 											"top": 1378,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): Restaurant[*]",
+											"text": "+createRestaurantsList(restaurantJsonStrings: String[*]): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -34871,7 +34778,7 @@
 											"top": 1393,
 											"width": 405.716796875,
 											"height": 13,
-											"text": "+createRestaurantsJson(restaurants: Restaurant[*]): String[*]",
+											"text": "+createRestaurantsJson(restaurants[*]): String[*]",
 											"horizontalAlignment": 0
 										}
 									],
@@ -35122,7 +35029,7 @@
 											"top": 922,
 											"width": 501.14111328125,
 											"height": 13,
-											"text": "+filter(restaurantList: Restaurant[*], searchWord: String): Restaurant[*]",
+											"text": "+filter(restaurantList[*], searchWord: String): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -35139,7 +35046,7 @@
 											"top": 937,
 											"width": 501.14111328125,
 											"height": 13,
-											"text": "+findNearestRestaurant(restaurants: Restaurant[*], userLocation: LatLong): Restaurant",
+											"text": "+findNearestRestaurant(restaurants[*], userLocation: LatLong): Restaurant",
 											"horizontalAlignment": 0
 										},
 										{
@@ -35192,7 +35099,7 @@
 											"width": 501.14111328125,
 											"height": 13,
 											"underline": true,
-											"text": "+getCities(restaurantList: Restaurant[*]): String[*]",
+											"text": "+getCities(restaurantList[*]): String[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -35528,7 +35435,7 @@
 											"top": 974,
 											"width": 373.94677734375,
 											"height": 13,
-											"text": "+uploadRestaurants(restaurantsFromDb: Restaurant[*]): boolean",
+											"text": "+uploadRestaurants(restaurantsFromDb[*]): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -35545,7 +35452,7 @@
 											"top": 989,
 											"width": 373.94677734375,
 											"height": 13,
-											"text": "+downloadRestaurants(): Restaurant[*]",
+											"text": "+downloadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										}
 									],
@@ -35864,7 +35771,7 @@
 											"top": 974,
 											"width": 373.94677734375,
 											"height": 13,
-											"text": "+downloadRestaurants(): Restaurant[*]",
+											"text": "+downloadRestaurants(): null[*]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -35881,7 +35788,7 @@
 											"top": 989,
 											"width": 373.94677734375,
 											"height": 13,
-											"text": "+uploadRestaurants(restaurantsFromDb: Restaurant[*]): boolean",
+											"text": "+uploadRestaurants(restaurantsFromDb[*]): boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -36064,7 +35971,7 @@
 											"top": 389,
 											"width": 303,
 											"height": 13,
-											"text": "-mainApp: MainApp",
+											"text": "-mainApp",
 											"horizontalAlignment": 0
 										},
 										{
@@ -36251,7 +36158,7 @@
 											"top": 547,
 											"width": 303,
 											"height": 13,
-											"text": "+setMainApp(mainApp: MainApp): void",
+											"text": "+setMainApp(mainApp): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -46175,126 +46082,6 @@
 					},
 					"name": "student",
 					"ownedElements": [
-						{
-							"_type": "UMLAssociation",
-							"_id": "AAAAAAFx0K8drvK6E1I=",
-							"_parent": {
-								"$ref": "AAAAAAFx0K8drvK5lC8="
-							},
-							"end1": {
-								"_type": "UMLAssociationEnd",
-								"_id": "AAAAAAFx0K8drvK7ayg=",
-								"_parent": {
-									"$ref": "AAAAAAFx0K8drvK6E1I="
-								},
-								"reference": {
-									"$ref": "AAAAAAFx0K8drvK5lC8="
-								}
-							},
-							"end2": {
-								"_type": "UMLAssociationEnd",
-								"_id": "AAAAAAFx0K8drvK8sHE=",
-								"_parent": {
-									"$ref": "AAAAAAFx0K8drvK6E1I="
-								}
-							}
-						},
-						{
-							"_type": "UMLAssociation",
-							"_id": "AAAAAAFx0K8drvK9BWk=",
-							"_parent": {
-								"$ref": "AAAAAAFx0K8drvK5lC8="
-							},
-							"end1": {
-								"_type": "UMLAssociationEnd",
-								"_id": "AAAAAAFx0K8drvK+Mbo=",
-								"_parent": {
-									"$ref": "AAAAAAFx0K8drvK9BWk="
-								},
-								"reference": {
-									"$ref": "AAAAAAFx0K8drvK5lC8="
-								}
-							},
-							"end2": {
-								"_type": "UMLAssociationEnd",
-								"_id": "AAAAAAFx0K8drvK/faw=",
-								"_parent": {
-									"$ref": "AAAAAAFx0K8drvK9BWk="
-								}
-							}
-						},
-						{
-							"_type": "UMLAssociation",
-							"_id": "AAAAAAFx0K8drvLAwyk=",
-							"_parent": {
-								"$ref": "AAAAAAFx0K8drvK5lC8="
-							},
-							"end1": {
-								"_type": "UMLAssociationEnd",
-								"_id": "AAAAAAFx0K8drvLByZs=",
-								"_parent": {
-									"$ref": "AAAAAAFx0K8drvLAwyk="
-								},
-								"reference": {
-									"$ref": "AAAAAAFx0K8drvK5lC8="
-								}
-							},
-							"end2": {
-								"_type": "UMLAssociationEnd",
-								"_id": "AAAAAAFx0K8drvLCKl0=",
-								"_parent": {
-									"$ref": "AAAAAAFx0K8drvLAwyk="
-								}
-							}
-						},
-						{
-							"_type": "UMLAssociation",
-							"_id": "AAAAAAFx0K8drvLDr0Y=",
-							"_parent": {
-								"$ref": "AAAAAAFx0K8drvK5lC8="
-							},
-							"end1": {
-								"_type": "UMLAssociationEnd",
-								"_id": "AAAAAAFx0K8drvLEKUs=",
-								"_parent": {
-									"$ref": "AAAAAAFx0K8drvLDr0Y="
-								},
-								"reference": {
-									"$ref": "AAAAAAFx0K8drvK5lC8="
-								}
-							},
-							"end2": {
-								"_type": "UMLAssociationEnd",
-								"_id": "AAAAAAFx0K8drvLFjpY=",
-								"_parent": {
-									"$ref": "AAAAAAFx0K8drvLDr0Y="
-								}
-							}
-						},
-						{
-							"_type": "UMLAssociation",
-							"_id": "AAAAAAFx0K8drvLGTYw=",
-							"_parent": {
-								"$ref": "AAAAAAFx0K8drvK5lC8="
-							},
-							"end1": {
-								"_type": "UMLAssociationEnd",
-								"_id": "AAAAAAFx0K8drvLHCv0=",
-								"_parent": {
-									"$ref": "AAAAAAFx0K8drvLGTYw="
-								},
-								"reference": {
-									"$ref": "AAAAAAFx0K8drvK5lC8="
-								}
-							},
-							"end2": {
-								"_type": "UMLAssociationEnd",
-								"_id": "AAAAAAFx0K8drvLIQ+0=",
-								"_parent": {
-									"$ref": "AAAAAAFx0K8drvLGTYw="
-								}
-							}
-						},
 						{
 							"_type": "UMLAssociation",
 							"_id": "AAAAAAFx0LRbHvRa0PQ=",
