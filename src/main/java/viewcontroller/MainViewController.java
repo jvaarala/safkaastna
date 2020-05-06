@@ -234,10 +234,7 @@ public class MainViewController implements Initializable, MapComponentInitialize
     @FXML
     protected void handleSearchButton(ActionEvent event) {
         if (!filterToggleButton.isSelected()) {
-            mainApp.sidebarOff();
             nearest = null;
-            map.clearMarkers();
-            updateMarkers(mainApp.getRestaurants());
             mainApp.setUserLocation(search.fetchGoogleCoordinates(textInSearchField));
             focusMapOnLocation(mainApp.getUserLocation());
             mainApp.getSidebarControl().setUserLocationText(formatString(textInSearchField));

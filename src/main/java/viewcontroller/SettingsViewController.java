@@ -122,4 +122,8 @@ public class SettingsViewController {
     public void closeSettings(MouseEvent mouseEvent) {
         mainApp.loadMainView(MainApp.view_main);
     }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
 }

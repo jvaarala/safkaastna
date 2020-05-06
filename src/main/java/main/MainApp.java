@@ -44,8 +44,6 @@ public class MainApp extends Application {
     private ResourceBundle cityCoordsBundle;
     private ResourceBundle defaultCityBundle;
 
-    private boolean restaurantsLoaded = false;
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -154,6 +152,7 @@ public class MainApp extends Application {
             view_settings = loader.load();
             this.settingsViewControl = loader.getController();
             this.settingsViewControl.setMainApp(this);
+            settingsViewControl.setLocale(ResourceBundle.getBundle("DefaultLanguage").getString("Default"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -174,7 +173,7 @@ public class MainApp extends Application {
         try {
             this.restaurantsFromDb = database.loadRestaurants();
             while (restaurantsFromDb == null) {
-                Thread.sleep(500);
+                Thread.sleep(5000);
             }
         } catch (Exception e) {
             e.printStackTrace();
