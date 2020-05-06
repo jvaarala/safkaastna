@@ -44,6 +44,8 @@ public class MainApp extends Application {
     private ResourceBundle cityCoordsBundle;
     private ResourceBundle defaultCityBundle;
 
+    private boolean restaurantsLoaded = false;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -171,6 +173,9 @@ public class MainApp extends Application {
         RestaurantDatabase database = new RestaurantMongoDB();
         try {
             this.restaurantsFromDb = database.loadRestaurants();
+            while (restaurantsFromDb == null) {
+                Thread.sleep(500);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
