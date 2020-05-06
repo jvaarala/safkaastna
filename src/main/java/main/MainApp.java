@@ -1,10 +1,8 @@
 package main;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
@@ -57,9 +55,10 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("SafkaaSTNA");
 
-        this.textResourcesBundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(
-                ResourceBundle.getBundle("DefaultLanguage").getString("Default"))
-        );
+        setDefaultLang(new File("UserDefaultLanguage.properties"));
+
+        setDefaultCity(new File("UserDefaultCity.properties"));
+
         this.cityCoordsBundle = ResourceBundle.getBundle("CityCoords");
         this.defaultCityBundle = ResourceBundle.getBundle("DefaultCity");
 
@@ -73,6 +72,38 @@ public class MainApp extends Application {
 
         this.applyLanguageBundle(this.textResourcesBundle);
         this.loadMainView(view_main);
+    }
+
+    public void setDefaultCity(File f) {
+        if (f.exists()) {
+        } else {
+            this.defaultCityBundle = ResourceBundle.getBundle("DefaultCity");
+        }
+    }
+
+    public void setDefaultLang(File f) {
+        if (f.exists()) {
+            // handle language
+            String language = "";
+            try (Scanner myReader = new Scanner(f)) {
+                while (myReader.hasNextLine()) {
+                    language += myReader.nextLine();
+
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            String temp = "";
+            for(int i=language.length()-5; i<language.length(); i++) {
+                temp += language.charAt(i);
+            }
+            System.out.println(temp);
+            textResourcesBundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(temp));
+        } else {
+            this.textResourcesBundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(
+                    ResourceBundle.getBundle("DefaultLanguage").getString("Default"))
+            );
+        }
     }
 
     /**
@@ -152,7 +183,7 @@ public class MainApp extends Application {
             view_settings = loader.load();
             this.settingsViewControl = loader.getController();
             this.settingsViewControl.setMainApp(this);
-            settingsViewControl.setLocale(ResourceBundle.getBundle("DefaultLanguage").getString("Default"));
+//            settingsViewControl.setLocale(ResourceBundle.getBundle("DefaultLanguage").getString("Default"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -233,12 +264,43 @@ public class MainApp extends Application {
         return cityCoordsBundle;
     }
 
-    public ResourceBundle getDefaultBundle() {
-        return defaultCityBundle;
+    public String getLanguage() {
+        String s = "";
+        try (InputStream input = new FileInputStream("UserDefaultLanguage.properties")) {
+            Properties prop = new Properties();
+            prop.load(input);
+            s = prop.getProperty("Default");
+        } catch (IOException ex) {
+            s = defaultCityBundle.getString("Default");
+            ex.printStackTrace();
+        }
+        return s;
+    }
+
+    public String getDefaultBundle() {
+        String s = "";
+        try (InputStream input = new FileInputStream("UserDefaultCity.properties")) {
+            Properties prop = new Properties();
+            prop.load(input);
+            s = prop.getProperty("Default");
+        } catch (IOException ex) {
+            s = defaultCityBundle.getString("Default");
+            ex.printStackTrace();
+        }
+        return s;
     }
 
     public String getDefaultCityName() {
-        return defaultCityBundle.getString("cityName");
+        String s;
+        try (InputStream input = new FileInputStream("UserDefaultCity.properties")) {
+            Properties prop = new Properties();
+            prop.load(input);
+            s = prop.getProperty("cityName");
+        } catch (IOException ex) {
+            s = defaultCityBundle.getString("cityName");
+            ex.printStackTrace();
+        }
+        return s;
     }
 
     public void applyLanguageBundle(ResourceBundle bundle) {

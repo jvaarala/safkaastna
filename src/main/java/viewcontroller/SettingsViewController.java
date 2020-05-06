@@ -45,6 +45,7 @@ public class SettingsViewController {
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+        locale = mainApp.getLanguage();
     }
 
     public void setLocationMenuItems(List<String> cityNames) {
@@ -95,8 +96,10 @@ public class SettingsViewController {
     }
 
     public void saveSettings(ActionEvent actionEvent) {
+
+        System.out.println("locale=" + locale);
         mainApp.applyLanguageBundle(ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(locale)));
-        try (OutputStream output = new FileOutputStream("./src/main/resources/DefaultLanguage.properties")) {
+        try (OutputStream output = new FileOutputStream("UserDefaultLanguage.properties")) {
             Properties prop = new Properties();
             // set the properties value
             prop.setProperty("Default", locale);
@@ -108,7 +111,7 @@ public class SettingsViewController {
 
         String city = this.locationMenu.getValue();
         String value = mainApp.getCityBundle().getString(city);
-        try (OutputStream output = new FileOutputStream("./src/main/resources/DefaultCity.properties")) {
+        try (OutputStream output = new FileOutputStream("UserDefaultCity.properties")) {
             Properties prop = new Properties();
             prop.setProperty("Default", value);
             prop.setProperty("cityName", city);
@@ -123,7 +126,7 @@ public class SettingsViewController {
         mainApp.loadMainView(MainApp.view_main);
     }
 
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
+//    public void setLocale(String locale) {
+//        this.locale = locale;
+//    }
 }

@@ -33,6 +33,7 @@ public class SearchLogic {
 
     private String api = dotenv.get("APIKEY");
 
+
     /**
      * Search restaurant list for names that match search word.
      *

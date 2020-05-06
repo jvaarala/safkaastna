@@ -100,7 +100,8 @@ public class MainViewController implements Initializable, MapComponentInitialize
      */
     @Override
     public void mapInitialized() {
-        String city = mainApp.getDefaultBundle().getString("Default");
+        String city = mainApp.getDefaultBundle();
+        System.out.println("mvCTrl city=" + city);
         defaultCity = search.stringToDouble(city);
 
         MapOptions mapOptions = new MapOptions();
