@@ -82,23 +82,18 @@ public class MainApp extends Application {
     }
 
     public void setDefaultLang(File f) {
+        String s;
         if (f.exists()) {
-            // handle language
-            String language = "";
-            try (Scanner myReader = new Scanner(f)) {
-                while (myReader.hasNextLine()) {
-                    language += myReader.nextLine();
 
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            try (InputStream input = new FileInputStream("UserDefaultLanguage.properties")) {
+                Properties prop = new Properties();
+                prop.load(input);
+                s = prop.getProperty("Default");
+            } catch (IOException ex) {
+                s = defaultCityBundle.getString("Default");
+//                ex.printStackTrace();
             }
-            String temp = "";
-            for(int i=language.length()-5; i<language.length(); i++) {
-                temp += language.charAt(i);
-            }
-            System.out.println(temp);
-            textResourcesBundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(temp));
+            textResourcesBundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(s));
         } else {
             this.textResourcesBundle = ResourceBundle.getBundle("TextResources", Locale.forLanguageTag(
                     ResourceBundle.getBundle("DefaultLanguage").getString("Default"))
@@ -272,7 +267,7 @@ public class MainApp extends Application {
             s = prop.getProperty("Default");
         } catch (IOException ex) {
             s = defaultCityBundle.getString("Default");
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
         return s;
     }
@@ -285,7 +280,7 @@ public class MainApp extends Application {
             s = prop.getProperty("Default");
         } catch (IOException ex) {
             s = defaultCityBundle.getString("Default");
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
         return s;
     }
@@ -298,7 +293,7 @@ public class MainApp extends Application {
             s = prop.getProperty("cityName");
         } catch (IOException ex) {
             s = defaultCityBundle.getString("cityName");
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
         return s;
     }
