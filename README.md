@@ -8,6 +8,10 @@ SafkaaSTNA is a school project to map restaurants who offer Kela subsidized meal
 Project is built with Maven so all dependencies can be found on pom.xml.
 Map view in program is provided with GmapsFX ( https://github.com/rterp/GMapsFX ), database connections are handled with Hibernate and the chosen framework for UI is JavaFX.
 
+[UML](http://users.metropolia.fi/~katriras/OTP-safkaaSTNA/uml/)
+
+[Javadoc](http://users.metropolia.fi/~katriras/OTP-safkaaSTNA/doc/)
+
 ## HOW TO SETUP?
 
 1: Clone project
